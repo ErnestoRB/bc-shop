@@ -1,0 +1,22 @@
+services:
+  apache:
+    environment:
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_NAME=development
+      - DB_USER=root
+      - DB_PASSWORD=123456789
+  pma:
+    environment:
+      - PMA_HOST=database
+      - PMA_PORT=3306
+      - PMA_USER=development
+      - PMA_PASSWORD=123456789
+      - MYSQL_ROOT_PASSWORD=123456789
+  database:
+    volumes:
+      - dev_db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456789
+volumes:
+  dev_db: {}
