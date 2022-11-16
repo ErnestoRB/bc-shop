@@ -20,6 +20,16 @@ function releaseUserAccount($id)
     return "UPDATE users SET bloqueado=0 WHERE idusuario = $id";
 }
 
+function incrementFailed($id)
+{
+    return "UPDATE users SET fallidos=fallidos+1 WHERE idusuario=$id;";
+}
+
+function clearFailed($id)
+{
+    return "UPDATE users SET fallidos=0 WHERE idusuario=$id;";
+}
+
 function addCategory($name)
 {
     return "INSERT INTO categoria(nombre) VALUES ($name);";
@@ -62,5 +72,5 @@ function addProductToSale($idProducto, $idVenta, $cantidad)
 
 function getUserInfo($username)
 {
-    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloque FROM users WHERE cuenta = $username";
+    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos FROM users WHERE cuenta = $username";
 }

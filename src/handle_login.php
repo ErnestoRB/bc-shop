@@ -21,6 +21,7 @@ if ($connection->connect_errno) {
     exit(1);
 }
 $result = $connection->query(getUserInfo($user));
+// comprobar que fallidos < 3
 if ($result->num_rows < 1) {
     header('Location: 500.php'); // no se encontró al usuario
     exit(1);
@@ -28,7 +29,7 @@ if ($result->num_rows < 1) {
 $user = $result->fetch_assoc();
 $hash = $user["contraseña"];
 
-if (validatePasswod($password, $hash)) {
+if (validatePassword($password, $hash)) {
     $_SESSION["usuario"] = $user["cuenta"];
     $_SESSION["nombre"] = $user["nombre"];
     $_SESSION["apellidos"] = $user["apellidos"];
@@ -36,5 +37,6 @@ if (validatePasswod($password, $hash)) {
     header('Location: panel.php');
     exit();
 } else {
+    // consulta de incrementar fallos
     header('Location: login.php'); // no es contraseña valida
 }
