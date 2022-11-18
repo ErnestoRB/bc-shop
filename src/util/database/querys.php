@@ -35,6 +35,11 @@ function addCategory($name)
     return "INSERT INTO categoria(nombre) VALUES ($name);";
 }
 
+function getCategories()
+{
+    return "SELECT idCategoria, nombre FROM CATEGORIA";
+}
+
 function deleteCategory($id)
 {
     return "DELETE FROM CATEGORIA WHERE idCategoria = $id;";
@@ -53,6 +58,11 @@ function deleteCupon($codigo)
 function addProduct($nombre, $id_categoria, $descripcion, $existencia, $precio, $rutaImagen)
 {
     return "INSERT into productos (nombre, id_categoría,descripción,existencia, precio, imagen) VALUES ($nombre, $id_categoria, $descripcion, $existencia, $precio, $rutaImagen);";
+}
+
+function updateProduct($id, $nombre, $id_categoria, $descripcion, $existencia, $precio, $rutaImagen)
+{
+    return "UPDATE productos SET nombre=$nombre, id_categoria=$id_categoria, descripción=$descripcion, existencia=$existencia, precio=$precio, imagen=$rutaImagen WHERE idProducto = $id";
 }
 
 function deleteProduct($id)
