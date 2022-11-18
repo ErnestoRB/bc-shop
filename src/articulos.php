@@ -12,6 +12,7 @@
 
 <body>
     <?php include "layout/navbar.php" ?>
+    
     <main id="content">
     </main>
     <?php include "layout/footer.html" ?>
