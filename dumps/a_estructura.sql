@@ -101,7 +101,9 @@ CREATE TABLE `users`
   `correo` varchar
 (50) NOT NULL,
   `bloqueo` tinyint
-(1) NOT NULL DEFAULT 1
+(1) NOT NULL DEFAULT 0,
+  `fallidos` tinyint
+(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
