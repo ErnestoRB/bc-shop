@@ -15,14 +15,14 @@
           <a  style="color:aliceblue"class="nav-link" href="login.php">Login</a>
         </li>
         <li class="nav-item">
-          <a style="color:aliceblue"class="nav-link" href="registroarticulos.php">Registro de Articulos</a>
+          <a style="color:aliceblue"class="nav-link" href="registroArticulo.php">Registro de Articulos</a>
         </li>
         <li class="nav-item dropdown">
           <a style="color:aliceblue"class="nav-link dropdown-toggle" href="articulos.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Articulos
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Mens</a></li>
+            <li><a class="dropdown-item" href="articulos.php">Mens</a></li>
             <li><a class="dropdown-item" href="#">Women</a></li>
             <li><a class="dropdown-item" href="#">A3</a></li>
           </ul>
