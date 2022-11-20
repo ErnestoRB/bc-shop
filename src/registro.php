@@ -13,7 +13,21 @@
 <body>
     <?php include "layout/navbar.php" ?>
     <main class="content">
-    <h3>Create an acount</h3>
+      <!-- ELIMINAR DESPUES, SE CREÓ PARA LA MANIPULACION DE REGISTROS -->
+      <form action="handle_register.php" method="post"> 
+        <p>Nombre</p>
+        <input type="text" name="nombre" id="">
+        <p>Apellidos</p>
+        <input type="text" name="apellidos" id="">
+        <p>Usuario</p>
+        <input type="text" name="usuario" id="">
+        <p>Email</p>
+        <input type="email" name="email" id="">
+        <p>Contraseña</p>
+        <input type="password" name="pass" id="">
+        <input type="submit" value="Aceptar">
+      </form>
+    <!-- <h3>Create an acount</h3>
   <div>
     <form style="background:gray" class="form">
     <div class="col-md-6">
@@ -57,7 +71,7 @@
   </label>
   </div>
     </form>
-  </div>
+  </div> -->
     </main>
     
     <?php include "layout/footer.html"; ?>

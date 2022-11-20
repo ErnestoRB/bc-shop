@@ -103,6 +103,8 @@ CREATE TABLE `users`
   `bloqueo` tinyint
 (1) NOT NULL DEFAULT 0,
   `fallidos` tinyint
+(1) NOT NULL DEFAULT 0,
+  `passgenerado` tinyint
 (1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
