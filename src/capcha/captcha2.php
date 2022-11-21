@@ -1,10 +1,4 @@
-<?php 
-/**
- * Autor: Rodrigo Chambi Q.
- * Mail:  filvovmax@gmail.com
- * web:   www.gitmedio.com
- * Generador de clave, para CAPTCHA
- */
+<?php s
 //Importando la librería para incriptar
 require_once 'classphp/PasswordLib/PasswordLib.php';
 
