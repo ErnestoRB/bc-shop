@@ -1,5 +1,6 @@
-
 <?php
+require_once "util/session.php";
+
 function GenerarCaptcha($cantidad)
 {
     $captcha = null;
@@ -24,7 +25,6 @@ function GenerarCaptcha($cantidad)
     return $captcha;
 }
 if (!empty($_POST['capt'])) {
-
     $_SESSION["valor"] = rand(0, 50);
 }
 if (!empty($_SESSION["valor"])) {
@@ -34,7 +34,7 @@ if (!empty($_SESSION["valor"])) {
         setcookie('captcha', md5($captcha), time() + 60 * 3);
 
         if ($captcha != "") {
-            echo '{"retornar":"'.$captcha .'}';
+            echo '{"retornar":"' . $captcha . '"}';
         } else {
             echo '{"retornar":false}';
         }
