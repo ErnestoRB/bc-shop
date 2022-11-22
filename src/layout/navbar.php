@@ -27,7 +27,10 @@
             <li><a class="dropdown-item" href="#">A3</a></li>
           </ul>
         </li>
-
+        <?= $isLogged ? '
+        <li class="nav-item">
+        <a style="color:aliceblue" class="nav-link" href="logout.php">Salir</a>
+      </li>' : '' ?>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
