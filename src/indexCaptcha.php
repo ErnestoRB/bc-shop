@@ -6,7 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Captcha</title>
-
+    <style>
+        @font-face {
+            font-family: 'NeoPrint M319';
+            src: url('fonts/NeoPrintM319.otf');
+        }
+    </style>
 </head>
 
 <body>
