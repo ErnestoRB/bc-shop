@@ -52,11 +52,11 @@ if($blocked){
         $mail->isSMTP();
         $mail->Host = 'smtp.office365.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'bashcrashers_supp@outlook.com';
-        $mail->Password = 'BashCrashersSupport@#';
+        $mail->Username = 'no_reply_bc@outlook.com';
+        $mail->Password = 'ProyectoFinalSW';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
-        $mail->setFrom('bashcrashers_supp@outlook.com', 'Bash Crashers Support');
+        $mail->setFrom('no_reply_bc@outlook.com', 'Bash Crashers Support');
         $mail->addAddress($correo, $nombre);
         $mail->isHTML(true);
         $mail->Subject = 'Recuperacion de cuenta';
@@ -72,6 +72,7 @@ if($blocked){
     $id = $user["idusuario"];
     $hash = hashPassword($new_pass);
     $update_pass = $connection -> query(updateUserPassword($id, $hash));
+    $new_pass = $connection -> query(setGeneratedPassword($id));
     header('Location: unlock_account.php');
 }
 else{

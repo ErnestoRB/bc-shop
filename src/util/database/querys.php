@@ -10,6 +10,14 @@ function updateUserPassword($id, $newHash)
     return "UPDATE users SET contraseña = '$newHash' WHERE idusuario = '$id'";
 }
 
+function setGeneratedPassword($id){
+    return "UPDATE users SET passgenerado = 1 WHERE idusuario = '$id'";
+}
+
+function unsetGeneratedPassword($id){
+    return "UPDATE users SET passgenerado = 0 WHERE idusuario = '$id'";
+}
+
 function blockUserAccount($id)
 {
     return "UPDATE users SET bloqueo = 1 WHERE idusuario = '$id'";
@@ -17,7 +25,7 @@ function blockUserAccount($id)
 
 function releaseUserAccount($id)
 {
-    return "UPDATE users SET bloqueado=0 WHERE idusuario = $id";
+    return "UPDATE users SET bloqueo = 0 WHERE idusuario = '$id'";
 }
 
 function incrementFailed($id)
@@ -82,5 +90,5 @@ function addProductToSale($idProducto, $idVenta, $cantidad)
 
 function getUserInfo($username)
 {
-    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos FROM users WHERE cuenta = '$username'";
+    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos, passgenerado FROM users WHERE cuenta = '$username'";
 }

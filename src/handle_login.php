@@ -32,9 +32,22 @@ if ($result->num_rows < 1) {
 $user = $result->fetch_assoc();
 $hash = $user["contraseña"];
 $id = $user["idusuario"];
-$locked = $user["bloqueo"];
+$generated = $user["passgenerado"];
+$blocked = false;
+$cuenta = $user["cuenta"];
 
-if($user["fallidos"] >= 2){
+if($generated == 1){
+    if(validatePassword($password, $hash)){
+        header('Location: change_pass.php?user='.$cuenta); 
+        exit();
+    }
+    else{
+        header('Location: login.php'); //la contraseña insertada no es correcta
+        exit();
+    }
+}
+
+if($user["fallidos"] >= 3){
     $blocked = $connection -> query(blockUserAccount($id));
 }
 
@@ -47,7 +60,7 @@ if (validatePassword($password, $hash)) {
     header('Location: panel.php');
     exit();
 } else {
-    if($locked == 1){
+    if($blocked){
         header('Location: unlock_account.php');
     }
     else{
