@@ -6,7 +6,7 @@ $(document).ready(function () {
     //si la clave intrdocida es la
     //correcta, y nos nuestra en un alert
     $.ajax({
-      url: "verifica.php",
+      url: "verificaAjax.php",
       type: "post",
       dataType: "text",
       data: { valor: $("#valorCapt").val() },
