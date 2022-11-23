@@ -3,7 +3,7 @@ include_once "util/session.php";
 include_once "util/database/connection.php";
 include_once "util/database/querys.php";
 if (!$isLogged) {
-    header('Location: /');
+    header('Location: login.php');
     exit();
 }
 $isEdit = isset($_GET["edit"]);

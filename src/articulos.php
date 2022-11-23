@@ -45,13 +45,11 @@ try {
     <main id="content">
         <div class="accordion" id="accordionExample">
             <div class="container">
-                <div class="row">
-                    <a href="registroArticulo.php" class="btn btn-primary">Registrar articulo</a>
-                </div>
+
                 <div class="row">
                     <?php
                     if (sizeof($articulos) == 0) {
-                        echo '<div class="col text-center bg-danger text-white p-4 m-4">No hay articulos, aún. Registra algunos <a class="btn btn-info" href="registroArticulo.php">aquí</a></div>';
+                        echo '<div class="col text-center bg-danger text-white p-4 m-4">No hay articulos, aún.</div>';
                     }
 
                     foreach ($articulos as $i => $articulo) {
@@ -63,10 +61,7 @@ try {
                                     <p class="card-text">' . $articulo['descripcion'] . '</p>
                                     <p>Existencias: ' . $articulo['existencia'] . '</p>
                                     <p>$ ' . $articulo['precio'] . '</p>
-                                    <a href="/registroArticulo.php?edit=' . $articulo['idProducto']  . '" class="btn btn-primary">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    <button type="button" data-eliminar-producto="' . $articulo['idProducto'] . '" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                                    <a href="#" class="btn btn-primary"><i class="bi bi-cart-plus-fill"></i></a>
                                 </div>
                             </div>
                     ';

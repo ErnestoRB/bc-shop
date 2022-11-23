@@ -8,17 +8,20 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a style="color:aliceblue" class="nav-link active" aria-current="page" href="registro.php">Registro</a>
-        </li>
-        <li class="nav-item">
-          <a style="color:aliceblue" class="nav-link" href="login.php">Login</a>
-        </li>
+
+        <?php if (!$isLogged) {
+          echo '
+          <li class="nav-item">
+            <a style="color:aliceblue" class="nav-link" href="login.php">Login</a>
+          </li>
+          <li class="nav-item">
+            <a style="color:aliceblue" class="nav-link active" aria-current="page" href="registro.php">Registro</a>
+          </li>
+          ';
+        }
+        ?>
         <li class="nav-item">
           <a style="color:aliceblue" class="nav-link" href="#">Acerca de Nosotros</a>
-        </li>
-        <li class="nav-item">
-          <a style="color:aliceblue" class="nav-link" href="registroArticulo.php">Registro de Articulos</a>
         </li>
         <li class="nav-item dropdown">
           <a style="color:aliceblue" class="nav-link dropdown-toggle" href="articulos.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -33,7 +36,7 @@
         <?= $isLogged ? '
         <li class="nav-item">
         <a style="color:aliceblue" class="nav-link" href="logout.php">Salir</a>
-      </li>' : '' ?>
+        </li>' : '' ?>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

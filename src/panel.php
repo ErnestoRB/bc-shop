@@ -1,6 +1,6 @@
 <?php include_once "util/session.php";
 if (!$isLogged) {
-    header('Location: /');
+    header('Location: index.php');
     exit();
 }
 ?>
@@ -26,6 +26,10 @@ if (!$isLogged) {
     <main id="content">
         <h1>Hola <?= $_SESSION["user"] ?></h1>
         <h2>Este es el panel de control</h2>
+        <div class="btn-group">
+            <a href="/registroArticulo.php" class="btn btn-primary">Registrar articulo</a>
+            <a href="/articulosPanel.php" class="btn btn-primary">Articulos</a>
+        </div>
     </main>
     <?php include "layout/footer.html" ?>
 </body>
