@@ -1,5 +1,5 @@
 :root {
-    --gray: rgb(212, 212, 212);
+  --gray: rgb(212, 212, 212);
 }
 
 body {
@@ -14,14 +14,14 @@ main#content {
 }
 
 footer {
-    padding: 20px;
-    background-color: white;
-    text-align: center;
+  padding: 20px;
+  background-color: white;
+  text-align: center;
 }
-a#nav-link active{
+a#nav-link active {
   color: white;
 }
-.form{
+.form {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
@@ -29,17 +29,24 @@ a#nav-link active{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
-.form input{
+.form input {
   width: 90%;
   height: 30px;
   margin: 0.5rem;
-
 }
-.form button{
+.form button {
   padding: 0.5em 1em;
   border: none;
-  background: rgb(100, 200,255);
+  background: rgb(100, 200, 255);
   cursor: pointer;
+}
+
+.img-product {
+  background-color: black;
+  color: white;
+  text-align: center;
+  width: 256px;
+  height: 256px;
+  object-fit: contain;
 }

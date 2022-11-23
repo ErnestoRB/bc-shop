@@ -1,4 +1,4 @@
-<?php include "util/session.php" ?>
+<?php include_once "util/session.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include "util/bootstrap.html" ?>
+    <?php include_once "util/bootstrap.html" ?>
 
     <title>Inicio | Pumped Up KickShop</title>
 </head>
@@ -110,6 +110,7 @@
                             <div>
                                 <label for="" class="fw-bold">$19.99</label>
                             </div>
+                            <a href="#" class="btn btn-primary"><i class="bi bi-cart-plus-fill"></i></a>
                         </div>
                     </div>
                 </div>

@@ -34,8 +34,8 @@ CREATE TABLE `categoria`
 (
   `idCategoria` int
 (11) NOT NULL,
-  `nombre` int
-(11) NOT NULL
+  `nombre` varchar
+(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -56,6 +56,11 @@ CREATE TABLE `cupones`
 (11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+ALTER TABLE `cupones`
+ADD PRIMARY KEY
+(`codigo`);
+
+
 -- --------------------------------------------------------
 
 --
@@ -66,11 +71,11 @@ CREATE TABLE `productos`
 (
   `idProducto` int
 (10) NOT NULL,
-  `nombre` int
-(50) NOT NULL,
-  `id_categoría` int
+  `nombre` varchar
+(100) NOT NULL,
+  `idCategoria` int
 (5) NOT NULL,
-  `descripción` varchar
+  `descripcion` varchar
 (100) NOT NULL,
   `existencia` int
 (5) NOT NULL,
@@ -90,9 +95,9 @@ CREATE TABLE `users`
 (
   `idusuario` int
 (11) NOT NULL,
-  `nombre` char
+  `nombre` varchar
 (50) NOT NULL,
-  `apellidos` char
+  `apellidos` varchar
 (50) NOT NULL,
   `cuenta` char
 (20) NOT NULL,
@@ -156,8 +161,8 @@ ADD UNIQUE KEY `idProducto_2`
 (`idProducto`),
 ADD KEY `idProducto`
 (`idProducto`),
-ADD KEY `id_categoría`
-(`id_categoría`);
+ADD KEY `idCategoria`
+(`idCategoria`);
 
 --
 -- Indexes for table `users`
@@ -166,10 +171,6 @@ ALTER TABLE `users`
 ADD PRIMARY KEY
 (`idusuario`),
 ADD UNIQUE KEY `Email`
-(`correo`),
-ADD UNIQUE KEY `Email_2`
-(`correo`),
-ADD UNIQUE KEY `Email_3`
 (`correo`),
 ADD UNIQUE KEY `id`
 (`idusuario`);
@@ -194,9 +195,16 @@ ADD KEY `idVenta`
 ADD KEY `idProducto`
 (`idProducto`);
 
+ALTER TABLE `venta_producto`
+ADD PRIMARY KEY
+(`idProducto`, `idVenta`);
+
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+ALTER TABLE `productos` CHANGE `idProducto` `idProducto` INT NOT NULL AUTO_INCREMENT;
+
 
 --
 -- AUTO_INCREMENT for table `categoria`
@@ -226,9 +234,14 @@ ALTER TABLE `venta`
 --
 -- Constraints for table `productos`
 --
+
+ALTER TABLE `productos`
+ADD PRIMARY KEY
+(`idProducto`);
+
 ALTER TABLE `productos`
 ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY
-(`id_categoría`) REFERENCES `categoria`
+(`idCategoria`) REFERENCES `categoria`
 (`idCategoria`) ON
 UPDATE CASCADE;
 

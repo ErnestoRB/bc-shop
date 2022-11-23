@@ -1,5 +1,23 @@
 <?php
-include "util/session.php";
+include_once "util/session.php";
+include_once "util/database/connection.php";
+include_once "util/database/querys.php";
+$articulos = array();
+if (!isset($isError)) {
+    $isError = false;
+}
+if (!isset($message)) {
+    $message = '';
+};
+try {
+    //code...
+    $connection = getConnection();
+    $result = $connection->query(getProducts());
+    $articulos = $result->fetch_all(MYSQLI_ASSOC);
+} catch (Exception $e) {
+    $isError = true;
+    $message = $e->getMessage();
+}
 
 ?>
 <!DOCTYPE html>
@@ -9,7 +27,7 @@ include "util/session.php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include "util/bootstrap.html" ?>
+    <?php include_once "util/bootstrap.html" ?>
     <script src="js/alerta_eliminar.js"></script>
     <title>Panel de artículos</title>
     <title>Tienda</title>
@@ -31,30 +49,31 @@ include "util/session.php";
                     <a href="registroArticulo.php" class="btn btn-primary">Registrar articulo</a>
                 </div>
                 <div class="row">
-                    <div class="card col-3" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Articulo</h5>
-                            <p class="card-text">Descripcion</p>
-                            <p>Existencias</p>
-                            <p>$ precio</p>
-                            <a href="#" class="btn btn-primary"><i class="bi bi-cart-plus-fill"></i></a>
-                        </div>
-                    </div>
+                    <?php
+                    if (sizeof($articulos) == 0) {
+                        echo '<div class="col text-center bg-danger text-white p-4 m-4">No hay articulos, aún. Registra algunos <a class="btn btn-info" href="registroArticulo.php">aquí</a></div>';
+                    }
 
-                    <div class="card col-3" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Articulo</h5>
-                            <p class="card-text">Descripcion</p>
-                            <p>Existencias</p>
-                            <p>$ precio</p>
-                            <a href="#" class="btn btn-primary">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                            <button type="button" data-eliminar-producto="id" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
-                        </div>
-                    </div>
+                    foreach ($articulos as $i => $articulo) {
+                        echo '
+                            <div class="card col-3" style="width: 18rem;">
+                                <img height="256" height "256" src="/static/' . $articulo['imagen'] . '" class="img-product card-img-top" alt="imagen de ' . $articulo['nombre'] . '">
+                                <div class="card-body">
+                                    <h5 class="card-title">' . $articulo['nombre'] . '</h5>
+                                    <p class="card-text">' . $articulo['descripcion'] . '</p>
+                                    <p>Existencias: ' . $articulo['existencia'] . '</p>
+                                    <p>$ ' . $articulo['precio'] . '</p>
+                                    <a href="/registroArticulo.php?edit=' . $articulo['idProducto']  . '" class="btn btn-primary">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <button type="button" data-eliminar-producto="' . $articulo['idProducto'] . '" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                                </div>
+                            </div>
+                    ';
+                    }
+                    ?>
+
+
                 </div>
             </div>
         </div>
