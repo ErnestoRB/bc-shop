@@ -13,7 +13,9 @@
         </li>
         <li class="nav-item">
           <a style="color:aliceblue" class="nav-link" href="login.php">Login</a>
-          <a  style="color:aliceblue"class="nav-link" href="#">Acerca de Nosotros</a>
+        </li>
+        <li class="nav-item">
+          <a style="color:aliceblue" class="nav-link" href="#">Acerca de Nosotros</a>
         </li>
         <li class="nav-item">
           <a style="color:aliceblue" class="nav-link" href="registroArticulo.php">Registro de Articulos</a>
