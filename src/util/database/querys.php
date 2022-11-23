@@ -10,11 +10,13 @@ function updateUserPassword($id, $newHash)
     return "UPDATE users SET contraseña = '$newHash' WHERE idusuario = '$id'";
 }
 
-function setGeneratedPassword($id){
+function setGeneratedPassword($id)
+{
     return "UPDATE users SET passgenerado = 1 WHERE idusuario = '$id'";
 }
 
-function unsetGeneratedPassword($id){
+function unsetGeneratedPassword($id)
+{
     return "UPDATE users SET passgenerado = 0 WHERE idusuario = '$id'";
 }
 
@@ -100,7 +102,7 @@ function getUserInfo($username)
 
 function getUserInfoByEmail($email)
 {
-    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos FROM users WHERE correo = '$email'";
+    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos, passgenerado FROM users WHERE correo = '$email'";
 }
 
 function getProduct($id)

@@ -1,5 +1,6 @@
 <?php
 require_once "util/session.php";
+require_once "util/captcha.php";
 require_once "util/validation.php";
 require_once "util/database/connection.php";
 require_once "util/database/querys.php";
@@ -33,8 +34,12 @@ try {
             $pass = $_POST["pass"];
             $confirmPass = $_POST["pass2"];
             $passMatch = $pass == $confirmPass;
+            $isCaptchaValid = validarCaptcha("code-captcha");
             if (!$passMatch) {
                 throw new Exception("Las contraseñas no son iguales");
+            }
+            if (!$isCaptchaValid) {
+                throw new Exception("El captcha no es correcto");
             }
             if (!$isError) {
                 $hash = hashPassword($pass);

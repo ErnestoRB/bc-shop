@@ -1,55 +1,53 @@
 <?php
-    require "util/session.php";
-    require "util/database/connection.php";
-    require "util/database/querys.php";
-    require "util/hash/password.php";
-    
-    if ($isLogged) {
-        header('Location: panel.php');
-        exit(1);
-    }
-    
-    if ($_SERVER["REQUEST_METHOD"] !== 'POST') {
-        header('Location: index.php');
-        exit(1);
-    }
+require "util/session.php";
+require "util/database/connection.php";
+require "util/database/querys.php";
+require "util/hash/password.php";
 
-    $user = $_POST["user"];
-    $password = $_POST["new_pass"];
+if ($isLogged) {
+    header('Location: panel.php');
+    exit(1);
+}
 
-    $connection = getConnection();
-    if ($connection->connect_errno) {
-        header('Location: 500.php');
-        exit(1);
-    }
+if ($_SERVER["REQUEST_METHOD"] !== 'POST') {
+    header('Location: index.php');
+    exit(1);
+}
 
-    $result = $connection->query(getUserInfo($user));
+$user = $_POST["user"];
+$password = $_POST["new_pass"];
 
-    if ($result->num_rows < 1) {
-        header('Location: 500.php');
-        exit(1);
-    }
+$connection = getConnection();
+if ($connection->connect_errno) {
+    header('Location: 500.php');
+    exit(1);
+}
 
-    $user = $result->fetch_assoc();
-    $cuenta = $user["cuenta"];
-    $generated = $user["passgenerado"];
-    $id = $user["idusuario"];
+$result = $connection->query(getUserInfo($user));
 
-    if($generated != 1){
-        header('Location: 500.php');
-        exit(1);
-    }
+if ($result->num_rows < 1) {
+    header('Location: 500.php');
+    exit(1);
+}
 
-    $hash = hashPassword($password);
+$user = $result->fetch_assoc();
+$cuenta = $user["cuenta"];
+$generated = $user["passgenerado"];
+$id = $user["idusuario"];
 
-    $update_pass = $connection -> query(updateUserPassword($id, $hash));
-    $clear_tries = $connection -> query(clearFailed($id));
-    $unlock = $connection -> query(releaseUserAccount($id));
-    $unset_generated = $connection -> query(unsetGeneratedPassword($id));
+if ($generated != 1) {
+    header('Location: 500.php');
+    exit(1);
+}
 
-    if($unlock){
-        header('Location: login.php'); 
-        exit();
-    }
+$hash = hashPassword($password);
 
-?>
+$update_pass = $connection->query(updateUserPassword($id, $hash));
+$clear_tries = $connection->query(clearFailed($id));
+$unlock = $connection->query(releaseUserAccount($id));
+$unset_generated = $connection->query(unsetGeneratedPassword($id));
+
+if ($unlock) {
+    header('Location: login.php');
+    exit();
+}

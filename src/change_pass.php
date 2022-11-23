@@ -1,11 +1,12 @@
-<?php 
-    include "util/session.php";
-    if(isset($_GET["user"])){
-        $user = $_GET["user"];
-    }
+<?php
+include "util/session.php";
+if (isset($_GET["user"])) {
+    $user = $_GET["user"];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,22 +17,31 @@
     <?php include "util/bootstrap.html" ?>
     <title>Document</title>
 </head>
+
 <body>
     <?php include "layout/navbar.php" ?>
-    <form action="set_new_pass.php" method="post" id="sendPass">
-        <p>Inserta nueva contraseña</p>
-        <input type="password" name="new_pass" id="pass">
-        <p>Vuelve a insertar nueva contraseña</p>
-        <input type="password" name="new_pass_comp">
-        <?php
-            if(isset($_GET["user"])){
-                echo '<input type="hidden" name="user" value="'.$user.'">';
-            }
-        ?>
-        <input type="submit" value="Cambiar contraseña">  
-    </form>
-    <script type="text/javascript"> //validacion de doble contraseña
-        $(document).ready(function(){
+    <main id="content">
+        <div class="container">
+
+            <form action="set_new_pass.php" method="post" id="sendPass">
+                <h1>Cambiar contraseña generada</h1>
+                <label for="new_pass">Inserta nueva contraseña</label>
+                <input type="password" class="form-control" name="new_pass" id="pass">
+                <label for="new_pass_comp">Vuelve a insertar nueva contraseña</label>
+                <input type="password" class="form-control" name="new_pass_comp">
+                <?php
+                if (isset($_GET["user"])) {
+                    echo '<input type="hidden" name="user" value="' . $user . '">';
+                }
+                ?>
+                <input type="submit" class="btn btn-primary" value="Cambiar contraseña">
+            </form>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        //validacion de doble contraseña
+        $(document).ready(function() {
             $('#sendPass').validate({
                 rules: {
                     new_pass: 'required',
@@ -51,4 +61,5 @@
     </script>
     <?php include "layout/footer.html" ?>
 </body>
+
 </html>

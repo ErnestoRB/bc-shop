@@ -32,9 +32,7 @@ try {
             throw new Exception("Error del servidor");
         }
         $result = $connection->query(getUserInfoByEmail($email));
-        if($user["fallidos"] >= 3){
-            $blocked = $connection -> query(blockUserAccount($id));
-        }
+
         if ($result->num_rows < 1) {
             throw new Exception("Credenciales inválidas");
         }
@@ -44,13 +42,14 @@ try {
         $generated = $user["passgenerado"];
         $blocked = false;
         $cuenta = $user["cuenta"];
-
-        if($generated == 1){
-            if(validatePassword($password, $hash)){
-                header('Location: change_pass.php?user='.$cuenta); 
+        if ($user["fallidos"] >= 3) {
+            $blocked = $connection->query(blockUserAccount($id));
+        }
+        if ($generated == 1) {
+            if (validatePassword($password, $hash)) {
+                header('Location: change_pass.php?user=' . $cuenta);
                 exit();
-            }
-            else{
+            } else {
                 header('Location: login.php'); //la contraseña insertada no es correcta
                 exit();
             }
@@ -60,14 +59,13 @@ try {
             $_SESSION["nombre"] = $user["nombre"];
             $_SESSION["apellidos"] = $user["apellidos"];
             $_SESSION["email"] = $user["correo"];
-            $cleared = $connection -> query(clearFailed($id));
+            $cleared = $connection->query(clearFailed($id));
             header('Location: panel.php');
         } else {
-            if($blocked){
+            if ($blocked) {
                 header('Location: unlock_account.php');
-            }
-            else{
-                $attempt = $connection -> query(incrementFailed($id));
+            } else {
+                $attempt = $connection->query(incrementFailed($id));
                 throw new Exception("Credenciales inválidas");
             }
         }

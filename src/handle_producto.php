@@ -21,7 +21,6 @@ try {
         $descripcion = $_POST["descripcion"];
         $cantidad = $_POST["cantidad"];
         $precio = $_POST["precio"];
-        var_dump($_FILES);
         $campos = array("nombre", "categoria", "descripcion", "cantidad", "precio");
         validatePostArray($campos);
         $archivoVacio = !validateFile("archivo");
