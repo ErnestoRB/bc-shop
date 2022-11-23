@@ -12,7 +12,16 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       });
       if (value) {
-        location.replace("/deleteArticulo?id=" + id);
+        fetch("/api/delete_producto.php?id=" + id, { method: "delete" }).then(
+          (res) => {
+            if (res.ok) {
+              window.swal(
+                "Registro eliminado, recarga la página para ver los cambios",
+                "success"
+              );
+            }
+          }
+        );
       }
     });
   });

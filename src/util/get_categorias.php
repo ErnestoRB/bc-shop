@@ -1,6 +1,6 @@
 <?php
-include "util/database/connection.php";
-include "util/database/querys.php";
+include_once "util/database/connection.php";
+include_once "util/database/querys.php";
 
 $categoriasArray = array();
 $connection = getConnection();

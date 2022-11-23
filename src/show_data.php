@@ -1,5 +1,5 @@
 <?php
-require "util/database/connection.php";
+require_once "util/database/connection.php";
 
 $conexion = getConnection();
 if ($conexion->connect_errno) {
