@@ -29,6 +29,7 @@ if ($isLogged) {
     <h3>Create an acount</h3>
     <div>
 
+
       <form action="<?= $_SERVER["PHP_SELF"] ?>" style="background:gray" class="form" method="post">
         <div style="align-items: left;">
           <h6>Already have an account?</h6>

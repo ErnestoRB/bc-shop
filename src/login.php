@@ -22,7 +22,6 @@ include "handle_login.php";
     </div>
     <?php include "layout/navbar.php" ?>
     <main id="content">
-
         <div class="d-flex align-items-center px-5 py-4">
             <h2>Login</h2>
         </div>
@@ -67,7 +66,6 @@ include "handle_login.php";
                 </div>
             </div>
         </form>
-
     </main>
     <?php include "layout/footer.html" ?>
 </body>

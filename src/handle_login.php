@@ -32,20 +32,44 @@ try {
             throw new Exception("Error del servidor");
         }
         $result = $connection->query(getUserInfoByEmail($email));
-        // comprobar que fallidos < 3
+        if($user["fallidos"] >= 3){
+            $blocked = $connection -> query(blockUserAccount($id));
+        }
         if ($result->num_rows < 1) {
             throw new Exception("Credenciales inválidas");
         }
         $user = $result->fetch_assoc();
         $hash = $user["contraseña"];
+        $id = $user["idusuario"];
+        $generated = $user["passgenerado"];
+        $blocked = false;
+        $cuenta = $user["cuenta"];
+
+        if($generated == 1){
+            if(validatePassword($password, $hash)){
+                header('Location: change_pass.php?user='.$cuenta); 
+                exit();
+            }
+            else{
+                header('Location: login.php'); //la contraseña insertada no es correcta
+                exit();
+            }
+        }
         if (validatePassword($password, $hash)) {
             $_SESSION["user"] = $user["cuenta"];
             $_SESSION["nombre"] = $user["nombre"];
             $_SESSION["apellidos"] = $user["apellidos"];
             $_SESSION["email"] = $user["correo"];
+            $cleared = $connection -> query(clearFailed($id));
             header('Location: panel.php');
         } else {
-            // consulta de incrementar fallos
+            if($blocked){
+                header('Location: unlock_account.php');
+            }
+            else{
+                $attempt = $connection -> query(incrementFailed($id));
+                throw new Exception("Credenciales inválidas");
+            }
         }
     }
 } catch (Exception $e) {
