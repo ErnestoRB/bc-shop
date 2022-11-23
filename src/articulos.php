@@ -12,6 +12,7 @@ include "util/session.php";
     <?php include "util/bootstrap.html" ?>
     <script src="js/alerta_eliminar.js"></script>
     <title>Panel de artículos</title>
+    <title>Tienda</title>
 </head>
 
 <body>
