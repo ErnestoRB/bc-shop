@@ -53,4 +53,10 @@ try {
 } catch (Exception $error) {
     $isError = true;
     $message = $error->getMessage();
+    if (
+        preg_match("/Duplicate/", $message)
+
+    ) {
+        $message = "Ese correo ya está registrado!";
+    }
 }

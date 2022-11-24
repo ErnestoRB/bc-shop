@@ -22,7 +22,7 @@ if ($isLogged) {
 </head>
 
 <body>
-  
+
   <?php include "layout/navbar.php" ?>
   <main id="content">
     <h3>Create an acount</h3>
@@ -33,27 +33,30 @@ if ($isLogged) {
           <a class="text-decoration-none text-info" href="login.php">Already have account? Log in instead!</a>
         </div>
         <?php include_once "util/handle_error.php" ?>
+        <div class="col-md-6">
+          <label for="usuario" class="form-label">Username</label>
+          <input type="text" class="form-control" id="nombre" name="usuario" required>
+        </div>
+        <div class="col-md-6">
+          <label for="nombre" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+        <div class="col-md-6">
+          <label for="apellidos" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+        </div>
+        <div class="col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
 
         <div class="col-md-6">
-          <label for="inputName" class="form-label">First Name</label>
-          <input type="text" class="form-control" id="nombre" name="nombre">
+          <label for="pass" class="form-label">Password</label>
+          <input type="password" class="form-control" id="pass" name="pass" required>
         </div>
         <div class="col-md-6">
-          <label for="inputLastName" class="form-label">Last Name</label>
-          <input type="text" class="form-control" id="apellidos" name="apellidos">
-        </div>
-        <div class="col-md-6">
-          <label for="inputEmail4" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email">
-        </div>
-
-        <div class="col-md-6">
-          <label for="inputPassword4" class="form-label">Password</label>
-          <input type="password" class="form-control" id="pass" name="pass">
-        </div>
-        <div class="col-md-6">
-          <label for="inputPassword4" class="form-label">Confirm Password</label>
-          <input type="password" class="form-control" id="pass2" name="pass2">
+          <label for="pass2" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="pass2" name="pass2" required>
         </div>
         <div class="col-md-6">
           <div class="captcha"><canvas id="captcha" height="62"></canvas></div>
@@ -63,16 +66,11 @@ if ($isLogged) {
           <label for="code-captcha" class="form-label">Código captcha</label>
           <input type="text" class="form-control" name="code-captcha" id="valorCapt" required>
         </div>
-        <div class="col-md-6">
-          <label for="fecha" class="form-label">Birthdate</label>
-          <input type="date" class="form-control" id="fecha">
-        </div>
-        
         <button type="submit">Enviar</button>
       </form>
     </div>
   </main>
-  
+
 
   <?php include "layout/footer.html"; ?>
 </body>

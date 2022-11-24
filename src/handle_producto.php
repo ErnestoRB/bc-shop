@@ -29,10 +29,10 @@ try {
         }
         if (!$archivoVacio) {
             $file = $_FILES["archivo"];
-            if ($file["type"] !== 'image/png') {
-                throw new Exception("No se aceptan imagenes que no sean PNG");
+            if (!preg_match("/image/", $file["type"])) {
+                throw new Exception("No se aceptan archivos que no sean imagenes");
             }
-            $filename = md5($nombre . date('c')) . '.png';
+            $filename = md5($nombre . date('c'));
             $stored = move_uploaded_file($file["tmp_name"], __DIR__ . '/static/' . $filename);
             if (!$stored) {
                 throw new Exception("No se pudo guardar la imagen");

@@ -16,7 +16,7 @@ include "handle_login.php";
 </head>
 
 <body>
-   
+
     <?php include "layout/navbar.php" ?>
     <main id="content">
         <div class="d-flex align-items-center px-5 py-4">
@@ -30,13 +30,26 @@ include "handle_login.php";
                     <div class="justify-content-center d-flex flex-wrap">
                         <div class="mb-3 col-xs-12 col-sm-10 col-md-6">
                             <label for="inputEmail" class="form-label fw-bold">Email</label>
-                            <input type="email" class="form-control" name="email" id="inputEmail" value="<?= !empty($_COOKIE["email"]) ? $_COOKIE["email"] : '' ?>">
+                            <input type="email" class="form-control" name="email" id="inputEmail" required value="<?= !empty($_COOKIE["email"]) ? $_COOKIE["email"] : '' ?>">
                         </div>
                     </div>
                     <div class="justify-content-center d-flex flex-wrap">
                         <div class="mb-3 col-xs-12 col-sm-10 col-md-6 ">
                             <label for="inputPassword" class="form-label fw-bold">Password</label>
-                            <input type="password" class="form-control" name="pass" id="inputPassword" value="<?= !empty($_COOKIE["pass"]) ? $_COOKIE["pass"] : '' ?>">
+                            <input type="password" class="form-control" name="pass" id="inputPassword" required value="<?= !empty($_COOKIE["pass"]) ? $_COOKIE["pass"] : '' ?>">
+                        </div>
+                    </div>
+
+                    <div class="justify-content-center d-flex flex-wrap">
+                        <div class="mb-3 col-xs-12 col-sm-10 col-md-6 justify-content-center d-flex flex-wrap">
+                            <div class="captcha"><canvas id="captcha" height="62" width="150"></canvas></div>
+                            <button id="refreshCaptcha" class="btn btn-primary" type="button"><i class="bi bi-arrow-clockwise"></i></button>
+                        </div>
+                    </div>
+                    <div class="justify-content-center d-flex flex-wrap">
+                        <div class="mb-3 col-xs-12 col-sm-10 col-md-6">
+                            <label for="code-captcha" class="form-label">Código captcha</label>
+                            <input type="text" class="form-control" name="code-captcha" id="valorCapt" required>
                         </div>
                     </div>
                     <div class="justify-content-center d-flex flex-wrap">
@@ -47,16 +60,6 @@ include "handle_login.php";
                             </label>
                         </div>
                     </div>
-                    <div class="justify-content-center d-flex flex-wrap">
-                        <div class="captcha"><canvas id="captcha" height="62" width="150"></canvas></div>
-                        <button id="refreshCaptcha" class="btn btn-primary" type="button"><i class="bi bi-arrow-clockwise"></i></button>
-                    </div>
-                    <div class="justify-content-center d-flex flex-wrap">
-
-                        <label for="code-captcha" class="form-label">Código captcha</label>
-                        <input type="text" class="form-control" name="code-captcha" id="valorCapt" required>
-                    </div>
-
                     <div class="justify-content-center d-flex">
                         <a class="text-decoration-none text-info" href="">Forgot your password?</a>
                     </div>

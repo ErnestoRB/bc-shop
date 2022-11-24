@@ -2,21 +2,26 @@ window.carrito = (function () {
   let cart = []; // { id, cantidad }
 
   window.addEventListener("DOMContentLoaded", () => {
+    const storedCart = window.localStorage.getItem("cart");
+    if (storedCart) {
+      cart = JSON.parse(storedCart);
+    }
+
+    const cartNumber = document.getElementById("cartNumber");
     const buttons = document.querySelectorAll("[data-cart-id]");
+    if (!!cartNumber) {
+      cartNumber.textContent = cart.length;
+    }
 
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
         const productId = button.dataset.cartId;
         cart.push({ id: productId, cantidad: 1 });
-        console.log(cart);
+        if (!!cartNumber) {
+          cartNumber.textContent = cart.length;
+        }
       });
     });
-
-    const storedCart = window.localStorage.getItem("cart");
-    if (storedCart) {
-      cart = JSON.parse(storedCart);
-    } else {
-    }
   });
 
   window.addEventListener("beforeunload", () => {
