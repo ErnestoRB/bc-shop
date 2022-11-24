@@ -1,8 +1,10 @@
 <?php
 require_once "util/session.php";
+require_once "util/validation.php";
 require_once "util/database/connection.php";
 require_once "util/database/querys.php";
 require_once "util/hash/password.php";
+require_once "util/captcha.php";
 
 if ($isLogged) {
     header('Location: panel.php');
@@ -17,6 +19,11 @@ if (!isset($message)) {
 };
 try {
     if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+        validatePostArray(array("email", "pass"));
+        $isCaptchaValid = validarCaptcha("code-captcha");
+        if (!$isCaptchaValid) {
+            throw new Exception("El captcha no es correcto");
+        }
         $email = $_POST["email"];
         $password = $_POST["pass"];
         $recordar = empty($_POST["recordar"]) ? false : $_POST["recordar"];
@@ -42,6 +49,7 @@ try {
         $generated = $user["passgenerado"];
         $blocked = false;
         $cuenta = $user["cuenta"];
+
         if ($user["fallidos"] >= 3) {
             $blocked = $connection->query(blockUserAccount($id));
         }

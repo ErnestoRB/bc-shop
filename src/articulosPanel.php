@@ -29,7 +29,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once "util/bootstrap.html" ?>
     <script src="js/alerta_eliminar.js"></script>
-    <title>Panel de artículos</title>
+    <title>Panel de artículos (administración)</title>
     <title>Tienda</title>
 </head>
 
@@ -45,6 +45,7 @@ try {
     <main id="content">
         <div class="accordion" id="accordionExample">
             <div class="container">
+                <h1>Panel de administración de articulos</h1>
                 <div class="row">
                     <a href="registroArticulo.php" class="btn btn-primary">Registrar articulo</a>
                 </div>

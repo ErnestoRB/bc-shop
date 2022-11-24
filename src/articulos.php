@@ -40,7 +40,7 @@ try {
     <main id="content">
         <div class="accordion" id="accordionExample">
             <div class="container">
-
+                <h1>Artículos</h1>
                 <div class="row">
                     <?php
                     if (sizeof($articulos) == 0) {

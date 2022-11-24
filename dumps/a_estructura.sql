@@ -46,8 +46,8 @@ CREATE TABLE `categoria`
 
 CREATE TABLE `cupones`
 (
-  `codigo` int
-(15) NOT NULL,
+  `codigo` varchar
+(50) NOT NULL,
   `porcentaje` int
 (11) NOT NULL,
   `minim` int
@@ -270,6 +270,19 @@ ADD CONSTRAINT `venta_producto_ibfk_2` FOREIGN KEY
 DELETE CASCADE;
 COMMIT;
 
+INSERT INTO `categoria` (`nombre`)
+VALUES
+  ('Hombre'),
+  ('Mujer'),
+  ('Infantil');
+
+INSERT INTO `cupones` (`codigo`,
+`porcentaje`,
+`minim`,
+`maximo`)
+VALUES
+('LLEGAMOS10',10,1000,NULL),
+('QUINCEOFF',15,10000,NULL);
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

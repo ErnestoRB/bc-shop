@@ -10,12 +10,7 @@ if ($isLogged) {
 <html lang="en">
 
 <head>
-  <style>
-    @font-face {
-      font-family: 'NeoPrint M319';
-      src: url('/fonts/NeoPrintM319.otf');
-    }
-  </style>
+  <link rel="stylesheet" href="/css/captcha.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,7 +56,7 @@ if ($isLogged) {
           <input type="password" class="form-control" id="pass2" name="pass2">
         </div>
         <div class="col-md-6">
-          <div class="captcha"><canvas id="capatcha" height="62"></canvas></div>
+          <div class="captcha"><canvas id="captcha" height="62"></canvas></div>
           <button id="refreshCaptcha" class="btn btn-primary" type="button"><i class="bi bi-arrow-clockwise"></i></button>
         </div>
         <div class="col-md-6">
