@@ -34,12 +34,7 @@ try {
 </head>
 
 <body>
-    <div style="background:#373737;" class="n1">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button style="background:#373737" class="btn btn-primary me-md-2" type="button"><i class="bi bi-cart-fill"></i></button>
-            <button style="background:#373737" class="btn btn-primary" type="button"><i class="bi bi-person"></i></button>
-        </div>
-    </div>
+    
     <?php include "layout/navbar.php" ?>
 
     <main id="content">
