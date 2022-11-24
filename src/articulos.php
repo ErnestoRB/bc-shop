@@ -50,7 +50,7 @@ try {
                     foreach ($articulos as $i => $articulo) {
                         echo '
                             <div class="card col-3" style="width: 18rem;">
-                                <img height="256" height "256" src="/static/' . $articulo['imagen'] . '" class="img-product card-img-top" alt="imagen de ' . $articulo['nombre'] . '">
+                                <img height="256" height "256" src="/static/' . $articulo['imagen'] . '" class="img-product card-img-top img efecto3" alt="imagen de ' . $articulo['nombre'] . '">
                                 <div class="card-body">
                                     <h5 class="card-title">' . $articulo['nombre'] . '</h5>
                                     <p class="card-text">' . $articulo['descripcion'] . '</p>
