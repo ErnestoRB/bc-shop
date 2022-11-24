@@ -35,11 +35,11 @@ try {
             $confirmPass = $_POST["pass2"];
             $passMatch = $pass == $confirmPass;
             $isCaptchaValid = validarCaptcha("code-captcha");
-            if (!$passMatch) {
-                throw new Exception("Las contraseñas no son iguales");
-            }
             if (!$isCaptchaValid) {
                 throw new Exception("El captcha no es correcto");
+            }
+            if (!$passMatch) {
+                throw new Exception("Las contraseñas no son iguales");
             }
             if (!$isError) {
                 $hash = hashPassword($pass);

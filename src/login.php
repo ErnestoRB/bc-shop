@@ -5,12 +5,14 @@ include "handle_login.php";
 <html lang="en">
 
 <head>
+    <script src="/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/captcha.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once "util/bootstrap.html" ?>
     <title>Login</title>
-    <!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
+    <script src="/js/jsCaptcha.js" defer></script>
 </head>
 
 <body>
@@ -50,9 +52,16 @@ include "handle_login.php";
                             </label>
                         </div>
                     </div>
-                    <!-- <div class="justify-content-center d-flex py-3">
-                        <div class="g-recaptcha" data-sitekey="llave del sitio"></div>
-                    </div> -->
+                    <div class="justify-content-center d-flex flex-wrap">
+                        <div class="captcha"><canvas id="captcha" height="62" width="150"></canvas></div>
+                        <button id="refreshCaptcha" class="btn btn-primary" type="button"><i class="bi bi-arrow-clockwise"></i></button>
+                    </div>
+                    <div class="justify-content-center d-flex flex-wrap">
+
+                        <label for="code-captcha" class="form-label">Código captcha</label>
+                        <input type="text" class="form-control" name="code-captcha" id="valorCapt" required>
+                    </div>
+
                     <div class="justify-content-center d-flex">
                         <a class="text-decoration-none text-info" href="">Forgot your password?</a>
                     </div>
