@@ -1,7 +1,36 @@
 <?php
+require "util/session.php";
+require "util/database/connection.php";
+require "util/database/querys.php";
+require "util/hash/password.php";
+
 include "util/session.php";
 if (isset($_GET["user"])) {
     $user = $_GET["user"];
+    $connection = getConnection();
+    $result = $connection->query(getUserInfo($user));
+    if ($connection->connect_errno) {
+        header('Location: 500.php');
+        exit(1);
+    }
+
+    if ($result->num_rows < 1) {
+        header('Location: 500.php');
+        exit(1);
+    }
+
+    $user = $result->fetch_assoc();
+    $blocked = $user["bloqueo"];
+    if($blocked != 1){
+        header('Location: login.php');
+        exit(1);
+    }
+
+    $user = $_GET["user"];
+}
+else{
+    header('Location: login.php');
+    exit(1);
 }
 ?>
 <!DOCTYPE html>
