@@ -27,7 +27,7 @@
         }
         ?>
         <li class="nav-item">
-          <a style="color:aliceblue" class="nav-link" href="#">Acerca de Nosotros</a>
+          <a style="color:aliceblue" class="nav-link" href="acerca.php">Acerca de Nosotros</a>
         </li>
         <li class="nav-item dropdown">
           <a style="color:aliceblue" class="nav-link dropdown-toggle" href="articulos.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">

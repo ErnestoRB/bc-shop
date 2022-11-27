@@ -32,8 +32,12 @@ try {
             if (!preg_match("/image/", $file["type"])) {
                 throw new Exception("No se aceptan archivos que no sean imagenes");
             }
+            $folder = __DIR__ . '/static';
             $filename = md5($nombre . date('c'));
-            $stored = move_uploaded_file($file["tmp_name"], __DIR__ . '/static/' . $filename);
+            if (!file_exists($folder)) {
+                mkdir($folder);
+            }
+            $stored = move_uploaded_file($file["tmp_name"], $folder . '/' . $filename);
             if (!$stored) {
                 throw new Exception("No se pudo guardar la imagen");
             }

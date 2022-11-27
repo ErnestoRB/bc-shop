@@ -115,3 +115,9 @@ function getProducts()
 {
     return "SELECT idProducto, p.nombre, c.nombre as categoria, descripcion, existencia, precio, imagen FROM productos as p JOIN categoria as c on c.idCategoria = p.idCategoria";
 }
+
+
+function getLatestProducts()
+{
+    return "SELECT idProducto, p.nombre, c.nombre as categoria, descripcion, existencia, precio, imagen FROM productos as p JOIN categoria as c on c.idCategoria = p.idCategoria ORDER BY agregado LIMIT 5";
+}
