@@ -81,6 +81,7 @@ CREATE TABLE `productos`
 (100) NOT NULL,
   `existencia` int
 (5) NOT NULL,
+`agregado` datetime DEFAULT CURRENT_TIMESTAMP,
   `precio` int
 (5) NOT NULL,
   `imagen` varchar
@@ -105,6 +106,7 @@ CREATE TABLE `users`
 (20) NOT NULL,
   `contraseña` varchar
 (100) NOT NULL,
+`admin` TINYINT DEFAULT 0,
   `correo` varchar
 (50) NOT NULL,
   `bloqueo` tinyint
