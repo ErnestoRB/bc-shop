@@ -32,7 +32,7 @@ if ($connection->connect_errno) {
 $result = $connection->query(getUserInfo($user));
 
 if ($result->num_rows < 1) {
-    header('Location: 500.php');
+    header('Location: unlock_account.php?status=failed');
     exit(1);
 }
 
@@ -73,7 +73,7 @@ if($blocked){
     $hash = hashPassword($new_pass);
     $update_pass = $connection -> query(updateUserPassword($id, $hash));
     $new_pass = $connection -> query(setGeneratedPassword($id));
-    header('Location: unlock_account.php');
+    header('Location: unlock_account.php?status=success');
 }
 else{
     header('Location: login.php');

@@ -16,6 +16,17 @@
         <div class="container">
             <h1>Recuperacion de cuenta</h1>
             <form action="handle_unlock.php" method="post">
+                <?php
+                    if(isset($_GET["status"])){
+                        $status = $_GET["status"];
+                        if($status == "failed"){
+                            echo '<div class="alert alert-danger"> Nombre de usuario inexistente o incorrecto </div>';
+                        }
+                        if($status == "success"){
+                            echo '<div class="alert alert-success"> Se ha enviado un mensaje a tu correo electrónico asociado </div>';
+                        }
+                    }
+                ?>
                 <p>Nombre de usuario de la cuenta</p>
                 <input type="text" name="usuario" id="">
                 <input type="submit" class="btn btn-primary" value="Recuperar">

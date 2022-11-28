@@ -61,14 +61,14 @@ include "handle_login.php";
                         </div>
                     </div>
                     <div class="justify-content-center d-flex">
-                        <a class="text-decoration-none text-info" href="">Forgot your password?</a>
+                        <a class="text-decoration-none text-info" href="unlock_account.php">Forgot your password?</a>
                     </div>
                     <div class="justify-content-center d-flex mt-3">
                         <button type="submit" class="btn btn-info text-white">Sign in</button>
                     </div>
                     <hr>
                     <div class="justify-content-center d-flex">
-                        <a class="text-decoration-none text-info" href="">No account ? Create one here</a>
+                        <a class="text-decoration-none text-info" href="">No account? Create one here</a>
                     </div>
                 </div>
             </div>
