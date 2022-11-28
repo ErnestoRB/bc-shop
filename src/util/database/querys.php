@@ -1,8 +1,8 @@
 <?php
 
-function registerUser($nombre, $apellidos, $cuenta, $pass, $email)
+function registerUser()
 {
-    return "INSERT INTO users(nombre, apellidos, cuenta, contraseña, correo, bloqueo) VALUES ('$nombre', '$apellidos', '$cuenta','$pass', '$email', 0);";
+    return "INSERT INTO users(nombre, apellidos, cuenta, contraseña, correo, bloqueo) VALUES (?, ?, ?, ?, ?, 0);";
 }
 
 function updateUserPassword($id, $newHash)
