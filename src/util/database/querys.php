@@ -1,8 +1,8 @@
 <?php
 
-function registerUser($nombre, $apellidos, $cuenta, $pass, $email)
+function registerUser()
 {
-    return "INSERT INTO users(nombre, apellidos, cuenta, contraseña, correo, bloqueo) VALUES ('$nombre', '$apellidos', '$cuenta','$pass', '$email', 0);";
+    return "INSERT INTO users(nombre, apellidos, cuenta, contraseña, correo, bloqueo) VALUES (?, ?, ?, ?, ?, 0);";
 }
 
 function updateUserPassword($id, $newHash)
@@ -105,9 +105,9 @@ function getUserInfoByEmail($email)
     return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos, passgenerado FROM users WHERE correo = '$email'";
 }
 
-function getProduct($id)
+function getProduct()
 {
-    return "SELECT idProducto, nombre, idCategoria, descripcion, existencia, precio, imagen FROM productos WHERE idProducto = $id";
+    return "SELECT idProducto, nombre, idCategoria, descripcion, existencia, precio, imagen FROM productos WHERE idProducto = ?";
 }
 
 
