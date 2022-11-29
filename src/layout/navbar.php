@@ -29,6 +29,12 @@
         <li class="nav-item">
           <a style="color:aliceblue" class="nav-link" href="acerca.php">Acerca de Nosotros</a>
         </li>
+        <li class="nav-item">
+          <a style="color:aliceblue" class="nav-link" href="acerca.php#faq">Preguntas Frecuentes</a>
+        </li>
+        <li class="nav-item">
+          <a style="color:aliceblue" class="nav-link" href="subscribe.php">Contacto</a>
+        </li>
         <li class="nav-item dropdown">
           <a style="color:aliceblue" class="nav-link dropdown-toggle" href="articulos.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Articulos
