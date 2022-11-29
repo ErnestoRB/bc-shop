@@ -77,3 +77,9 @@ a#nav-link active {
   -webkit-transform: scale(1.8);
   transform: scale(1.8);
 }
+.col-8 border{
+  background-color:white;
+}
+.col-1 border{
+  background-color: gray;
+}
