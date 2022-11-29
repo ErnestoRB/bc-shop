@@ -56,15 +56,18 @@
                                         </label>
                                     </div>
                                 </div>
+                                <br>
+                                <h6>Si desea dejarnos un comentario acerca de su pedido, por favor escribalo a continuacion</h6>
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                                    <label for="floatingTextarea">Comments</label>
+                                </div>
+                                <br>
+                                <button class="btn btn-primary" type="submit">CONTINUAR</button>
+
                             </div>
-                            <br>
-                            <h6>Si desea dejarnos un comentario acerca de su pedido, por favor escribalo a continuacion</h6>
-                            <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                                <label for="floatingTextarea">Comments</label>
-                            </div>
-                            <br>
-                            <button class="btn btn-primary" type="submit">CONTINUAR</button>
+
+
                         </div>
                     </div>
                     <div class="accordion" id="accordion3">
