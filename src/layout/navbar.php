@@ -1,16 +1,19 @@
 <?php require __DIR__ . '/../util/session.php'; ?>
 <div style="background:#373737;" class=" n1">
-  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <button style="background:#373737" class="btn btn-primary me-md-2" type="button"><i class="bi bi-cart-fill"></i><span id="cartNumber" class="badge text-bg-primary">0</span></button>
-    <button style="background:#373737" class="btn btn-primary" type="button"><i class="bi bi-person"></i></button>
+  <div class="d-grid gap-2 d-flex justify-content-end">
+    <button id="carrito" class="btn btn-dark me-md-2 border-1 border-white" type="button"><i class="bi bi-cart-fill"></i><span id="cartNumber" class="badge text-bg-primary">0</span></button>
+    <?php if (!$isLogged) {
+      echo '<a href="/login.php" class="btn btn-dark border-1 border-white" type="button"><i class="bi bi-person"></i> Iniciar sesión</a>';
+    }
+    ?>
   </div>
 </div>
 <nav class="navbar navbar-expand-lg bg-dark">
 
   <div class="container-fluid">
-    <a class="navbar-brand text-white" href="index.php"><img src="images/logoColorShadow.png" width="40"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <a class="bg-white p-2 navbar-brand text-white" href="index.php"><img src="images/logoColorShadow.png" width="40"></a>
+    <button class="navbar-toggler  border-1 border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bi bi-list text-white"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -18,7 +21,7 @@
         <?php if (!$isLogged) {
           echo '
           <li class="nav-item">
-            <a style="color:aliceblue" class="nav-link" href="login.php">Login</a>
+            <a style="color:aliceblue" class="nav-link" href="login.php">Iniciar sesión</a>
           </li>
           <li class="nav-item">
             <a style="color:aliceblue" class="nav-link active" aria-current="page" href="registro.php">Registro</a>
@@ -54,7 +57,7 @@
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-primary" type="submit">Buscar</button>
       </form>
     </div>
 

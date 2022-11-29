@@ -105,9 +105,9 @@ function getUserInfoByEmail($email)
     return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos, passgenerado FROM users WHERE correo = '$email'";
 }
 
-function getProduct($id)
+function getProduct()
 {
-    return "SELECT idProducto, nombre, idCategoria, descripcion, existencia, precio, imagen FROM productos WHERE idProducto = $id";
+    return "SELECT idProducto, nombre, idCategoria, descripcion, existencia, precio, imagen FROM productos WHERE idProducto = ?";
 }
 
 
