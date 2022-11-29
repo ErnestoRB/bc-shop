@@ -16,7 +16,7 @@
                 <div class="card-body pt-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Corero electrónico</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="correo">
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="correo" required>
                         <small id="emailHelp" class="form-text text-muted">No compartiremos tu correo con nadie más</small>
                     </div>
                     <br>
