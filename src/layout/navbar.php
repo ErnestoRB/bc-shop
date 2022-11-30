@@ -36,7 +36,10 @@
           <a style="color:aliceblue" class="nav-link" href="acerca.php#faq">Preguntas Frecuentes</a>
         </li>
         <li class="nav-item">
-          <a style="color:aliceblue" class="nav-link" href="subscribe.php">Contacto</a>
+          <a style="color:aliceblue" class="nav-link" href="subscribe.php">Sucribirse</a>
+        </li>
+        <li class="nav-item">
+          <a style="color:aliceblue" class="nav-link" href="contact_us.php">Contacto</a>
         </li>
         <li class="nav-item dropdown">
           <a style="color:aliceblue" class="nav-link dropdown-toggle" href="articulos.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
