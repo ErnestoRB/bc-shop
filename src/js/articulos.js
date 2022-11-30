@@ -1,9 +1,16 @@
 $(document).ready(() => {
-  function getProducts() {
+  const forms = $("#formCategorias");
+  forms.submit((e) => {
+    e.preventDefault();
+    const id = forms[0].elements.categoria.value;
+    getProducts(id);
+  });
+
+  function getProducts(categoria) {
     const contenedor = $("#contenedorProductos");
     contenedor.empty();
     $.get(
-      "http://localhost:9999/api/productos.php?categoria=1",
+      "http://localhost:9999/api/productos.php?categoria=" + categoria,
       function (data, status) {
         const obj = JSON.parse(data);
         console.log(obj);

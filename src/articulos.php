@@ -1,4 +1,8 @@
 <?php require_once "util/session.php";
+require_once 'util/database/connection.php';
+require_once 'util/get_categorias.php';
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,39 +26,21 @@
         <div class="accordion" id="accordionExample">
             <div class="container">
                 <h1>Artículos</h1>
+                <div>
+                    <form id="formCategorias">
+                        <label for="categoria">Filtrar por categoria</label>
+                        <select class="form-control" name="categoria" id="">
+                            <?php
+                            foreach ($categoriasArray as $categoria) {
+                                echo '<option value="' . $categoria["idCategoria"] . '">' . $categoria["nombre"] . ' </option>';
+                            }
+                            ?>
+                        </select>
+                        <button class="btn btn-primary" type="submit">Buscar</button>
+                    </form>
+
+                </div>
                 <div id="contenedorProductos" class="row">
-                    <?php
-                    /* $numeroArticulos = sizeof($articulos);
-                    if ($numeroArticulos == 0) {
-                        echo '<div class="col text-center bg-danger text-white p-4 m-4">No hay articulos, aún.</div>';
-                    } else {
-                        $rand = rand(0, $numeroArticulos - 1);
-                    }
-
-                    foreach ($articulos as $i => $articulo) {
-                        $esDeOferta = $i == $rand;
-                        echo '
-                            <div class="card col-3" style="width: 18rem;">
-                                <img height="256" height "256" src="/static/' . $articulo['imagen'] . '" class="img-product card-img-top img efecto3" alt="imagen de ' . $articulo['nombre'] . '">
-                                <div class="card-body">
-                                    <h5 class="card-title">' . $articulo['nombre'] . ($esDeOferta ? '<span class="badge text-bg-danger">Oferta!</span>' : '') . '</h5>
-                                    <p class="card-text">' . $articulo['descripcion'] . '</p>
-                                    <p>Existencias: ' . $articulo['existencia'] . '</p>
-                                    <p>
-                                        <span class="' . ($esDeOferta ? 'text-decoration-line-through text-danger' : '') . '" >$ ' . $articulo['precio'] . '</span>
-                                        <span>' . ($esDeOferta ? $articulo['precio'] * 0.9 : '') . '</span>
-                                    </p>
-                                    <form data-cart-form>
-                                        <input type="hidden" name="id" value="' . $articulo["idProducto"] . '" />
-                                        <input type="number" class="form-control" name="cantidad" step="" min="1" max="' . $articulo['existencia'] . '" value="' . $articulo["idProducto"] . '" />
-                                        <button type="submit" class="btn btn-primary"><i class="bi bi-cart-plus-fill"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                    ';
-                    } */
-                    ?>
-
 
                 </div>
             </div>
