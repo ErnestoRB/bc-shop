@@ -1,12 +1,12 @@
+const className = "container";
+
 window.carrito = (function () {
   let cart = []; // { id, cantidad }
-
   window.addEventListener("DOMContentLoaded", () => {
     const storedCart = window.localStorage.getItem("cart");
     if (storedCart) {
       cart = JSON.parse(storedCart);
     }
-    const className = "container";
     async function generateCarritoWindow() {
       const results = await window.carrito.getProductsData();
       const wrapper = document.createElement("div");
@@ -77,60 +77,9 @@ window.carrito = (function () {
       generateCarritoWindow();
     });
     const cartNumber = document.getElementById("cartNumber");
-    const forms = document.querySelectorAll("[data-cart-form]");
     if (!!cartNumber) {
       cartNumber.textContent = cart.length;
     }
-    forms.forEach((form) => {
-      form.addEventListener("submit", async (evt) => {
-        evt.preventDefault();
-        const cantidad = Number(form.elements.cantidad.value);
-        const productId = form.elements.id.value;
-        const productData = await getProductData(productId);
-        const newCantidad = window.carrito.getCantidad(productId) + cantidad;
-        console.log(newCantidad);
-        if (newCantidad > productData.existencia) {
-          swal({
-            title: `No es posible agregar ${cantidad} de ese producto!`,
-            text: "Intenta agregando menos cantidad ",
-            icon: "error",
-            buttons: [true],
-            className,
-          });
-          return;
-        }
-        const added = window.carrito.addToCart(productId, cantidad);
-        if (added) {
-          const element = document.createElement("div");
-          element.classList.add("container");
-          element.innerHTML = `<div class="row py-4">
-          <div class="col"><img class="img-product-sm" src="/static/${productData.imagen}"></div>
-          <div class="d-flex flex-column col">
-            <h4 class="text-info">${productData.nombre}</h4>
-            <div>$${productData.precio}</div>
-            <div>Cantidad: <b>${cantidad}</b></div>
-          </div>
-          </div>`;
-          swal({
-            title: `Producto agregado al carrito!`,
-            content: element,
-            icon: "success",
-            className,
-          });
-        } else {
-          const response = await swal({
-            title: `El producto ${productData.nombre} ya estaba agregado al carrito!`,
-            text: "¿Deseas continuar? Agregarás " + cantidad + " al carrito.",
-            icon: "warning",
-            buttons: ["Olvidalo", "Entiendo, agregar"],
-            className,
-          });
-          if (response == true) {
-            window.carrito.addCantidad(productId, cantidad);
-          }
-        }
-      });
-    });
   });
 
   window.addEventListener("beforeunload", () => {
@@ -185,6 +134,59 @@ window.carrito = (function () {
     },
     get cart() {
       return cart;
+    },
+    loadForms() {
+      const forms = document.querySelectorAll("[data-cart-form]");
+      forms.forEach((form) => {
+        form.addEventListener("submit", async (evt) => {
+          evt.preventDefault();
+          const cantidad = Number(form.elements.cantidad.value);
+          const productId = form.elements.id.value;
+          const productData = await getProductData(productId);
+          const newCantidad = window.carrito.getCantidad(productId) + cantidad;
+          console.log(newCantidad);
+          if (newCantidad > productData.existencia) {
+            swal({
+              title: `No es posible agregar ${cantidad} de ese producto!`,
+              text: "Intenta agregando menos cantidad ",
+              icon: "error",
+              buttons: [true],
+              className,
+            });
+            return;
+          }
+          const added = window.carrito.addToCart(productId, cantidad);
+          if (added) {
+            const element = document.createElement("div");
+            element.classList.add("container");
+            element.innerHTML = `<div class="row py-4">
+            <div class="col"><img class="img-product-sm" src="/static/${productData.imagen}"></div>
+            <div class="d-flex flex-column col">
+              <h4 class="text-info">${productData.nombre}</h4>
+              <div>$${productData.precio}</div>
+              <div>Cantidad: <b>${cantidad}</b></div>
+            </div>
+            </div>`;
+            swal({
+              title: `Producto agregado al carrito!`,
+              content: element,
+              icon: "success",
+              className,
+            });
+          } else {
+            const response = await swal({
+              title: `El producto ${productData.nombre} ya estaba agregado al carrito!`,
+              text: "¿Deseas continuar? Agregarás " + cantidad + " al carrito.",
+              icon: "warning",
+              buttons: ["Olvidalo", "Entiendo, agregar"],
+              className,
+            });
+            if (response == true) {
+              window.carrito.addCantidad(productId, cantidad);
+            }
+          }
+        });
+      });
     },
     async getProductsData() {
       return (

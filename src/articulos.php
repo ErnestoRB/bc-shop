@@ -1,24 +1,4 @@
-<?php
-include_once "util/session.php";
-include_once "util/database/connection.php";
-include_once "util/database/querys.php";
-$articulos = array();
-if (!isset($isError)) {
-    $isError = false;
-}
-if (!isset($message)) {
-    $message = '';
-};
-try {
-    //code...
-    $connection = getConnection();
-    $result = $connection->query(getProducts());
-    $articulos = $result->fetch_all(MYSQLI_ASSOC);
-} catch (Exception $e) {
-    $isError = true;
-    $message = $e->getMessage();
-}
-
+<?php require_once "util/session.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +8,7 @@ try {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once "util/bootstrap.html" ?>
+    <script src="/js/articulos.js"></script>
     <script src="js/alerta_eliminar.js"></script>
     <title>Panel de artículos</title>
     <title>Tienda</title>
@@ -41,9 +22,9 @@ try {
         <div class="accordion" id="accordionExample">
             <div class="container">
                 <h1>Artículos</h1>
-                <div class="row">
+                <div id="contenedorProductos" class="row">
                     <?php
-                    $numeroArticulos = sizeof($articulos);
+                    /* $numeroArticulos = sizeof($articulos);
                     if ($numeroArticulos == 0) {
                         echo '<div class="col text-center bg-danger text-white p-4 m-4">No hay articulos, aún.</div>';
                     } else {
@@ -71,7 +52,7 @@ try {
                                 </div>
                             </div>
                     ';
-                    }
+                    } */
                     ?>
 
 
