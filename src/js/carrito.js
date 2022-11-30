@@ -6,10 +6,8 @@ window.carrito = (function () {
     if (storedCart) {
       cart = JSON.parse(storedCart);
     }
-
-    const carritoButton = document.getElementById("carrito");
-    carritoButton.addEventListener("click", async (evt) => {
-      evt.preventDefault();
+    const className = "container";
+    async function generateCarritoWindow() {
       const results = await window.carrito.getProductsData();
       const wrapper = document.createElement("div");
       wrapper.classList.add("container");
@@ -19,6 +17,7 @@ window.carrito = (function () {
       if (results.length > 0) {
         wrapper.innerHTML += `<b>Hay ${results.length} artículo(s) en el carrito</b>`;
         element.innerHTML += `<thead><tr>
+        <th>Eliminar</th>
         <th>Imagen</th>
         <th>Articulo</th>
         <th>Precio unitario</th>
@@ -28,6 +27,9 @@ window.carrito = (function () {
         results.forEach((item) => {
           total += item.precio * item.cantidad;
           element.innerHTML += `<tr>
+        <td><button class="btn btn-danger" data-cart-delete="${
+          item.idProducto
+        }">Borrar</button></td>
         <td><img src="/static/${item.imagen}" width="64"></td>
         <td>${item.nombre}</td>
         <td>$${item.precio}</td>
@@ -36,12 +38,12 @@ window.carrito = (function () {
         </tr>`;
         });
         element.innerHTML += `<tr>
-        <td colspan="4"></td>
+        <td colspan="5"></td>
         <td>Total: $${total}</td>
         </tr>`;
         wrapper.append(element);
         wrapper.innerHTML += `<div class="d-flex justify-content-end">
-        <button class="btn btn-danger" onclick="window.carrito.clearCart(); location.reload()">Limpiar carrito</button>
+        <button data-cart-clear class="btn btn-danger">Limpiar carrito</button>
         <a class="btn btn-primary" href="carrito.php">Ir al carrito</a>
         </div>`;
       } else {
@@ -49,21 +51,55 @@ window.carrito = (function () {
       }
       swal({
         title: "Previsualización de carrito",
+        className,
         content: wrapper,
         buttons: false,
       });
+      const deleteButtons = document.querySelectorAll("[data-cart-delete]");
+      deleteButtons.forEach((button) => {
+        button.addEventListener("click", (evt) => {
+          const id = button.dataset.cartDelete;
+          window.carrito.removeFromCart(id);
+          generateCarritoWindow();
+        });
+      });
+      const clearButtons = document.querySelectorAll("[data-cart-clear]");
+      clearButtons.forEach((button) => {
+        button.addEventListener("click", (evt) => {
+          window.carrito.clearCart();
+          generateCarritoWindow();
+        });
+      });
+    }
+    const carritoButton = document.getElementById("carrito");
+    carritoButton.addEventListener("click", async (evt) => {
+      evt.preventDefault();
+      generateCarritoWindow();
     });
     const cartNumber = document.getElementById("cartNumber");
-    const buttons = document.querySelectorAll("[data-cart-id]");
+    const forms = document.querySelectorAll("[data-cart-form]");
     if (!!cartNumber) {
       cartNumber.textContent = cart.length;
     }
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", async () => {
-        const productId = button.dataset.cartId;
-        const added = window.carrito.addToCart(productId, 1);
+    forms.forEach((form) => {
+      form.addEventListener("submit", async (evt) => {
+        evt.preventDefault();
+        const cantidad = Number(form.elements.cantidad.value);
+        const productId = form.elements.id.value;
         const productData = await getProductData(productId);
+        const newCantidad = window.carrito.getCantidad(productId) + cantidad;
+        console.log(newCantidad);
+        if (newCantidad > productData.existencia) {
+          swal({
+            title: `No es posible agregar ${cantidad} de ese producto!`,
+            text: "Intenta agregando menos cantidad ",
+            icon: "error",
+            buttons: [true],
+            className,
+          });
+          return;
+        }
+        const added = window.carrito.addToCart(productId, cantidad);
         if (added) {
           const element = document.createElement("div");
           element.classList.add("container");
@@ -71,24 +107,26 @@ window.carrito = (function () {
           <div class="col"><img class="img-product-sm" src="/static/${productData.imagen}"></div>
           <div class="d-flex flex-column col">
             <h4 class="text-info">${productData.nombre}</h4>
-            <div>$${productData.cantidad}</div>
-            <div>Cantidad: <b>${productData.cantidad}</b></div>
+            <div>$${productData.precio}</div>
+            <div>Cantidad: <b>${cantidad}</b></div>
           </div>
           </div>`;
           swal({
             title: `Producto agregado al carrito!`,
             content: element,
             icon: "success",
+            className,
           });
         } else {
           const response = await swal({
             title: `El producto ${productData.nombre} ya estaba agregado al carrito!`,
-            text: "¿Deseas continuar?",
+            text: "¿Deseas continuar? Agregarás " + cantidad + " al carrito.",
             icon: "warning",
             buttons: ["Olvidalo", "Entiendo, agregar"],
+            className,
           });
           if (response == true) {
-            window.carrito.addCantidad(productId, 1);
+            window.carrito.addCantidad(productId, cantidad);
           }
         }
       });
@@ -101,27 +139,37 @@ window.carrito = (function () {
 
   return {
     addToCart: function (id, cantidad) {
-      if (!!cartNumber) {
-        cartNumber.textContent = cart.length;
-      }
       const found = this.isOnCart(id);
       if (!found) {
-        cart.push({ id, cantidad });
+        cart.push({ id, cantidad: Number(cantidad) });
+      }
+      if (!!cartNumber) {
+        cartNumber.textContent = cart.length;
       }
       return !found;
     },
     addCantidad: function (id, cantidad) {
       const found = this.isOnCart(id);
       if (found) {
-        found.cantidad += cantidad;
+        found.cantidad += Number(cantidad);
+      }
+      if (!!cartNumber) {
+        cartNumber.textContent = cart.length;
       }
       return !!found;
     },
     isOnCart: function (id) {
-      return cart.find((item) => item.id === id);
+      return cart.find((item) => item.id == id);
+    },
+    getCantidad: function (id) {
+      const found = cart.find((item) => item.id == id);
+      if (!found) {
+        return 0;
+      }
+      return found.cantidad;
     },
     removeFromCart: function (id) {
-      const i = cart.findIndex((item) => item.id === id);
+      const i = cart.findIndex((item) => item.id == id);
       if (i != -1) {
         cart.splice(i, 1);
       }

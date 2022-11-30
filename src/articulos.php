@@ -63,7 +63,11 @@ try {
                                         <span class="' . ($esDeOferta ? 'text-decoration-line-through text-danger' : '') . '" >$ ' . $articulo['precio'] . '</span>
                                         <span>' . ($esDeOferta ? $articulo['precio'] * 0.9 : '') . '</span>
                                     </p>
-                                    <a data-cart-id="' . $articulo["idProducto"] . '" class="btn btn-primary"><i class="bi bi-cart-plus-fill"></i></a>
+                                    <form data-cart-form>
+                                        <input type="hidden" name="id" value="' . $articulo["idProducto"] . '" />
+                                        <input type="number" class="form-control" name="cantidad" step="" min="1" max="' . $articulo['existencia'] . '" value="' . $articulo["idProducto"] . '" />
+                                        <button type="submit" class="btn btn-primary"><i class="bi bi-cart-plus-fill"></i></button>
+                                    </form>
                                 </div>
                             </div>
                     ';
