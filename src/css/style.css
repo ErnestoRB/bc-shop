@@ -83,3 +83,7 @@ a#nav-link active {
 .col-1 border{
   background-color: gray;
 }
+.table{
+border: 2px solid black;
+} 
+    

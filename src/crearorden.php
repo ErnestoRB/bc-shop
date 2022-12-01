@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once "util/bootstrap.html" ?>
 
-    <title>Inicio | Pumped Up KickShop</title>
+    <title>Crear Orden | Pumped Up KickShop</title>
 </head>
 
 <body>
@@ -17,45 +17,89 @@
 
             <div class="row">
                 <div class="col-8">
-                    <div class="accordion" id="accordion1">
+                    <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="headOne">
+                            <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     Direcciones
                                 </button>
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                                        <label for="floatingInput">Address</label>
-                                    </div>
+                                    <form class="row g-3">
+
+                                        <div class="col-12">
+                                            <label for="inputAddress" class="form-label">Address</label>
+                                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="inputAddress2" class="form-label">Address 2</label>
+                                            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="inputCity" class="form-label">City</label>
+                                            <input type="text" class="form-control" id="inputCity">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="inputState" class="form-label">State</label>
+                                            <select id="inputState" class="form-select">
+                                                <option selected>Choose...</option>
+                                                <option>...</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="inputZip" class="form-label">Zip</label>
+                                            <input type="text" class="form-control" id="inputZip">
+                                        </div>
+
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="accordion" id="accordion2">
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="headDos">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     Tipo de Envio
                                 </button>
                             </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            Recoger en tienda
-                                        </label>
+                                    <div class="container text-center">
+                                        <div style="background-color:#ECECEC;" class="row">
+                                            <div class="col">
+                                                <div  class="form-check">
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                        PumpedUp KickShop
+                                                    </label>
+                                                </div>
+                                            </div>
+                                                <div class="col order-5">
+                                                ¡Gratis!
+                                                </div>
+                                                <div class="col order-1">
+                                                Recoger en Tienda
+                                                </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            Envio estandar
-                                        </label>
+                                    <div class="container text-center">
+                                        <div style="background-color:#ECECEC;" class="row">
+                                            <div class="col">
+                                                <div  class="form-check">
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                    <i class="bi bi-truck">Envio Estandar</i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                                <div class="col order-5">
+                                                $79 c/iva incl.
+                                                </div>
+                                                <div class="col order-1">
+                                                Envio Estandar
+                                                </div>
+                                        </div>
                                     </div>
-                                </div>
                                 <br>
                                 <h6>Si desea dejarnos un comentario acerca de su pedido, por favor escribalo a continuacion</h6>
                                 <div class="form-floating">
@@ -64,32 +108,35 @@
                                 </div>
                                 <br>
                                 <button class="btn btn-primary" type="submit">CONTINUAR</button>
-
                             </div>
 
-
                         </div>
-                    </div>
-                    <div class="accordion" id="accordion3">
                         <div class="accordion-item">
-                            <h2 class="accordion-header" id="headTres">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                     Pago
                                 </button>
                             </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3">
                                         <label class="form-check-label" for="flexRadioDefault1">
-                                            Pago por transferencia Bancaria
+                                            Pago Mediante Paypal <i class="bi bi-paypal"></i>
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
                                         <label class="form-check-label" for="flexRadioDefault1">
-                                            Pago contra entrega
+                                            Pago en Banco <i class="bi bi-bank2"></i>
                                         </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Pago en Oxxo
+                                        </label>
+
                                     </div>
                                     <br>
                                     <div class="form-check">
@@ -105,6 +152,9 @@
                         </div>
                     </div>
                 </div>
+                </div>
+
+
 
                 <div class="col-4">
                     <div class="card" style="width: 18rem;">
@@ -140,13 +190,15 @@
                                 </div>
 
                                 <br>
-                                <div class="col-8">Impuestos Incluidos </div>
-
-                                <br>
+                                <div class="col-8">Impuestos Incluidos </div><br>
+                                <a href="#" class="text-decoration-none">Tiene un codigo promocional?</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
     </main>
 </body>
