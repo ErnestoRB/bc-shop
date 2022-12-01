@@ -42,7 +42,10 @@ if ($generated != 1) {
 
 $hash = hashPassword($password);
 
-$update_pass = $connection->query(updateUserPassword($id, $hash));
+
+$update_pass = mysqli_prepare(getConnection(), updateUserPassword());
+mysqli_stmt_bind_param($update_pass, "si", $id,$hash);
+
 $clear_tries = $connection->query(clearFailed($id));
 $unlock = $connection->query(releaseUserAccount($id));
 $unset_generated = $connection->query(unsetGeneratedPassword($id));

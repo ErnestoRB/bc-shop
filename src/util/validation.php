@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @param campos Array con los nombres de las  variables que no deben ser vacias
+ * @param array $campos Array con los nombres de las  variables que no deben ser vacias
  */
 function validatePostArray($campos)
 {
@@ -13,7 +13,7 @@ function validatePostArray($campos)
 }
 
 /**
- * @param nombre Nombre del archivo
+ * @param string $nombre Nombre del archivo
  * @return boolean True si no está  vacio
  */
 function validateFile($nombre)

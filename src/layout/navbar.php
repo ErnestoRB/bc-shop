@@ -11,7 +11,7 @@
 <nav class="navbar navbar-expand-lg bg-dark">
 
   <div class="container-fluid">
-    <a class="bg-white p-2 navbar-brand text-white" href="index.php"><img src="images/logoColorShadow.png" width="40"></a>
+    <a class="bg-white p-2 navbar-brand text-white" href="/"><img src="images/logoColorShadow.png" width="40"></a>
     <button class="navbar-toggler  border-1 border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="bi bi-list text-white"></i>
     </button>

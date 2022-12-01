@@ -26,7 +26,7 @@ try {
             }
         }
         $connection = getConnection();
-        $connection->query(updateProduct($id, $nombre, $categoria, $descripcion, $cantidad, $precio, $filename));
+        $connection->query(updateProduct());
         $exitoso = $connection->affected_rows > 0;
         if (!$exitoso) {
             throw new Exception("Registro no exitoso");

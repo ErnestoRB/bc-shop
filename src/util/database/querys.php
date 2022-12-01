@@ -5,44 +5,44 @@ function registerUser()
     return "INSERT INTO users(nombre, apellidos, cuenta, contraseña, correo, bloqueo) VALUES (?, ?, ?, ?, ?, 0);";
 }
 
-function updateUserPassword($id, $newHash)
+function updateUserPassword()
 {
-    return "UPDATE users SET contraseña = '$newHash' WHERE idusuario = '$id'";
+    return "UPDATE users SET contraseña = '?' WHERE idusuario = '?'";
 }
 
-function setGeneratedPassword($id)
+function setGeneratedPassword()
 {
-    return "UPDATE users SET passgenerado = 1 WHERE idusuario = '$id'";
+    return "UPDATE users SET passgenerado = 1 WHERE idusuario = ?";
 }
 
-function unsetGeneratedPassword($id)
+function unsetGeneratedPassword()
 {
-    return "UPDATE users SET passgenerado = 0 WHERE idusuario = '$id'";
+    return "UPDATE users SET passgenerado = 0 WHERE idusuario = ?";
 }
 
-function blockUserAccount($id)
+function blockUserAccount()
 {
-    return "UPDATE users SET bloqueo = 1 WHERE idusuario = '$id'";
+    return "UPDATE users SET bloqueo = 1 WHERE idusuario = '?'";
 }
 
-function releaseUserAccount($id)
+function releaseUserAccount()
 {
-    return "UPDATE users SET bloqueo = 0 WHERE idusuario = '$id'";
+    return "UPDATE users SET bloqueo = 0 WHERE idusuario = '?'";
 }
 
-function incrementFailed($id)
+function incrementFailed()
 {
-    return "UPDATE users SET fallidos=fallidos+1 WHERE idusuario = '$id'";
+    return "UPDATE users SET fallidos=fallidos+1 WHERE idusuario = '?'";
 }
 
-function clearFailed($id)
+function clearFailed()
 {
-    return "UPDATE users SET fallidos = 0 WHERE idusuario = '$id'";
+    return "UPDATE users SET fallidos = 0 WHERE idusuario = '?'";
 }
 
-function addCategory($name)
+function addCategory()
 {
-    return "INSERT INTO categoria(nombre) VALUES ('$name');";
+    return "INSERT INTO categoria(nombre) VALUES (?);";
 }
 
 function getCategories()
@@ -50,59 +50,59 @@ function getCategories()
     return "SELECT idCategoria, nombre FROM categoria";
 }
 
-function deleteCategory($id)
+function deleteCategory()
 {
-    return "DELETE FROM CATEGORIA WHERE idCategoria = $id;";
+    return "DELETE FROM CATEGORIA WHERE idCategoria = ?;";
 }
 
-function addCupon($codigo, $porcentaje, $minim, $maximo)
+function addCupon()
 {
-    return "INSERT INTO cupones(codigo, porcentaje, minim, maximo) VALUES ('$codigo', $porcentaje, $minim, $maximo)";
+    return "INSERT INTO cupones(codigo, porcentaje, minim, maximo) VALUES (?, ?, ?, ?)";
 }
 
-function deleteCupon($codigo)
+function deleteCupon()
 {
-    return "DELETE FROM cupones WHERE codigo = '$codigo';";
+    return "DELETE FROM cupones WHERE codigo = '?';";
 }
 
-function addProduct($nombre, $id_categoria, $descripcion, $existencia, $precio, $rutaImagen)
+function addProduct()
 {
-    return "INSERT into productos (nombre, idCategoria,descripcion,existencia, precio, imagen) VALUES ('$nombre', $id_categoria, '$descripcion', $existencia, $precio, '$rutaImagen');";
+    return "INSERT into productos (nombre, idCategoria,descripcion,existencia, precio, imagen) VALUES (?,?,?,?,?,?);";
 }
 
-function updateProduct($id, $nombre, $id_categoria, $descripcion, $existencia, $precio)
+function updateProduct()
 {
-    return "UPDATE productos SET nombre='$nombre', idCategoria=$id_categoria, descripcion='$descripcion', existencia=$existencia, precio=$precio WHERE idProducto = $id";
+    return "UPDATE productos SET nombre='?', idCategoria=?, descripcion='?', existencia=?, precio=? WHERE idProducto = ?";
 }
 
-function updateProductWithImage($id, $nombre, $id_categoria, $descripcion, $existencia, $precio, $rutaImagen)
+function updateProductWithImage()
 {
-    return "UPDATE productos SET nombre='$nombre', idCategoria=$id_categoria, descripcion='$descripcion', existencia=$existencia, precio=$precio, imagen='$rutaImagen' WHERE idProducto = $id";
+    return "UPDATE productos SET nombre='?', idCategoria=?, descripcion='?', existencia=?, precio=?, imagen='?' WHERE idProducto = ?";
 }
 
-function deleteProduct($id)
+function deleteProduct()
 {
-    return "DELETE FROM productos WHERE idProducto = $id;";
+    return "DELETE FROM productos WHERE idProducto = ;";
 }
 
-function registerSale($idUsuario)
+function registerSale()
 {
-    return "INSERT INTO venta(idUsuario, fecha) VALUES ($idUsuario,CURDATE())";
+    return "INSERT INTO venta(idUsuario, fecha) VALUES (?,CURDATE())";
 }
 
-function addProductToSale($idProducto, $idVenta, $cantidad)
+function addProductToSale()
 {
-    return "INSERT INTO venta_articulo(idProducto, idVenta, cantidad) VALUES ($idProducto, $idVenta, $cantidad)";
+    return "INSERT INTO venta_articulo(idProducto, idVenta, cantidad) VALUES (?,?,?)";
 }
 
-function getUserInfo($username)
+function getUserInfo()
 {
-    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos, passgenerado FROM users WHERE cuenta = '$username'";
+    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos, passgenerado FROM users WHERE cuenta = '?'";
 }
 
-function getUserInfoByEmail($email)
+function getUserInfoByEmail()
 {
-    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos, passgenerado FROM users WHERE correo = '$email'";
+    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos, passgenerado FROM users WHERE correo = '?'";
 }
 
 function getProduct()
@@ -121,3 +121,4 @@ function getLatestProducts()
 {
     return "SELECT idProducto, p.nombre, c.nombre as categoria, descripcion, existencia, precio, imagen FROM productos as p JOIN categoria as c on c.idCategoria = p.idCategoria ORDER BY agregado LIMIT 5";
 }
+?>

@@ -56,7 +56,9 @@ try {
             }
             $message = "Actualización correcta exitoso";
         } else {
-            $connection->query(addProduct($nombre, $categoria, $descripcion, $cantidad, $precio, $filename));
+            $ps = $connection->prepare(addProduct());
+            $ps->bind_param('sisiis',$nombre, $categoria, $descripcion, $cantidad, $precio, $filename);
+            
             $exitoso = $connection->affected_rows > 0;
             if (!$exitoso) {
                 throw new Exception("Crear el registro falló");
