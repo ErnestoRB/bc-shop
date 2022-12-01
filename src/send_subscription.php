@@ -23,7 +23,7 @@
         $mail->addAddress($correo);
         $mail->isHTML(true);
         $mail->Subject = 'Recuperacion de cuenta';
-        $mail->Body = "<h1 style='color: blue;'>PumpedUp KickShop agradece tu suscripcion</h1>
+        $mail->Body = "<h1> style='color: blue;'>PumpedUp KickShop agradece tu suscripcion</h1>
                         <h3>Aqui recibiras nustras futuras promociones y descuentos</h3>
                         <h4>No te pierdas ninguna noticia!</h6>
                         <hr>
