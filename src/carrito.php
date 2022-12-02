@@ -11,7 +11,14 @@
 </head>
 
 <body style="background-color: rgb(240, 240, 240); height: 100%;" >
-    <div class="row px-0 mx-0 justify-content-around pt-5">
+    <div style="background:#373737;" class="n1"> 
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button style="background:#373737" class="btn btn-primary me-md-2" type="button"><i class="bi bi-cart-fill"></i></button>
+            <button style="background:#373737" class="btn btn-primary" type="button"><i class="bi bi-person"></i></button>
+        </div>
+    </div>
+    <?php include "layout/navbar.php" ?>
+    <div class="row px-0 mx-0 justify-content-around pt-3">
         <div class="px-2 col-md-8 col-sm-12">
             <div class="card my-2 border-0" style="box-sizing: border-box;">
                 <div class="card-header bg-white">
@@ -71,10 +78,10 @@
                     Impuestos incluidos: <small class="fw-bold">$243.52</small>
                 </small>
                 <div class="d-flex justify-content-center mt-2">
-                    <a class="text-decoration-none" href=""> Tienes un codigo de promocion?</a>
+                    <a class="text-decoration-none text-info" href=""> Tienes un codigo de promocion?</a>
                 </div>
                 <div class="mt-4">
-                    <button class="btn btn-primary w-100"> IR A LA CAJA</button>
+                    <button class="btn btn-info w-100"> IR A LA CAJA</button>
                 </div>
               </div>
         </div>
