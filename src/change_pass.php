@@ -8,7 +8,11 @@ include "util/session.php";
 if (isset($_GET["user"])) {
     $user = $_GET["user"];
     $connection = getConnection();
-    $result = $connection->query(getUserInfo($user));
+    $result = $connection->prepare(getUserInfo());
+    $result->bind_param("S",$user);
+    $result->execute();
+    $UserInf = $result->get_result();
+
     if ($connection->connect_errno) {
         header('Location: 500.php');
         exit(1);
@@ -19,7 +23,7 @@ if (isset($_GET["user"])) {
         exit(1);
     }
 
-    $user = $result->fetch_assoc();
+    $user = $UserInf->fetch_assoc();
     $blocked = $user["bloqueo"];
     if($blocked != 1){
         header('Location: login.php');

@@ -82,7 +82,7 @@ function updateProductWithImage()
 
 function deleteProduct()
 {
-    return "DELETE FROM productos WHERE idProducto = ;";
+    return "DELETE FROM productos WHERE idProducto = ?;";
 }
 
 function registerSale()

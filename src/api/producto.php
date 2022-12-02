@@ -5,7 +5,7 @@ if (isset($_GET["id"])) {
     $id = $_GET["id"];
     $conn = getConnection();
     $ps = $conn->prepare(getProduct());
-    $ps->bind_param("s", $id);
+    $ps->bind_param("i", $id);
     $ps->execute();
     $results = $ps->get_result()->fetch_all(MYSQLI_ASSOC);
     if (sizeof($results) === 0) {

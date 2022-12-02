@@ -18,8 +18,12 @@ $connection = getConnection();
 try {
     if ($isEdit) {
         $id = $_GET["edit"];
-        $results = $connection->query(getProduct());
-        $producto = $results->fetch_assoc();
+        $results = $connection->prepare(getProduct());
+        $results->bind_param("i", $id);
+        $results->execute();
+        $product = $results->get_result();
+        $producto = $product->fetch_assoc();
+        
         if (!$producto) {
             throw new Exception("No se pudo cargar el producto con id:  " . $id);
         }
