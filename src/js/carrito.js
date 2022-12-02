@@ -135,6 +135,17 @@ window.carrito = (function () {
     get cart() {
       return cart;
     },
+    getProductData(id, cantidad = 1) {
+      return fetch("/api/producto.php?id=" + id).then(async (res) => {
+        if (res.ok) {
+          const json = await res.json();
+          json.cantidad = cantidad;
+          return json;
+        } else {
+          return undefined;
+        }
+      });
+    },
     loadForms() {
       const forms = document.querySelectorAll("[data-cart-form]");
       forms.forEach((form) => {
@@ -199,15 +210,3 @@ window.carrito = (function () {
     },
   };
 })();
-
-function getProductData(id, cantidad = 1) {
-  return fetch("/api/producto.php?id=" + id).then(async (res) => {
-    if (res.ok) {
-      const json = await res.json();
-      json.cantidad = cantidad;
-      return json;
-    } else {
-      return undefined;
-    }
-  });
-}
