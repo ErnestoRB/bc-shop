@@ -5,11 +5,16 @@ require "util/database/querys.php";
 require "util/hash/password.php";
 
 include "util/session.php";
+$error = "";
+if (isset($_GET["error"])) {
+    $error = $_GET["error"];
+}
+
 if (isset($_GET["user"])) {
     $user = $_GET["user"];
     $connection = getConnection();
     $result = $connection->prepare(getUserInfo());
-    $result->bind_param("S",$user);
+    $result->bind_param("s", $user);
     $result->execute();
     $UserInf = $result->get_result();
 
@@ -18,21 +23,18 @@ if (isset($_GET["user"])) {
         exit(1);
     }
 
-    if ($result->num_rows < 1) {
+    if ($UserInf->num_rows < 1) {
         header('Location: 500.php');
         exit(1);
     }
 
     $user = $UserInf->fetch_assoc();
-    $blocked = $user["bloqueo"];
-    if($blocked != 1){
+    $blocked = (bool) $user["bloqueo"];
+    if (!$blocked) {
         header('Location: login.php');
         exit(1);
     }
-
-    $user = $_GET["user"];
-}
-else{
+} else {
     header('Location: login.php');
     exit(1);
 }
@@ -64,7 +66,7 @@ else{
                 <input type="password" class="form-control" name="new_pass_comp">
                 <?php
                 if (isset($_GET["user"])) {
-                    echo '<input type="hidden" name="user" value="' . $user . '">';
+                    echo '<input type="hidden" name="user" value="' . $_GET["user"] . '">';
                 }
                 ?>
                 <input type="submit" class="btn btn-primary" value="Cambiar contraseña">

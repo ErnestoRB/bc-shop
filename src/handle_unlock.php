@@ -1,4 +1,5 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -30,11 +31,11 @@ if ($connection->connect_errno) {
 }
 
 $result = $connection->prepare(getUserInfo());
-$result->bind_param("s",$user);
+$result->bind_param("s", $user);
 $result->execute();
 $UserInf = $result->get_result();
 
-if ($result->num_rows < 1) {
+if ($UserInf->num_rows < 1) {
     header('Location: unlock_account.php?status=failed');
     exit(1);
 }
@@ -42,7 +43,7 @@ if ($result->num_rows < 1) {
 $user = $UserInf->fetch_assoc();
 $blocked = $user["bloqueo"];
 
-if($blocked){
+if ($blocked) {
     $correo = $user["correo"];
     $nombre = $user["nombre"];
 
@@ -65,7 +66,7 @@ if($blocked){
         $mail->Subject = 'Recuperacion de cuenta';
         $mail->Body = '<h1 style="color: blue;">Recuperacion de cuenta de PumpedUp KickShop</h1>
                         <p>Use esta clave generada para poder desbloquear su cuenta.</p><br>
-                        <p style="color: red;">'.$new_pass.'</p><br>
+                        <p style="color: red;">' . $new_pass . '</p><br>
                         <p>Recuerde insertar una nueva contraseña al ingresar la que le hemos brindado, esto por motivos de seguridad.</p><br>
                         <h5>Este correo no recibe respuestas.</h5>';
         $mail->send();
@@ -74,15 +75,14 @@ if($blocked){
     }
     $id = $user["idusuario"];
     $hash = hashPassword($new_pass);
-    $update_pass = $connection -> prepare(updateUserPassword());
+    $update_pass = $connection->prepare(updateUserPassword());
     $update_pass->bind_param("si", $hash, $id);
     $ok = $update_pass->execute();
-    $new_pass = $connection -> prepare(setGeneratedPassword());
+    $new_pass = $connection->prepare(setGeneratedPassword());
     $new_pass->bind_param("i", $id);
     $ok = $new_pass->execute();
     header('Location: unlock_account.php?status=success');
-}
-else{
+} else {
     header('Location: login.php');
     exit(1);
 }

@@ -23,7 +23,7 @@ try {
         $results->execute();
         $product = $results->get_result();
         $producto = $product->fetch_assoc();
-        
+
         if (!$producto) {
             throw new Exception("No se pudo cargar el producto con id:  " . $id);
         }
@@ -70,7 +70,7 @@ while ($categorias[] = $results->fetch_assoc());
                 foreach ($categorias as $i => $categoria) {
                     if (empty($categoria)) continue;
                     echo '
-                        <option ' . (!empty($producto["idCategoria"]) ? 'selected' : '') . ' value="' . $categoria['idCategoria'] . '"> ' . $categoria["nombre"] . '</option>
+                        <option ' . ($producto["idCategoria"] ==  $categoria['idCategoria'] ? 'selected' : '') . ' value="' . $categoria['idCategoria'] . '"> ' . $categoria["nombre"] . '</option>
                         ';
                 }
                 ?>

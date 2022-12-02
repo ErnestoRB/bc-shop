@@ -7,7 +7,7 @@ function registerUser()
 
 function updateUserPassword()
 {
-    return "UPDATE users SET contraseña = '?' WHERE idusuario = '?'";
+    return "UPDATE users SET contraseña = ? WHERE idusuario = ?";
 }
 
 function setGeneratedPassword()
@@ -22,22 +22,22 @@ function unsetGeneratedPassword()
 
 function blockUserAccount()
 {
-    return "UPDATE users SET bloqueo = 1 WHERE idusuario = '?'";
+    return "UPDATE users SET bloqueo = 1 WHERE idusuario = ?";
 }
 
 function releaseUserAccount()
 {
-    return "UPDATE users SET bloqueo = 0 WHERE idusuario = '?'";
+    return "UPDATE users SET bloqueo = 0 WHERE idusuario = ?";
 }
 
 function incrementFailed()
 {
-    return "UPDATE users SET fallidos=fallidos+1 WHERE idusuario = '?'";
+    return "UPDATE users SET fallidos=fallidos+1 WHERE idusuario = ?";
 }
 
 function clearFailed()
 {
-    return "UPDATE users SET fallidos = 0 WHERE idusuario = '?'";
+    return "UPDATE users SET fallidos = 0 WHERE idusuario = ?";
 }
 
 function addCategory()
@@ -62,7 +62,7 @@ function addCupon()
 
 function deleteCupon()
 {
-    return "DELETE FROM cupones WHERE codigo = '?';";
+    return "DELETE FROM cupones WHERE codigo = ?;";
 }
 
 function addProduct()
@@ -72,12 +72,12 @@ function addProduct()
 
 function updateProduct()
 {
-    return "UPDATE productos SET nombre='?', idCategoria=?, descripcion='?', existencia=?, precio=? WHERE idProducto = ?";
+    return "UPDATE productos SET nombre=?, idCategoria=?, descripcion=?, existencia=?, precio=? WHERE idProducto = ?";
 }
 
 function updateProductWithImage()
 {
-    return "UPDATE productos SET nombre='?', idCategoria=?, descripcion='?', existencia=?, precio=?, imagen='?' WHERE idProducto = ?";
+    return "UPDATE productos SET nombre=?, idCategoria=?, descripcion=?, existencia=?, precio=?, imagen=? WHERE idProducto = ?";
 }
 
 function deleteProduct()
@@ -97,12 +97,12 @@ function addProductToSale()
 
 function getUserInfo()
 {
-    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos, passgenerado FROM users WHERE cuenta = '?'";
+    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos, passgenerado FROM users WHERE cuenta = ?";
 }
 
 function getUserInfoByEmail()
 {
-    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, `admin`, bloqueo, fallidos, passgenerado FROM users WHERE correo = '?'";
+    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, `admin`, bloqueo, fallidos, passgenerado FROM users WHERE correo = ?";
 }
 
 function getProduct()

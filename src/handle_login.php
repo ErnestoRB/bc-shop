@@ -38,32 +38,31 @@ try {
         if ($connection->connect_errno) {
             throw new Exception("Error del servidor");
         }
-        $result = $connection->prepare(getUserInfoByEmail());
-        $result->bind_param("s", $email);
-        $result->execute();
-        $email = $result->get_result();
+        $ps = $connection->prepare(getUserInfoByEmail());
+        $ps->bind_param("s", $email);
+        $ps->execute();
+        $result = $ps->get_result();
         if ($result->num_rows < 1) {
             throw new Exception("Credenciales inválidas");
         }
-        $user = $email->fetch_assoc();
+        $user = $result->fetch_assoc();
         $hash = $user["contraseña"];
         $id = $user["idusuario"];
-        $generated = $user["passgenerado"];
-        $blocked = false;
+        $generated = (bool) $user["passgenerado"];
+        $blocked = (bool) $user["bloqueo"];
         $cuenta = $user["cuenta"];
 
-        if ($user["fallidos"] >= 3) {
-            $blocked = $connection->prepare(blockUserAccount());
-            $blocked->bind_param('i', $id);
-            $ok = $blocked->execute();
+        if ($user["fallidos"] >= 3 && !$generated) {
+            $blockedQuery = $connection->prepare(blockUserAccount());
+            $blockedQuery->bind_param('i', $id);
+            $ok = $blockedQuery->execute();
         }
-        if ($generated == 1) {
+        if ($generated) {
             if (validatePassword($password, $hash)) {
                 header('Location: change_pass.php?user=' . $cuenta);
                 exit();
-            } else {
-                header('Location: login.php'); //la contraseña insertada no es correcta
-                exit();
+            } else { //la contraseña insertada no es correcta
+                throw new Exception("Credenciales inválidas");
             }
         }
         if (validatePassword($password, $hash)) {

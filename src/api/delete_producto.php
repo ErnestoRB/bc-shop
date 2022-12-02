@@ -11,6 +11,7 @@ try {
         $connection = getConnection();
         $dltProduct = $connection->prepare(deleteProduct());
         $dltProduct->bind_param("i", $id);
+        $dltProduct->execute();
         $exito = $connection->affected_rows > 0;
         if (!$exito) {
             throw new Exception("No se pudo eliminar");

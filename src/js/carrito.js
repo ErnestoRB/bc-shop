@@ -153,7 +153,7 @@ window.carrito = (function () {
           evt.preventDefault();
           const cantidad = Number(form.elements.cantidad.value);
           const productId = form.elements.id.value;
-          const productData = await getProductData(productId);
+          const productData = await this.getProductData(productId);
           const newCantidad = window.carrito.getCantidad(productId) + cantidad;
           console.log(newCantidad);
           if (newCantidad > productData.existencia) {
@@ -203,7 +203,7 @@ window.carrito = (function () {
       return (
         await Promise.all(
           cart.map((item) => {
-            return getProductData(item.id, item.cantidad);
+            return this.getProductData(item.id, item.cantidad);
           })
         )
       ).filter((item) => item != undefined);

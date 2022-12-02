@@ -12,3 +12,8 @@ Servicios disponibles:
 **NOTAS**
 
 - Si se necesita hacer un "ambiente" desde cero `docker compose down -v` y luego normal usar el comando del punto #3.
+
+### Cuenta de admin
+
+no_reply_bc@outlook.com
+!!r00tAcce$$!!
