@@ -41,7 +41,7 @@ try {
         $result = $connection->prepare(getUserInfoByEmail());
         $result->bind_param("s", $email);
         $result->execute();
-        $email =$result ->get_result();
+        $email = $result->get_result();
         if ($result->num_rows < 1) {
             throw new Exception("Credenciales inválidas");
         }
@@ -71,6 +71,7 @@ try {
             $_SESSION["nombre"] = $user["nombre"];
             $_SESSION["apellidos"] = $user["apellidos"];
             $_SESSION["email"] = $user["correo"];
+            $_SESSION["esAdmin"]  = $user["admin"];
             $cleared = $connection->prepare(clearFailed());
             $cleared->bind_param('i', $id);
             $ok = $cleared->execute();

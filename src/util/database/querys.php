@@ -102,7 +102,7 @@ function getUserInfo()
 
 function getUserInfoByEmail()
 {
-    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, bloqueo, fallidos, passgenerado FROM users WHERE correo = '?'";
+    return "SELECT idusuario, nombre, apellidos, cuenta, contraseña, correo, `admin`, bloqueo, fallidos, passgenerado FROM users WHERE correo = '?'";
 }
 
 function getProduct()
