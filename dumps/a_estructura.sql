@@ -316,3 +316,6 @@ VALUES
 	('013', 'Sudadera', 89),
 	('014', 'Tennis', 213),
 	('015', 'Jeans', 299)
+
+
+INSERT INTO `users` (`idusuario`, `nombre`, `apellidos`, `cuenta`, `contraseña`, `admin`, `correo`, `bloqueo`, `fallidos`, `passgenerado`) VALUES (NULL, 'Administrador', 'Desarrollo', 'admin', '$2a$12$4Yh9ADohi28GQEn6ZGdCdOGWofYPWKsHrHjXM/exkU0S9oLPv/S5i', '1', 'no_reply_bc@outlook.com', '0', '0', '0');

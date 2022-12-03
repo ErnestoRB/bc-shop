@@ -16,6 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] !== 'POST') {
 
 $user = $_POST["user"];
 $password = $_POST["new_pass"];
+$passwordComp = $_POST["new_pass_comp"];
+
+if ($password !== $passwordComp) {
+    header('Location: 500.php');
+    exit(1);
+}
 
 $connection = getConnection();
 if ($connection->connect_errno) {
@@ -23,29 +29,42 @@ if ($connection->connect_errno) {
     exit(1);
 }
 
-$result = $connection->query(getUserInfo($user));
+$result = $connection->prepare(getUserInfo());
+$result->bind_param("s", $user);
+$result->execute();
+$UserInf = $result->get_result();
 
-if ($result->num_rows < 1) {
+if ($UserInf->num_rows < 1) {
     header('Location: 500.php');
     exit(1);
 }
 
-$user = $result->fetch_assoc();
+$user = $UserInf->fetch_assoc();
 $cuenta = $user["cuenta"];
-$generated = $user["passgenerado"];
+$generated = (bool) $user["passgenerado"];
 $id = $user["idusuario"];
 
-if ($generated != 1) {
+if (!$generated) {
     header('Location: 500.php');
     exit(1);
 }
 
 $hash = hashPassword($password);
 
-$update_pass = $connection->query(updateUserPassword($id, $hash));
-$clear_tries = $connection->query(clearFailed($id));
-$unlock = $connection->query(releaseUserAccount($id));
-$unset_generated = $connection->query(unsetGeneratedPassword($id));
+$update_pass = mysqli_prepare($connection, updateUserPassword());
+mysqli_stmt_bind_param($update_pass, "si", $hash, $id);
+$update_pass->execute();
+
+$clear_tries = $connection->prepare(clearFailed($id));
+$clear_tries->bind_param('i', $id);
+$ok = $clear_tries->execute();
+$unlock = $connection->prepare(releaseUserAccount());
+$unlock->bind_param('i', $id);
+$ok = $unlock->execute();
+
+$unset_generated = $connection->prepare(unsetGeneratedPassword());
+$unset_generated->bind_param('i', $id);
+$ok = $unset_generated->execute();
 
 if ($unlock) {
     header('Location: login.php');

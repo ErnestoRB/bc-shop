@@ -46,9 +46,13 @@ try {
         if ($isEditInput) {
             $id = $_POST['id'];
             if ($archivoVacio) {
-                $connection->query(updateProduct($id, $nombre, $categoria, $descripcion, $cantidad, $precio));
+                $updateProduct = $connection->prepare(updateProduct());
+                $updateProduct->bind_param('sisiii', $nombre, $categoria, $descripcion, $cantidad, $precio, $id);
+                $ok = $updateProduct->execute();
             } else {
-                $connection->query(updateProductWithImage($id, $nombre, $categoria, $descripcion, $cantidad, $precio, $filename));
+                $upProductimg = $connection->prepare(updateProductWithImage());
+                $updateProduct->bind_param('sisiisi', $nombre, $categoria, $descripcion, $cantidad, $precio, $filename, $id);
+                $ok = $updateProduct->execute();
             }
             $exitoso = $connection->affected_rows > 0;
             if (!$exitoso) {
@@ -56,7 +60,10 @@ try {
             }
             $message = "Actualización correcta exitoso";
         } else {
-            $connection->query(addProduct($nombre, $categoria, $descripcion, $cantidad, $precio, $filename));
+            $ps = $connection->prepare(addProduct());
+            $ps->bind_param('sisiis', $nombre, $categoria, $descripcion, $cantidad, $precio, $filename);
+            $ok = $ps->execute();
+
             $exitoso = $connection->affected_rows > 0;
             if (!$exitoso) {
                 throw new Exception("Crear el registro falló");

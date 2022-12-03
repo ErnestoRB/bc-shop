@@ -43,8 +43,10 @@ try {
             }
             if (!$isError) {
                 $hash = hashPassword($pass);
+               
                 $ps = $connection->prepare(registerUser());
                 $ps->bind_param("sssss", $nombre, $apellidos, $cuenta, $hash, $email);
+                
                 $ok = $ps->execute();
                 if ($ok) {
                     $message = "Registrado con éxito";
