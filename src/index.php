@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once "util/bootstrap.html" ?>
+    <script src="/js/tarjetas.js"></script>
     <title>Inicio | Pumped Up KickShop</title>
 </head>
 
@@ -50,7 +51,7 @@
         <div class="justify-content-center row mx-0 text-center">
             <h3>Products</h3>
         </div>
-        <div class="justify-content-center row mx-0">
+        <div id="contprod" class="justify-content-center row mx-0">
             <div class="col-10 flex-wrap d-flex">
 
                 <!-- tarjetas -->
