@@ -1,11 +1,6 @@
 $(document).ready(() => {
 
-    const forms = $("#formCategorias");
-    forms.submit((e) => {
-      e.preventDefault();
-      const id = forms[0].elements.categoria.value;
-      getProducts(id);
-    });
+    
   
     function getProducts(categoria) {
       const contenedor = $("#contprod");
@@ -49,6 +44,7 @@ $(document).ready(() => {
       </div>    
           `);
             contenedor.append(titulo);
+            window.carrito.loadForms();
             
           });
         }
@@ -56,8 +52,6 @@ $(document).ready(() => {
     }
   
     getProducts();
-    setInterval(()=>{
-        getProducts();
-    },5000);
+    
   });
   
