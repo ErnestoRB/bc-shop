@@ -21,7 +21,6 @@ try {
         $descripcion = $_POST["descripcion"];
         $cantidad = $_POST["cantidad"];
         $precio = $_POST["precio"];
-        var_dump($_FILES);
         $campos = array("nombre", "categoria", "descripcion", "cantidad", "precio");
         validatePostArray($campos);
         $archivoVacio = !validateFile("archivo");
@@ -30,11 +29,15 @@ try {
         }
         if (!$archivoVacio) {
             $file = $_FILES["archivo"];
-            if ($file["type"] !== 'image/png') {
-                throw new Exception("No se aceptan imagenes que no sean PNG");
+            if (!preg_match("/image/", $file["type"])) {
+                throw new Exception("No se aceptan archivos que no sean imagenes");
             }
-            $filename = md5($nombre . date('c')) . '.png';
-            $stored = move_uploaded_file($file["tmp_name"], __DIR__ . '/static/' . $filename);
+            $folder = __DIR__ . '/static';
+            $filename = md5($nombre . date('c'));
+            if (!file_exists($folder)) {
+                mkdir($folder);
+            }
+            $stored = move_uploaded_file($file["tmp_name"], $folder . '/' . $filename);
             if (!$stored) {
                 throw new Exception("No se pudo guardar la imagen");
             }
@@ -43,9 +46,13 @@ try {
         if ($isEditInput) {
             $id = $_POST['id'];
             if ($archivoVacio) {
-                $connection->query(updateProduct($id, $nombre, $categoria, $descripcion, $cantidad, $precio));
+                $updateProduct = $connection->prepare(updateProduct());
+                $updateProduct->bind_param('sisiii', $nombre, $categoria, $descripcion, $cantidad, $precio, $id);
+                $ok = $updateProduct->execute();
             } else {
-                $connection->query(updateProductWithImage($id, $nombre, $categoria, $descripcion, $cantidad, $precio, $filename));
+                $upProductimg = $connection->prepare(updateProductWithImage());
+                $updateProduct->bind_param('sisiisi', $nombre, $categoria, $descripcion, $cantidad, $precio, $filename, $id);
+                $ok = $updateProduct->execute();
             }
             $exitoso = $connection->affected_rows > 0;
             if (!$exitoso) {
@@ -53,7 +60,10 @@ try {
             }
             $message = "Actualización correcta exitoso";
         } else {
-            $connection->query(addProduct($nombre, $categoria, $descripcion, $cantidad, $precio, $filename));
+            $ps = $connection->prepare(addProduct());
+            $ps->bind_param('sisiis', $nombre, $categoria, $descripcion, $cantidad, $precio, $filename);
+            $ok = $ps->execute();
+
             $exitoso = $connection->affected_rows > 0;
             if (!$exitoso) {
                 throw new Exception("Crear el registro falló");

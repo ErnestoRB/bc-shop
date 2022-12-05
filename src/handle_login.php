@@ -1,8 +1,10 @@
 <?php
 require_once "util/session.php";
+require_once "util/validation.php";
 require_once "util/database/connection.php";
 require_once "util/database/querys.php";
 require_once "util/hash/password.php";
+require_once "util/captcha.php";
 
 if ($isLogged) {
     header('Location: panel.php');
@@ -17,6 +19,11 @@ if (!isset($message)) {
 };
 try {
     if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+        validatePostArray(array("email", "pass"));
+        $isCaptchaValid = validarCaptcha("code-captcha");
+        if (!$isCaptchaValid) {
+            throw new Exception("El captcha no es correcto");
+        }
         $email = $_POST["email"];
         $password = $_POST["pass"];
         $recordar = empty($_POST["recordar"]) ? false : $_POST["recordar"];
@@ -31,28 +38,31 @@ try {
         if ($connection->connect_errno) {
             throw new Exception("Error del servidor");
         }
-        $result = $connection->query(getUserInfoByEmail($email));
-        if($user["fallidos"] >= 3){
-            $blocked = $connection -> query(blockUserAccount($id));
-        }
+        $ps = $connection->prepare(getUserInfoByEmail());
+        $ps->bind_param("s", $email);
+        $ps->execute();
+        $result = $ps->get_result();
         if ($result->num_rows < 1) {
             throw new Exception("Credenciales inválidas");
         }
         $user = $result->fetch_assoc();
         $hash = $user["contraseña"];
         $id = $user["idusuario"];
-        $generated = $user["passgenerado"];
-        $blocked = false;
+        $generated = (bool) $user["passgenerado"];
+        $blocked = (bool) $user["bloqueo"];
         $cuenta = $user["cuenta"];
 
-        if($generated == 1){
-            if(validatePassword($password, $hash)){
-                header('Location: change_pass.php?user='.$cuenta); 
+        if ($user["fallidos"] >= 3 && !$generated) {
+            $blockedQuery = $connection->prepare(blockUserAccount());
+            $blockedQuery->bind_param('i', $id);
+            $ok = $blockedQuery->execute();
+        }
+        if ($generated) {
+            if (validatePassword($password, $hash)) {
+                header('Location: change_pass.php?user=' . $cuenta);
                 exit();
-            }
-            else{
-                header('Location: login.php'); //la contraseña insertada no es correcta
-                exit();
+            } else { //la contraseña insertada no es correcta
+                throw new Exception("Credenciales inválidas");
             }
         }
         if (validatePassword($password, $hash)) {
@@ -60,14 +70,18 @@ try {
             $_SESSION["nombre"] = $user["nombre"];
             $_SESSION["apellidos"] = $user["apellidos"];
             $_SESSION["email"] = $user["correo"];
-            $cleared = $connection -> query(clearFailed($id));
+            $_SESSION["esAdmin"]  = $user["admin"];
+            $cleared = $connection->prepare(clearFailed());
+            $cleared->bind_param('i', $id);
+            $ok = $cleared->execute();
             header('Location: panel.php');
         } else {
-            if($blocked){
+            if ($blocked) {
                 header('Location: unlock_account.php');
-            }
-            else{
-                $attempt = $connection -> query(incrementFailed($id));
+            } else {
+                $attempt = $connection->prepare(incrementFailed());
+                $attempt->bind_param('i', $id);
+                $ok = $attempt->execute();
                 throw new Exception("Credenciales inválidas");
             }
         }

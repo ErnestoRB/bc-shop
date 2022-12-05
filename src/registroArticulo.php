@@ -3,7 +3,7 @@ include_once "util/session.php";
 include_once "util/database/connection.php";
 include_once "util/database/querys.php";
 if (!$isLogged) {
-    header('Location: /');
+    header('Location: login.php');
     exit();
 }
 $isEdit = isset($_GET["edit"]);
@@ -18,8 +18,12 @@ $connection = getConnection();
 try {
     if ($isEdit) {
         $id = $_GET["edit"];
-        $results = $connection->query(getProduct($id));
-        $producto = $results->fetch_assoc();
+        $results = $connection->prepare(getProduct());
+        $results->bind_param("i", $id);
+        $results->execute();
+        $product = $results->get_result();
+        $producto = $product->fetch_assoc();
+
         if (!$producto) {
             throw new Exception("No se pudo cargar el producto con id:  " . $id);
         }
@@ -47,12 +51,6 @@ while ($categorias[] = $results->fetch_assoc());
     <?php include_once "util/bootstrap.html" ?>
     <title>Panel de artículos</title>
 </head>
-<div style="background:#373737;" class=" n1">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button style="background:#373737" class="btn btn-primary me-md-2" type="button"><i class="bi bi-cart-fill"></i></button>
-        <button style="background:#373737" class="btn btn-primary" type="button"><i class="bi bi-person"></i></button>
-    </div>
-</div>
 <?php include "layout/navbar.php" ?>
 
 <main id="content">
@@ -72,7 +70,7 @@ while ($categorias[] = $results->fetch_assoc());
                 foreach ($categorias as $i => $categoria) {
                     if (empty($categoria)) continue;
                     echo '
-                        <option ' . (!empty($producto["idCategoria"]) ? 'selected' : '') . ' value="' . $categoria['idCategoria'] . '"> ' . $categoria["nombre"] . '</option>
+                        <option ' . ($producto["idCategoria"] ==  $categoria['idCategoria'] ? 'selected' : '') . ' value="' . $categoria['idCategoria'] . '"> ' . $categoria["nombre"] . '</option>
                         ';
                 }
                 ?>

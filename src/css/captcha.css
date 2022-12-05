@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "NeoPrint M319";
+  src: url("/fonts/NeoPrintM319.otf");
+}
+
+#captcha {
+    font-family: "NeoPrint M319";
+}

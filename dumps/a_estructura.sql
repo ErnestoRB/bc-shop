@@ -7,6 +7,9 @@
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
+CREATE DATABASE IF NOT EXISTS development;
+USE development;
+
 SET SQL_MODE
 = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -22,7 +25,6 @@ SET time_zone
 --
 -- Database: `bd_shop`
 --
-USE development;
 
 -- --------------------------------------------------------
 
@@ -46,8 +48,8 @@ CREATE TABLE `categoria`
 
 CREATE TABLE `cupones`
 (
-  `codigo` int
-(15) NOT NULL,
+  `codigo` varchar
+(50) NOT NULL,
   `porcentaje` int
 (11) NOT NULL,
   `minim` int
@@ -79,6 +81,7 @@ CREATE TABLE `productos`
 (100) NOT NULL,
   `existencia` int
 (5) NOT NULL,
+`agregado` datetime DEFAULT CURRENT_TIMESTAMP,
   `precio` int
 (5) NOT NULL,
   `imagen` varchar
@@ -103,6 +106,7 @@ CREATE TABLE `users`
 (20) NOT NULL,
   `contraseña` varchar
 (100) NOT NULL,
+`admin` TINYINT DEFAULT 0,
   `correo` varchar
 (50) NOT NULL,
   `bloqueo` tinyint
@@ -270,6 +274,48 @@ ADD CONSTRAINT `venta_producto_ibfk_2` FOREIGN KEY
 DELETE CASCADE;
 COMMIT;
 
+INSERT INTO `categoria` (`nombre`)
+VALUES
+  ('Hombre'),
+  ('Mujer'),
+  ('Infantil');
+
+INSERT INTO `cupones` (`codigo`,
+`porcentaje`,
+`minim`,
+`maximo`)
+VALUES
+('LLEGAMOS10',10,1000,NULL),
+('QUINCEOFF',15,10000,NULL);
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE TABLE Ventas
+(
+	ID_Venta CHAR(5),
+	Prenda VARCHAR(50),
+	Cantidad INT
+);
+
+INSERT INTO Ventas
+	(ID_Venta, Prenda, Cantidad)
+VALUES
+	('001', 'Camisa', 65),
+	('002', 'Pantalon', 201),
+	('003', 'Camiseta', 99),
+	('004', 'Calcetines', 106),
+	('005', 'Corbata', 54),
+	('006', 'Vestido', 322),
+	('007', 'Falda', 201),
+	('008', 'Collar', 48),
+	('009', 'Blusa', 196),
+	('010', 'Playera', 24),
+	('011', 'Zapatillas', 12),
+	('012', 'Sueter', 80),
+	('013', 'Sudadera', 89),
+	('014', 'Tennis', 213),
+	('015', 'Jeans', 299)
+
+
+INSERT INTO `users` (`idusuario`, `nombre`, `apellidos`, `cuenta`, `contraseña`, `admin`, `correo`, `bloqueo`, `fallidos`, `passgenerado`) VALUES (NULL, 'Administrador', 'Desarrollo', 'admin', '$2a$12$4Yh9ADohi28GQEn6ZGdCdOGWofYPWKsHrHjXM/exkU0S9oLPv/S5i', '1', 'no_reply_bc@outlook.com', '0', '0', '0');

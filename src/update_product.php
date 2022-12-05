@@ -26,7 +26,11 @@ try {
             }
         }
         $connection = getConnection();
-        $connection->query(updateProduct($id, $nombre, $categoria, $descripcion, $cantidad, $precio, $filename));
+        $updateProduct = $connection->prepare(updateProduct());
+        $updateProduct->bind_param('sisiii', $nombre, $categoria, $descripcion, $cantidad, $precio, $id);
+        $ok = $updateProduct->execute();
+        
+         
         $exitoso = $connection->affected_rows > 0;
         if (!$exitoso) {
             throw new Exception("Registro no exitoso");

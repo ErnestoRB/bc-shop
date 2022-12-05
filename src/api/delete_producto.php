@@ -9,7 +9,9 @@ try {
             throw new Exception("No tienes permisos");
         $id = $_GET["id"];
         $connection = getConnection();
-        $connection->query(deleteProduct($id));
+        $dltProduct = $connection->prepare(deleteProduct());
+        $dltProduct->bind_param("i", $id);
+        $dltProduct->execute();
         $exito = $connection->affected_rows > 0;
         if (!$exito) {
             throw new Exception("No se pudo eliminar");
