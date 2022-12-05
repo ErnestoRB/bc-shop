@@ -25,7 +25,7 @@ $(document).ready(() => {
                 ? '<span class="badge text-bg-danger">Oferta!</span>'
                 : ""
             } </h5>
-              <p class="card-text">${articulo.descripcion}</p>
+              
               <p>Existencias: ${articulo.existencia}</p>
               <p>
                   <span class="' . ${

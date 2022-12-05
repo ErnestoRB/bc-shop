@@ -51,8 +51,8 @@
         <div class="justify-content-center row mx-0 text-center">
             <h3>Products</h3>
         </div>
-        <div id="contprod" class="justify-content-center row mx-0"><!--Contenedor para ajax-->
-            <div class="col-10 flex-wrap d-flex">
+        <div id="contprod" class="d-flex flex-wrap; align-items:center" ><!--Contenedor para ajax-->
+            <div class="flex-wrap d-flex">
 
                 
                 
