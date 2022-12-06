@@ -110,6 +110,20 @@ function getProduct()
     return "SELECT idProducto, nombre, idCategoria, descripcion, existencia, precio, imagen FROM productos WHERE idProducto = ?";
 }
 
+function getProductCantidad()
+{
+    return "SELECT idProducto, nombre, idCategoria, descripcion, existencia, ? cantidad, precio, imagen FROM productos WHERE idProducto = ?";
+}
+
+function getCuponByCodigo()
+{
+    return "SELECT codigo, porcentaje, minim, maximo FROM cupones WHERE codigo = ?";
+}
+
+function getEnvios()
+{
+    return "SELECT id, nombre, costo FROM envio";
+}
 
 function getProducts()
 {

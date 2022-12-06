@@ -44,7 +44,7 @@ window.carrito = (function () {
         wrapper.append(element);
         wrapper.innerHTML += `<div class="d-flex justify-content-end">
         <button data-cart-clear class="btn btn-danger">Limpiar carrito</button>
-        <a class="btn btn-primary" href="carrito.php">Ir al carrito</a>
+        <a class="btn btn-primary" href="/carrito.php">Ir al carrito</a>
         </div>`;
       } else {
         wrapper.innerHTML += `<b>No has agregado ningun artículo a el carrito</b>`;

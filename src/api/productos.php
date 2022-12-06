@@ -5,6 +5,13 @@ require_once __DIR__ . '/../util/database/querys.php';
 $conn = getConnection();
 if (!empty($_GET["categoria"])) {
     $categoria = $_GET["categoria"];
+    if ($categoria == 'todos') {
+        $ps = $conn->prepare(getProducts());
+        $ps->execute();
+        $data = $ps->get_result();
+        echo json_encode($data->fetch_all(MYSQLI_ASSOC));
+        exit();
+    }
     $ps = $conn->prepare(getProductsByCategory());
     $ps->bind_param("i", $categoria);
     $ps->execute();

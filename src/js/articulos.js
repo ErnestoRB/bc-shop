@@ -2,8 +2,8 @@ $(document).ready(() => {
   const forms = $("#formCategorias");
   forms.submit((e) => {
     e.preventDefault();
-    const id = forms[0].elements.categoria.value;
-    getProducts(id);
+    const categoria = forms[0].elements.categoria.value;
+    getProducts(categoria);
   });
 
   function getProducts(categoria) {
@@ -54,5 +54,5 @@ $(document).ready(() => {
     );
   }
 
-  getProducts();
+  getProducts(forms[0].elements.categoria.value);
 });
