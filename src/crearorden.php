@@ -1,5 +1,10 @@
 <?php include_once "util/session.php";
-if (!$_SESSION["orden"]) {
+if (!$isLogged) {
+    header('Location: login.php');
+    exit();
+}
+
+if (empty($_SESSION["orden"])) {
     header('Location: carrito.php');
     exit();
 }
@@ -57,57 +62,20 @@ $descuentoSubtotal = $subtotal * $porcentajeDescuento;
 </head>
 
 <body>
+    <?php include "layout/navbar.php" ?>
     <main id="content">
         <div class="container" style="--bs-columns: 10; --bs-gap: 1rem;">
 
             <div class="row">
                 <form id="orden-form" class="col-8">
                     <div class="accordion" id="accordionExample">
-                        <!-- <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Direcciones
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <form class="row g-3">
-
-                                        <div class="col-12">
-                                            <label for="inputAddress" class="form-label">Address</label>
-                                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="inputAddress2" class="form-label">Address 2</label>
-                                            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="inputCity" class="form-label">City</label>
-                                            <input type="text" class="form-control" id="inputCity">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="inputState" class="form-label">State</label>
-                                            <select id="inputState" class="form-select">
-                                                <option selected>Choose...</option>
-                                                <option>...</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="inputZip" class="form-label">Zip</label>
-                                            <input type="text" class="form-control" id="inputZip">
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     Tipo de Envio
                                 </button>
                             </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="container text-center">
                                         <div style="background-color:#ECECEC;" class="row">
@@ -139,7 +107,7 @@ $descuentoSubtotal = $subtotal * $porcentajeDescuento;
                                         <label for="floatingTextarea">Comments</label>
                                     </div> -->
                                     <br>
-                                    <button class="btn btn-primary" type="button">CONTINUAR</button>
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">CONTINUAR</button>
                                 </div>
 
                             </div>
@@ -152,7 +120,7 @@ $descuentoSubtotal = $subtotal * $porcentajeDescuento;
                                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="pago" id="flexRadioDefault3" value="Paypal" checked>
+                                            <input class="form-check-input" type="radio" name="pago" id="flexRadioDefault3" value="Paypal">
                                             <label class="form-check-label" for="flexRadioDefault1">
                                                 Pago Mediante Paypal <i class="bi bi-paypal"></i>
                                             </label>
@@ -257,4 +225,5 @@ $descuentoSubtotal = $subtotal * $porcentajeDescuento;
 
 
     </main>
+    <?php include "layout/footer.html" ?>
 </body>

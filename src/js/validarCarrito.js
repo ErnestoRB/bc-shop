@@ -126,7 +126,8 @@ $(document).ready(function () {
       }).then(async (res) => {
         const json = await res.json();
         if (res.ok) {
-          swal("Orden creada");
+          window.carrito.clearCart();
+          window.location.assign("/crearorden.php");
         } else {
           swal("Error al crear la orden: " + json.message);
         }

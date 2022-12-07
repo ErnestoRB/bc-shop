@@ -87,12 +87,17 @@ function deleteProduct()
 
 function registerSale()
 {
-    return "INSERT INTO venta(idUsuario, fecha) VALUES (?,CURDATE())";
+    return "INSERT INTO venta(idUsuario, fecha, idEnvio, pago) VALUES (?,CURDATE(), ?, ?)";
 }
 
 function addProductToSale()
 {
-    return "INSERT INTO venta_articulo(idProducto, idVenta, cantidad) VALUES (?,?,?)";
+    return "INSERT INTO venta_producto(idProducto, idVenta, cantidad) VALUES (?,?,?)";
+}
+
+function addCouponToSale()
+{
+    return "INSERT INTO venta_cupon(idVenta, idCupon) VALUES (?,?)";
 }
 
 function getUserInfo()

@@ -20,10 +20,22 @@ $(document).ready(() => {
       swal("Falta escoger metodo de pago", "", "error");
       return;
     }
-    swal("Orden hecha!", "", "success");
+    $.ajax("/api/crear_orden.php", {
+      method: "POST",
+      data: JSON.stringify({ envio, politicas, pago }),
+      contentType: "application/json",
+    }).done((data, status) => {
+      const json = JSON.parse(data);
+      console.log(json);
+      if (json.link) {
+        swal("Orden hecha!", "", "success").then((value) =>
+          window.location.assign(json.link)
+        );
+      }
+    });
   });
 
-  const envios = $("[name='envio']").change(function () {
+  $("[name='envio']").change(function () {
     const value = this.dataset.costo;
     console.log(value);
     $("#costoEnvio").text("$" + value);

@@ -66,6 +66,7 @@ try {
             }
         }
         if (validatePassword($password, $hash)) {
+            $_SESSION["id"] = $user["idusuario"];
             $_SESSION["user"] = $user["cuenta"];
             $_SESSION["nombre"] = $user["nombre"];
             $_SESSION["apellidos"] = $user["apellidos"];
