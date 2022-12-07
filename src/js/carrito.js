@@ -72,10 +72,13 @@ window.carrito = (function () {
       });
     }
     const carritoButton = document.getElementById("carrito");
-    carritoButton.addEventListener("click", async (evt) => {
+    carritoButton?.addEventListener("click", async (evt) => {
       evt.preventDefault();
       generateCarritoWindow();
     });
+    if (!carritoButton) {
+      console.warn("No hay ningun botón de carrito en esta pagina");
+    }
     const cartNumber = document.getElementById("cartNumber");
     if (!!cartNumber) {
       cartNumber.textContent = cart.length;
