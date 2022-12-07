@@ -145,3 +145,34 @@ function getProductsByCategory()
 {
     return "SELECT idProducto, p.nombre, c.nombre as categoria, descripcion, existencia, precio, imagen FROM productos as p JOIN categoria as c on c.idCategoria = p.idCategoria WHERE p.idCategoria = ? ORDER BY agregado LIMIT 5";
 }
+
+
+function getProductsFromVenta()
+{
+    return "SELECT v.idVenta, p.nombre, p.precio, vp.cantidad, (p.precio * vp.cantidad) total, c.nombre categoria from venta v JOIN venta_producto vp on v.idVenta = vp.idVenta JOIN productos p on p.idProducto = vp.idProducto JOIN categoria c on c.idCategoria = p.idCategoria WHERE v.idVenta = ?";
+}
+
+function getNumberProductsFromVenta()
+{
+    return "SELECT COUNT(*) Numero_Articulos from venta v JOIN venta_producto vp on vp.idVenta = v.idVenta WHERE v.idVenta = 2 GROUP BY v.idVenta";
+}
+
+function getDetallesFromVenta()
+{
+    return "SELECT v.idVenta, v.fecha, v.pago, e.nombr nombre_envio, e.costo costo_envio from venta v JOIN envio e on e.id = v.idEnvio WHERE idVenta = ?;";
+}
+
+function getTotalesFromVenta()
+{
+    return "SELECT v.idVenta,IFNULL((SUM(porcentaje)/100),0) descuento_cupones, (SUM(p.precio * vp.cantidad)) subtotal, (SUM(p.precio * vp.cantidad) * (1-IFNULL((SUM(porcentaje)/100),0))) subtotal_descuentos , (SUM(p.precio * vp.cantidad) * (1-IFNULL((SUM(porcentaje)/100),0)) * 0.16)iva, (SUM(p.precio * vp.cantidad) * (1-IFNULL((SUM(porcentaje)/100),0)) * 1.16) subtotal_iva, e.costo costo_envio, ((SUM(p.precio * vp.cantidad) * (1-IFNULL((SUM(porcentaje)/100),0)) * 1.16) + e.costo) total from venta v JOIN venta_producto vp on v.idVenta = vp.idVenta JOIN  productos p on p.idProducto = vp.idProducto JOIN categoria c on c.idCategoria = p.idCategoria LEFT JOIN venta_cupon vc on vc.idVenta = v.idVenta LEFT JOIN cupones cp ON cp.codigo = vc.idCupon JOIN envio e on e.id = v.idEnvio WHERE v.idVenta = ? GROUP BY v.idVenta;";
+}
+
+function getNumeroVentasByEnvios()
+{
+    return "SELECT e.nombre envio, COUNT(*) numero_ventas from envio e join venta v on v.idEnvio = e.id group by e.id";
+}
+
+function getNumeroVentasByCategoria()
+{
+    return "SELECT c.nombre categoria, COUNT(*) ventas from venta v join venta_producto vp on vp.idVenta = v.idVenta JOIN productos p on p.idProducto = vp.idProducto JOIN categoria c on c.idCategoria = p.idCategoria GROUP BY p.idCategoria, p.nombre;";
+}
