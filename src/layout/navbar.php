@@ -1,4 +1,7 @@
-<?php require __DIR__ . '/../util/session.php'; ?>
+<?php require_once __DIR__ . '/../util/session.php';
+require_once __DIR__ . '/../util/admin.php';
+$esAdmin = esAdmin();
+?>
 <div style="background:#373737;" class=" n1">
   <div class="d-grid gap-2 d-flex justify-content-end">
     <button id="carrito" class="btn btn-dark me-md-2 border-1 border-white" type="button"><i class="bi bi-cart-fill"></i><span id="cartNumber" class="badge text-bg-primary">0</span></button>
@@ -36,33 +39,40 @@
           <a style="color:aliceblue" class="nav-link" href="acerca.php#faq">Preguntas Frecuentes</a>
         </li>
         <li class="nav-item">
-          <a style="color:aliceblue" class="nav-link" href="subscribe.php">Sucribirse</a>
+          <a style="color:aliceblue" class="nav-link" href="subscribe.php">Suscribirse</a>
         </li>
         <li class="nav-item">
           <a style="color:aliceblue" class="nav-link" href="contact_us.php">Contacto</a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item">
+          <a style="color:aliceblue" class="nav-link bg-primary" href="articulos.php">Artículos</a>
+        </li>
+        <?php if ($esAdmin) {
+          echo '
+          <li class="nav-item dropdown">
           <a style="color:aliceblue" class="nav-link dropdown-toggle" href="articulos.php" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Articulos
+            Administrar
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="articulos.php">Articulos Disponibles </a></li>
-            <li><a class="dropdown-item" href="#">Womens</a></li>
-            <li><a class="dropdown-item" href="#">Mens</a></li>
+            <li><a class="dropdown-item" href="/registroArticulo.php">Nuevo artículo </a></li>
+            <li><a class="dropdown-item" href="/articulosPanel.php">Administrar articulos</a></li>
           </ul>
-        </li>
 
+          ';
+        }
+        ?>
         <?php if ($isLogged) {
           echo '
           <li class="nav-item">
-            <a style="color:aliceblue" class="nav-link"  href="panel.php">Panel</a>
+            <a class="nav-link text-primary"  href="panel.php">Panel</a>
           </li>
           <li class="nav-item">
-            <a style="color:aliceblue" class="nav-link" href="logout.php">Salir</a>
+            <a class="text-danger nav-link" href="logout.php">Salir</a>
           </li>
           ';
         }
         ?>
+
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

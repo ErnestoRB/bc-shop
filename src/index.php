@@ -38,28 +38,22 @@
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                        <span class="visually-hidden">Anterior</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                        <span class="visually-hidden">Siguiente</span>
                     </button>
                 </div>
             </div>
         </div>
 
         <div class="justify-content-center row mx-0 text-center">
-            <h3>Products</h3>
+            <h3>Últimos productos</h3>
         </div>
-        <div id="contprod" class="d-flex flex-wrap; align-items:center" ><!--Contenedor para ajax-->
+        <div id="contprod" class="container d-flex flex-wrap">
+            <!--Contenedor para ajax-->
             <div class="flex-wrap d-flex">
-
-                
-                
-
-                
-
-
             </div>
         </div>
         <div class="justify-content-center row mx-0">

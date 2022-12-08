@@ -56,7 +56,7 @@ while ($categorias[] = $results->fetch_assoc());
 <main id="content">
     <div class="container">
 
-        <form class="form" action="<?= $_SERVER["PHP_SELF"] ?>" method="post" enctype="multipart/form-data">
+        <form class="bg-white p-2 p-md-4 form" action="<?= $_SERVER["PHP_SELF"] ?>" method="post" enctype="multipart/form-data">
             <h1><?php echo $isEdit ? "Actualizar producto" : "Registrar nuevo producto" ?></h1>
             <?php if ($isEdit) {
                 echo '<input type="hidden" name="id" value="' . $id . '">';
@@ -80,7 +80,7 @@ while ($categorias[] = $results->fetch_assoc());
             <label for="cantidad">Cantidad</label>
             <input class="form-control" type="number" name="cantidad" id="cantidad" min="0" max="1000" value="<?= !empty($producto["existencia"]) ? $producto["existencia"] : '1'  ?>">
             <label for="precio">Precio</label>
-            <input class="form-control" type="number" name="precio" id="precio" value="<?= !empty($producto["precio"]) ? $producto["precio"] : '0'  ?>">
+            <input class="form-control" type="number" name="precio" id="precio" value="<?= !empty($producto["precio"]) ? $producto["precio"] : ''  ?>">
             <label for="archivo"></label>
             <?php if (!empty($producto["imagen"])) {
                 echo '

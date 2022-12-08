@@ -17,18 +17,27 @@ if (!$isLogged) {
 </head>
 
 <body>
-    
+
     <?php include "layout/navbar.php" ?>
     <main id="content">
-        <div class="container">
+        <div class="container bg-white p-2 p-md-4">
             <h1>Hola "<?= $_SESSION["user"] ?>"</h1>
-            <h2>Este es el panel de control. </h2>
+            <p>Este es el panel de control. </p>
             <hr>
-            <h4>Acciones</h4>
-            <div class="btn-group">
-                <a href="/registroArticulo.php" class="btn btn-primary">Registrar articulo</a>
-                <a href="/articulosPanel.php" class="btn btn-primary">Articulos</a>
-            </div>
+            <h4>Historial de pedidos</h4>
+            <?php include_once "historden.php" ?>
+            <?php if ($esAdmin) {
+                echo '
+                <hr>
+                <h4>Acciones de administrador</h4>
+                <div class="btn-group">
+                    <a href="/registroArticulo.php" class="btn btn-primary">Registrar articulo</a>
+                    <a href="/articulosPanel.php" class="btn btn-primary">Articulos</a>
+                </div>
+                ';
+            }
+            ?>
+
         </div>
     </main>
     <?php include "layout/footer.html" ?>
