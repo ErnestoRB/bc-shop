@@ -30,6 +30,7 @@ require_once 'util/get_categorias.php';
                     <form id="formCategorias">
                         <label for="categoria">Filtrar por categoria</label>
                         <select class="form-control" name="categoria" id="">
+                            <option value="todos">Todos</option>
                             <?php
                             foreach ($categoriasArray as $categoria) {
                                 echo '<option value="' . $categoria["idCategoria"] . '">' . $categoria["nombre"] . ' </option>';

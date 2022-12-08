@@ -44,7 +44,7 @@ window.carrito = (function () {
         wrapper.append(element);
         wrapper.innerHTML += `<div class="d-flex justify-content-end">
         <button data-cart-clear class="btn btn-danger">Limpiar carrito</button>
-        <a class="btn btn-primary" href="carrito.php">Ir al carrito</a>
+        <a class="btn btn-primary" href="/carrito.php">Ir al carrito</a>
         </div>`;
       } else {
         wrapper.innerHTML += `<b>No has agregado ningun artículo a el carrito</b>`;
@@ -72,10 +72,13 @@ window.carrito = (function () {
       });
     }
     const carritoButton = document.getElementById("carrito");
-    carritoButton.addEventListener("click", async (evt) => {
+    carritoButton?.addEventListener("click", async (evt) => {
       evt.preventDefault();
       generateCarritoWindow();
     });
+    if (!carritoButton) {
+      console.warn("No hay ningun botón de carrito en esta pagina");
+    }
     const cartNumber = document.getElementById("cartNumber");
     if (!!cartNumber) {
       cartNumber.textContent = cart.length;
@@ -142,6 +145,7 @@ window.carrito = (function () {
           json.cantidad = cantidad;
           return json;
         } else {
+          this.removeFromCart(id);
           return undefined;
         }
       });
