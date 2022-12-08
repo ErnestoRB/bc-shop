@@ -2,6 +2,9 @@
 require_once __DIR__ . '/../util/database/connection.php';
 require_once __DIR__ . '/../util/database/querys.php';
 if (isset($_GET["id"])) {
+    if (isset($_SESSION["oferta"])) {
+        $idOferta = $_SESSION["oferta"];
+    }
     $id = $_GET["id"];
     $conn = getConnection();
     $ps = $conn->prepare(getProduct());

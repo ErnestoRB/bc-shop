@@ -13,9 +13,9 @@ $(document).ready(() => {
       "http://localhost:9999/api/productos.php?categoria=" + categoria,
       function (data, status) {
         const obj = JSON.parse(data);
-        console.log(obj);
+        console.log(data);
         obj.forEach((articulo) => {
-          let esDeOferta = true;
+          let esDeOferta = articulo.oferta;
           let titulo = $("<div>").html(`
         <div class="card col-3" style="width: 18rem;">
         <img height="256" height "256" src="/static/${
