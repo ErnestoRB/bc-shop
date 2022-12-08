@@ -37,7 +37,8 @@ $(document).ready(() => {
 
   $("[name='envio']").change(function () {
     const value = this.dataset.costo;
-    console.log(value);
     $("#costoEnvio").text("$" + value);
+    console.log(subtotal);
+    $("#total").text("$" + (Number(subtotal) + Number(value)));
   });
 });

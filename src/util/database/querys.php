@@ -95,6 +95,11 @@ function addProductToSale()
     return "INSERT INTO venta_producto(idProducto, idVenta, cantidad) VALUES (?,?,?)";
 }
 
+function decreaseExistencias()
+{
+    return "UPDATE productos SET existencia=existencia-? WHERE idProducto = ?;";
+}
+
 function addCouponToSale()
 {
     return "INSERT INTO venta_cupon(idVenta, idCupon) VALUES (?,?)";

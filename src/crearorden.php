@@ -23,14 +23,12 @@ $nombreCupon = '';
 $ps->bind_param("s", $nombreCupon);
 
 
-$subtotal = array_reduce($orden, function ($carry, $element) {
+$subtotalAntesDescuento = $subtotal = array_reduce($orden, function ($carry, $element) {
 
     return $carry + $element["precio"];
 }, 0);
 
-$iva = $subtotal * 0.16;
 $porcentajeDescuento = 0;
-$total = $subtotal + $iva;
 foreach ($_SESSION["orden"]["cupones"] as $nombreCupon) {
     $ps->execute();
     $registro = $ps->get_result()->fetch_assoc();
@@ -48,6 +46,9 @@ foreach ($_SESSION["orden"]["cupones"] as $nombreCupon) {
     }
 }
 $descuentoSubtotal = $subtotal * $porcentajeDescuento;
+$subtotal -= $descuentoSubtotal;
+$iva = $subtotal * 0.16;
+$total = $subtotal + $iva;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,6 +58,9 @@ $descuentoSubtotal = $subtotal * $porcentajeDescuento;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include_once "util/bootstrap.html" ?>
+    <script>
+        const subtotal = <?= $total ?>
+    </script>
     <script src="/js/crearOrden.js"></script>
     <title>Crear Orden | Pumped Up KickShop</title>
 </head>
@@ -168,54 +172,55 @@ $descuentoSubtotal = $subtotal * $porcentajeDescuento;
                         ?>
                         <hr>
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col">
                                 Subtotal
                             </div>
-                            <div class="col-4" style="text-align:left;">
-                                $<?= $subtotal ?>
+                            <div class="col" style="text-align:left;">
+                                $<?= $subtotalAntesDescuento ?>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col">
                                 Cupones (<?= sizeof($cupones) ?>)
                             </div>
                             <div class="col d-flex flex-column" style="text-align:left;">
                                 <?php
                                 foreach ($cupones as $cupon) {
-                                    echo "<li><b>" . $cupon['codigo'] . "</b><span class='badge bg-danger'>-" .  $cupon["porcentaje"] . "%</span>" . "</li>";
+                                    echo "<div><b>" . $cupon['codigo'] . "</b><span class='badge bg-danger'>-" .  $cupon["porcentaje"] . "%</span>" . "</div>";
                                 }
                                 ?>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col">
                                 <b>Subtotal (con cupones aplicados)</b>
                             </div>
-                            <div class="col-4" style="text-align:left;">
-                                $<?= $subtotal + $descuentoSubtotal
+                            <div class="col" style="text-align:left;">
+                                $<?= $subtotal
                                     ?>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col">
                                 Envio
                             </div>
-                            <div id="costoEnvio" class="col-4" style="text-align:left;">
+                            <div id="costoEnvio" class="col" style="text-align:left;">
                                 A seleccionar
                             </div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col">
                                 <b>Total (IVA Incluido)</b>
                                 <br>
                             </div>
-                            <div class="col-4" style="text-align:left;">
+                            <div id="total" class="col" style="text-align:left;">
                                 $<?= $total ?>
                             </div>
 
                             <br>
-                            <div class="col-8 text-muted">Impuestos Incluidos </div><br>
+                            <div class="col text-muted">Impuestos Incluidos </div><br>
+                            <div class="col text-muted">$<?= $iva ?></div><br>
                         </div>
                     </div>
                 </div>

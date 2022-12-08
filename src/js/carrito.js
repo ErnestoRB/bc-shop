@@ -145,6 +145,7 @@ window.carrito = (function () {
           json.cantidad = cantidad;
           return json;
         } else {
+          this.removeFromCart(id);
           return undefined;
         }
       });
