@@ -187,7 +187,7 @@ function getNumeroVentasByEnvios()
 
 function getNumeroVentasByCategoria()
 {
-    return "SELECT c.nombre categoria, COUNT(*) ventas from venta v join venta_producto vp on vp.idVenta = v.idVenta JOIN productos p on p.idProducto = vp.idProducto JOIN categoria c on c.idCategoria = p.idCategoria GROUP BY p.idCategoria, p.nombre;";
+    return "SELECT c.nombre categoria, COUNT(*) ventas from venta v join venta_producto vp on vp.idVenta = v.idVenta JOIN productos p on p.idProducto = vp.idProducto JOIN categoria c on c.idCategoria = p.idCategoria GROUP BY p.idCategoria, c.nombre;";
 }
 function getOrdenesFromUsuario()
 {
