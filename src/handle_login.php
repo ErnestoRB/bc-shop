@@ -76,7 +76,7 @@ try {
             $productos = $connection->query(getProductsId());
             $productos = $productos->fetch_all(MYSQLI_ASSOC);
             if (sizeof($productos) > 0) {
-                $indexProductoOferta = rand(0, sizeof($productos));
+                $indexProductoOferta = rand(0, min(sizeof($productos) - 1, 0));
                 $_SESSION["oferta"] = $productos[$indexProductoOferta]['idProducto'];
             }
             $cleared = $connection->prepare(clearFailed());

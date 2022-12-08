@@ -48,8 +48,8 @@ $(document).ready(() => {
     </div>    
         `);
           contenedor.append(titulo);
-          window.carrito.loadForms();
         });
+        window.carrito.loadForms();
       }
     );
   }

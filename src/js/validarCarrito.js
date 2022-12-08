@@ -26,6 +26,11 @@ $(document).ready(function () {
         return;
       }
       json.carrito?.forEach((articulo) => {
+        articulo.precioOferta = articulo.precio;
+        const esDeOferta = articulo.oferta;
+        if (esDeOferta) {
+          articulo.precioOferta *= 0.9;
+        }
         const deleteButton = $(
           '<button class="btn btn-danger bi bi-trash"></button>'
         );
@@ -40,7 +45,11 @@ $(document).ready(function () {
                         }" class="card-img-top" alt="...">
                     </div>
                     <div class="col-sm-4 ps-2 col-6 py-2">
-                        <div class="">$${articulo.precio}</div>
+                        <div class="">${
+                          esDeOferta
+                            ? `<p class="text-decoration-line-through text-danger">$${articulo.precio}</p>`
+                            : ""
+                        }        $${articulo.precioOferta}</div>
                     </div>
                     <div class="col-sm-2 ps-2 col-6 py-2">
                         <input disabled type="number" value="${
@@ -49,7 +58,7 @@ $(document).ready(function () {
                     </div>
                     <div class="col-sm-3 col-6 p-2 d-flex justify-content-between">
                         <div> <b>$${
-                          articulo.cantidad * articulo.precio
+                          articulo.cantidad * articulo.precioOferta
                         }</b></div>
                         <div data-delete-container>
                         </div>
@@ -59,7 +68,7 @@ $(document).ready(function () {
         console.log(item);
       });
       const total = json.carrito?.reduce((acum, articulo) => {
-        return (acum += articulo.precio * articulo.cantidad);
+        return (acum += articulo.precioOferta * articulo.cantidad);
       }, 0);
 
       const pagarButton = $(
@@ -68,19 +77,19 @@ $(document).ready(function () {
 
       summary.append(
         $(`
-          <div class="d-flex justify-content-between">
-                    <div>
+          <div class="row">
+                    <div class="col">
                         <span>${json.carrito?.length || 0} articulo(s)</span>
                     </div>
-                    <div>
+                    <div class="col">
                         <b>$${total}</b>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <div>
+                <div class="row">
+                    <div class="col">
                         <span>Envio</span>
                     </div>
-                    <div>
+                    <div class="col">
                         <b>A determinar en la siguiente fase</b>
                     </div>
                 </div>
