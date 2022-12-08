@@ -151,7 +151,6 @@ function getProductsByCategory()
     return "SELECT idProducto, p.nombre, c.nombre as categoria, descripcion, existencia, precio, imagen FROM productos as p JOIN categoria as c on c.idCategoria = p.idCategoria WHERE p.idCategoria = ? ORDER BY agregado LIMIT 5";
 }
 
-
 function getProductsFromVenta()
 {
     return "SELECT v.idVenta, p.nombre, p.precio, vp.cantidad, (p.precio * vp.cantidad) total, c.nombre categoria from venta v JOIN venta_producto vp on v.idVenta = vp.idVenta JOIN productos p on p.idProducto = vp.idProducto JOIN categoria c on c.idCategoria = p.idCategoria WHERE v.idVenta = ?";
@@ -180,4 +179,8 @@ function getNumeroVentasByEnvios()
 function getNumeroVentasByCategoria()
 {
     return "SELECT c.nombre categoria, COUNT(*) ventas from venta v join venta_producto vp on vp.idVenta = v.idVenta JOIN productos p on p.idProducto = vp.idProducto JOIN categoria c on c.idCategoria = p.idCategoria GROUP BY p.idCategoria, p.nombre;";
+
+function getOrdenesFromUsuario()
+{
+    return "SELECT idVenta, fecha, e.nombre envio, pago FROM venta v JOIN envio e on e.id = v.idEnvio WHERE idUsuario = ?";
 }
