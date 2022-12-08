@@ -22,24 +22,33 @@ window.carrito = (function () {
         <th>Articulo</th>
         <th>Precio unitario</th>
         <th>Cantidad</th>
-        <th>Total $</th>
+        <th>Precio final</th>
         </tr></thead>`;
         results.forEach((item) => {
-          total += item.precio * item.cantidad;
+          item.precioOferta = item.precio;
+          const esDeOferta = item.oferta;
+          if (esDeOferta) {
+            item.precioOferta *= 0.9;
+          }
+          total += item.precioOferta * item.cantidad;
           element.innerHTML += `<tr>
         <td><button class="btn btn-danger" data-cart-delete="${
           item.idProducto
-        }">Borrar</button></td>
+        }"><i class="bi bi-trash3-fill"></i></button></td>
         <td><img src="/static/${item.imagen}" width="64"></td>
         <td>${item.nombre}</td>
-        <td>$${item.precio}</td>
+        <td>${
+          esDeOferta
+            ? `<p class="text-decoration-line-through text-danger">$${item.precio}</p>`
+            : ""
+        }        $${item.precioOferta}</td>
         <td>${item.cantidad}</td>
-        <td>$${item.precio * item.cantidad}</td>
+        <td>$${item.precioOferta * item.cantidad}</td>
         </tr>`;
         });
         element.innerHTML += `<tr>
         <td colspan="5"></td>
-        <td>Total: $${total}</td>
+        <td>Subtotal: $${total}</td>
         </tr>`;
         wrapper.append(element);
         wrapper.innerHTML += `<div class="d-flex justify-content-end">

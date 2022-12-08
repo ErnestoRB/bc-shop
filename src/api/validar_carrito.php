@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../util/session.php';
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(array("message" => "Sólo metodo POST"));
     exit();
@@ -6,6 +7,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 require_once __DIR__ . '/../util/database/connection.php';
 require_once __DIR__ . '/../util/database/querys.php';
+
+$idOferta = '';
+if (isset($_SESSION["oferta"])) {
+    $idOferta = $_SESSION["oferta"];
+}
 
 $_POST = json_decode(file_get_contents('php://input'), true);
 
@@ -25,6 +31,9 @@ foreach ($_POST as $i => $producto) {
     $cantidad = $producto["cantidad"];
     $ps->execute();
     $articulo = $ps->get_result()->fetch_assoc();
+    if ($idOferta == $articulo["idProducto"]) {
+        $articulo["oferta"] = true;
+    }
     if ($articulo["cantidad"] > $articulo["existencia"]) {
         $articulo["cantidad"] = $articulo["existencia"];
     }

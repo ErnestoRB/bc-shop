@@ -6,7 +6,7 @@ $(document).ready(() => {
       const obj = JSON.parse(data);
       console.log(obj);
       obj.forEach((articulo) => {
-        let esDeOferta = true;
+        let esDeOferta = articulo.oferta;
         let titulo = $("<div>").html(`
           <div class="card col-3" style="width: 18rem;">
           <img height="256" height "256" src="/static/${
@@ -16,7 +16,9 @@ $(document).ready(() => {
         }">
           <div class="card-body">
               <h5 class="card-title"> ${articulo.nombre} ${
-          esDeOferta ? '<span class="badge text-bg-danger">Oferta!</span>' : ""
+          esDeOferta
+            ? '<span class="badge text-bg-danger">Oferta (-10%)!</span>'
+            : ""
         } </h5>
               
               <p>Existencias: ${articulo.existencia}</p>
@@ -24,7 +26,7 @@ $(document).ready(() => {
                   <span class="' . ${
                     esDeOferta ? "text-decoration-line-through text-danger" : ""
                   } . '" >$ ${articulo.precio}</span>
-                  <span> ${esDeOferta ? articulo.precio * 0.9 : ""}</span>
+                  <span> ${esDeOferta ? "$" + articulo.precio * 0.9 : ""}</span>
               </p>
               <form data-cart-form>
                   <input type="hidden" name="id" value="${
@@ -39,8 +41,8 @@ $(document).ready(() => {
       </div>    
           `);
         contenedor.append(titulo);
-        window.carrito.loadForms();
       });
+      window.carrito.loadForms();
     });
   }
 

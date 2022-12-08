@@ -29,7 +29,10 @@ if (empty($_SESSION["orden"])) {
     echo json_encode(array("message" => "Solicitud no válida"));
     exit();
 }
-
+$idOferta = '';
+if (isset($_SESSION["oferta"])) {
+    $idOferta = $_SESSION["oferta"];
+}
 $connection = getConnection();
 try {
     $connection->begin_transaction();
@@ -38,6 +41,7 @@ try {
     $psVenta->execute();
     $idVenta = $psVenta->insert_id;
     $psArticuloVenta = $connection->prepare(addProductToSale()); // agregar articulo a venta (tabla venta_producto)
+    $psArticuloVentaConDescuento = $connection->prepare(addProductWithDiscountToSale()); // agregar articulo con descuento a venta (tabla venta_producto)
     $psDecreaseExistencia = $connection->prepare(decreaseExistencias());  // decrementar existencias (tabla producto)
     $idProducto = 0;
     $cantidad = 1;
@@ -47,7 +51,12 @@ try {
     foreach ($articulosCarrito as $articulo) {
         $idProducto = $articulo["idProducto"];
         $cantidad = $articulo["cantidad"];
-        $psArticuloVenta->execute();
+        if ($idProducto == $idOferta) {
+            $psArticuloVentaConDescuento->bind_param("iiid", $idProducto, $idVenta, $cantidad, $articulo["precioOferta"]);
+            $psArticuloVentaConDescuento->execute();
+        } else {
+            $psArticuloVenta->execute();
+        }
         $psDecreaseExistencia->execute();
     }
     $psCupones = $connection->prepare(addCouponToSale());

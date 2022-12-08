@@ -95,6 +95,11 @@ function addProductToSale()
     return "INSERT INTO venta_producto(idProducto, idVenta, cantidad) VALUES (?,?,?)";
 }
 
+function addProductWithDiscountToSale()
+{
+    return "INSERT INTO venta_producto(idProducto, idVenta, cantidad, precio_oferta) VALUES (?,?,?,?)";
+}
+
 function decreaseExistencias()
 {
     return "UPDATE productos SET existencia=existencia-? WHERE idProducto = ?;";
@@ -140,6 +145,10 @@ function getProducts()
     return "SELECT idProducto, p.nombre, c.nombre as categoria, descripcion, existencia, precio, imagen FROM productos as p JOIN categoria as c on c.idCategoria = p.idCategoria";
 }
 
+function getProductsId()
+{
+    return "SELECT idProducto FROM productos";
+}
 
 function getLatestProducts()
 {
@@ -153,7 +162,7 @@ function getProductsByCategory()
 
 function getProductsFromVenta()
 {
-    return "SELECT v.idVenta, p.nombre, p.precio, vp.cantidad, (p.precio * vp.cantidad) total, c.nombre categoria from venta v JOIN venta_producto vp on v.idVenta = vp.idVenta JOIN productos p on p.idProducto = vp.idProducto JOIN categoria c on c.idCategoria = p.idCategoria WHERE v.idVenta = ?";
+    return "SELECT v.idVenta, p.nombre, p.precio, vp.cantidad, (IFNULL(vp.precio_oferta,p.precio) * vp.cantidad) total, c.nombre categoria from venta v JOIN venta_producto vp on v.idVenta = vp.idVenta JOIN productos p on p.idProducto = vp.idProducto JOIN categoria c on c.idCategoria = p.idCategoria WHERE v.idVenta = ?";
 }
 
 function getNumberProductsFromVenta()
@@ -163,12 +172,12 @@ function getNumberProductsFromVenta()
 
 function getDetallesFromVenta()
 {
-    return "SELECT v.idVenta, v.fecha, v.pago, e.nombr nombre_envio, e.costo costo_envio from venta v JOIN envio e on e.id = v.idEnvio WHERE idVenta = ?;";
+    return "SELECT v.idVenta, v.fecha, v.pago, e.nombre nombre_envio, e.costo costo_envio from venta v JOIN envio e on e.id = v.idEnvio WHERE idVenta = ?;";
 }
 
 function getTotalesFromVenta()
 {
-    return "SELECT v.idVenta,IFNULL((SUM(porcentaje)/100),0) descuento_cupones, (SUM(p.precio * vp.cantidad)) subtotal, (SUM(p.precio * vp.cantidad) * (1-IFNULL((SUM(porcentaje)/100),0))) subtotal_descuentos , (SUM(p.precio * vp.cantidad) * (1-IFNULL((SUM(porcentaje)/100),0)) * 0.16)iva, (SUM(p.precio * vp.cantidad) * (1-IFNULL((SUM(porcentaje)/100),0)) * 1.16) subtotal_iva, e.costo costo_envio, ((SUM(p.precio * vp.cantidad) * (1-IFNULL((SUM(porcentaje)/100),0)) * 1.16) + e.costo) total from venta v JOIN venta_producto vp on v.idVenta = vp.idVenta JOIN  productos p on p.idProducto = vp.idProducto JOIN categoria c on c.idCategoria = p.idCategoria LEFT JOIN venta_cupon vc on vc.idVenta = v.idVenta LEFT JOIN cupones cp ON cp.codigo = vc.idCupon JOIN envio e on e.id = v.idEnvio WHERE v.idVenta = ? GROUP BY v.idVenta;";
+    return "SELECT v.idVenta, IFNULL(SUM(porcentaje),0) descuento_cupones, SUM(v.precio_total) subtotal, SUM(v.precio_total) * (1-IFNULL(SUM(porcentaje),0)) subtotal_descuentos , (SUM(v.precio_total) * (1-IFNULL(SUM(porcentaje),0)) * .16) iva, (SUM(v.precio_total) * (1-IFNULL(SUM(porcentaje),0)) * 1.16) subtotal_iva, e.costo costo_envio, (SUM(v.precio_total) * (1-IFNULL(SUM(porcentaje),0)) * 1.16 + e.costo) total FROM (SELECT v.idVenta, IFNULL(vp.precio_oferta, p.precio) precio, (IFNULL(vp.precio_oferta, p.precio) * cantidad) precio_total, v.idEnvio FROM venta v JOIN venta_producto vp on v.idVenta = vp.idVenta JOIN  productos p on p.idProducto = vp.idProducto) v LEFT JOIN venta_cupon vc on vc.idVenta = v.idVenta LEFT JOIN (SELECT cupones.codigo, (cupones.porcentaje/100) porcentaje from cupones ) cp ON cp.codigo = vc.idCupon JOIN envio e on e.id = v.idEnvio WHERE v.idVenta = ? GROUP BY v.idVenta;";
 }
 
 function getNumeroVentasByEnvios()
