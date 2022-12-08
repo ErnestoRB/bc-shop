@@ -126,3 +126,8 @@ function getProductsByCategory()
 {
     return "SELECT idProducto, p.nombre, c.nombre as categoria, descripcion, existencia, precio, imagen FROM productos as p JOIN categoria as c on c.idCategoria = p.idCategoria WHERE p.idCategoria = ? ORDER BY agregado LIMIT 5";
 }
+
+function getOrdenesFromUsuario()
+{
+    return "SELECT idVenta, fecha, e.nombre envio, pago FROM venta v JOIN envio e on e.id = v.idEnvio WHERE idUsuario = ?";
+}
