@@ -2,6 +2,8 @@
 include_once "util/session.php";
 include_once "util/database/connection.php";
 include_once "util/database/querys.php";
+include_once "util/admin.php";
+
 $articulos = array();
 if (!isset($isError)) {
     $isError = false;
@@ -9,6 +11,12 @@ if (!isset($isError)) {
 if (!isset($message)) {
     $message = '';
 };
+
+if(!esAdmin()){
+    header('Location: index.php');
+    exit();
+}
+
 try {
     //code...
     $connection = getConnection();
