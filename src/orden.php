@@ -1,4 +1,4 @@
-<?php include_once "util/session.php" ?>
+<?php include_once "util/session.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +12,11 @@
 </head>
 
 <body>
+
+<?php
+include('layout/navbar.php');
+if(isset($_GET['id'])){
+?>
   <main id="content">
     <br>
 
@@ -28,25 +33,54 @@
       </div>
     </div>
     <br>
+    <?php
+    include('util/database/connection.php');
+    include('util/database/querys.php');
+    $id = $_GET['id'];
+    $db = getConnection();
+    
+    $orden = $db->prepare(getProductsFromVenta());
+    $orden->bind_param('i',$id);
+    $orden->execute();
+    $result = $orden->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    ?>
     <div class="container text-center" tyle="background-color:white; ">
       <div class="row align-items-start" style="background-color:white;">
-        <div class="col" style="background-color:white;">
-          <p>ARTICULOS DE PEDIDO</p>
-          <img src="..." class="rounded float-start" >
-        </div>
-        <div class="col">
-          <p>PRECIO UNITARIO</p>
-          <p>$1599</p>
-        </div>
-        <div class="col">
-          <p>CANTIDAD</p>
-          <p>2</p>
-        </div>
-        <div class="col">
-          <p>TOTAL DE PEDIDO:</p>
-          <p>$3198</p>
+                  <table class="table table-hover">
+                <thead>
+                    <th scope="col">#</th>
+                    <th scope="col">ARTICULOS DEL PEDIDO</th>
+                    <th scope="col">PRECIO UNITARIO</th>
+                    <th scope="col">CANTIDAD</th>
+                    <th scope="col">TOTAL</th>
+                </thead>
 
-        </div>
+                <tbody>
+                <?php
+                $i = 0;
+                foreach($result as $resultado){
+                ?>
+                  <tr>
+                    <td><?php echo $i++;   ?></td>
+                    <!--numreo  -->
+                    <!--<td><img width="100" src="data:image/png;base64,<?php //echo base64_encode($resultado['imagen']);    ?>"></td>-->
+                    <td></td>
+                    <!--imagen del producto -->
+                    <td><?php echo $resultado['idVenta'];  ?></td>
+                    <!--precio -->
+                    <td><?php echo $resultado['precio'];  ?></td>
+                    <!--cantidad-->
+                    <td><?php echo $resultado['cantidad'];  ?></td>
+                    <!--total  -->
+                    <td><?php echo $resultado['total'];  ?></td>
+                    <!--categoria  -->
+                  </tr>
+                <?php }
+                ?>
+                </tbody>
+
+            </table>
         <hr>
         <div class="container text-center" tyle="background-color:white; ">
           <div class="row align-items-start" style="background-color:white;">
@@ -54,32 +88,36 @@
               <p class="fw-light" style="text-align:left; font-size:13px">Subtotal</p>
               <p class="fw-light" style="text-align:left; font-size:13px">Gastos de envio y preparacion</p>
               <div style="grid-column: span 16; background-color:gainsboro; text-align:left">TOTAL (IVA INCLUIDO)</div>
-              <p class="fw-light" style="text-align:left ; font-size:13px">IVA: $243.20</p>
+              <p class="fw-light" style="text-align:left ; font-size:13px">IVA: <?php ?></p>
               <br>
               <h6 style="text-align:left ;">DETALLES DEL PEDIDO:</h6>
               <br>
-              <p  class="font-monospace" style="text-align:left ;">Referencia de Pedido: ABCUY71910</p>
-              <p  class="font-monospace" style="text-align:left ;">Metodo de Pago: OXXO</p>
-              <p  class="font-monospace" style="text-align:left ;">Metodo de Envio: Envio Estandar</p>
+              <p class="font-monospace" style="text-align:left ;">Referencia de Pedido: <?php ?></p>
+              <p class="font-monospace" style="text-align:left ;">Metodo de Pago: <?php ?></p>
+              <p class="font-monospace" style="text-align:left ;">Metodo de Envio: <?php ?></p>
               <p class="fst-italic" style="text-align:left ;">Envio estandar</p>
 
             </div>
 
             <div class="col" style="background-color:white;">
-              <p class="fw-light" style="text-align:end ; font-size:13px">$3198</p>
-              <p class="fw-light" style="text-align:end ; font-size:13px">$60.50</p>
-              <div style="grid-column: span 20; background-color:gainsboro; text-align:end">$3501.570</div>
-             
-             
+              <p class="fw-light" style="text-align:end ; font-size:13px">1<?php ?></p>
+              <p class="fw-light" style="text-align:end ; font-size:13px">1<?php ?></p>
+              <div style="grid-column: span 20; background-color:gainsboro; text-align:end">1<?php ?></div>
             </div>
-
-
-
           </div>
         </div>
-        
-
-       
-
   </main>
+<?php
+}else{?>
+  <div class="error" style="text-align: center; background-color: #ff000095;">
+    <h1>Uups</h1>
+    <p>parece que hubo un error vuelve a intentarlo</p>
+  </div>
+  <script></script>
+<?php 
+}
+include('layout/footer.html');
+
+?>
+
 </body>
