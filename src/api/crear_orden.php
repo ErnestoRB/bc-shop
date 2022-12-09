@@ -69,6 +69,149 @@ try {
         $psCupones->execute();
     }
     $connection->commit();
+
+    $connection = getConnection();
+    $psArticulos = $connection->prepare(getProductsFromVenta());
+    $psArticulos->bind_param('i', $idVenta);
+    $psArticulos->execute();
+    $articulos = $psArticulos->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    $psDetalles = $connection->prepare(getDetallesFromVenta());
+    $psDetalles->bind_param('i', $idVenta);
+    $psDetalles->execute();
+    $detalles = $psDetalles->get_result()->fetch_all(MYSQLI_ASSOC)[0];
+
+    $psTotales = $connection->prepare(getTotalesFromVenta());
+    $psTotales->bind_param('i', $idVenta);
+    $psTotales->execute();
+    $totales = $psTotales->get_result()->fetch_all(MYSQLI_ASSOC)[0];
+
+    $correoHTML = '<table>';
+    $correoHTML += '
+          <tr>
+            <td>
+              <p>Precio unitario</p>
+            </td>
+            <td>
+              <p>Cantidad</p>
+            </td>
+            <td>
+              <p>Total articulos</p>
+            </td>
+          </tr>
+          ';
+    foreach ($articulos as $articulo) {
+        $correoHTML += '
+          <tr>
+            <td>
+              <p>$' . $articulo['precio'] . '</p>
+            </td>
+            <td>
+              <p>' . $articulo['cantidad'] . '</p>
+            </td>
+            <td>
+              <p>$' . $articulo['total'] . '</p>
+            </td>
+          </tr>
+          ';
+    }
+    $correoHTML += '
+          <tr>
+            <td colspan="2">
+                <p>Subtotal</p>
+            </td>
+            <td>
+              <p>$' . $totales['subtotal'] . '</p>
+            </td>
+          </tr>
+          ';
+    $correoHTML += '
+          <tr>
+            <td colspan="2">
+                <p>Descuento cupones</p>
+            </td>
+            <td>
+              <p>-$' . $totales['descuento_cupones'] . '</p>
+            </td>
+          </tr>
+          ';
+    $correoHTML += '
+          <tr>
+            <td colspan="2">
+                <p>Subtotal con descuentos</p>
+            </td>
+            <td>
+              <p>$' . $totales['subtotal_descuentos'] . '</p>
+            </td>
+          </tr>
+          ';
+    $correoHTML += '
+          <tr>
+            <td colspan="2">
+                <p>IVA</p>
+            </td>
+            <td>
+              <p>$' . $totales['iva'] . '</p>
+            </td>
+          </tr>
+          ';
+    $correoHTML += '
+          <tr>
+            <td colspan="2">
+                <p>Costo envio</p>
+            </td>
+            <td>
+              <p>$' . $totales['costo_envio'] . '</p>
+            </td>
+          </tr>
+          ';
+    $correoHTML += '
+          <tr>
+            <td colspan="2">
+                <p>Total</p>
+            </td>
+            <td>
+              <p>$' . $totales['total'] . '</p>
+            </td>
+          </tr>
+          ';
+    $correoHTML += '
+          <hr>
+          ';
+    $correoHTML += '
+          <tr>
+            <td colspan="2">
+                <p>Pedido</p>
+            </td>
+            <td>
+              <p>#' . $idVenta . '</p>
+            </td>
+          </tr>
+          ';
+    $correoHTML += '
+          <tr>
+            <td colspan="2">
+                <p>Metodo de pago</p>
+            </td>
+            <td>
+              <p>$' . $detalles['pago'] . '</p>
+            </td>
+          </tr>
+          ';
+    $correoHTML += '
+          <tr>
+            <td colspan="2">
+                <p>Tipo de envio</p>
+            </td>
+            <td>
+              <p>$' . $detalles['envio'] . '</p>
+            </td>
+          </tr>
+          ';
+
+    $correoHTML += '</table>';
+
+    // mandar correo
     echo json_encode(array("message" => "Orden creada", "link" => '/orden.php?id=' . $idVenta));
 } catch (\Throwable $th) {
     $connection->rollback();
