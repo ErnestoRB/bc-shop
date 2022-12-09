@@ -2,6 +2,14 @@
 
 require_once __DIR__ . '/../util/session.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+require 'PHPMailer/src/Exception.php';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(array("message" => "Sólo metodo POST"));
     exit();
@@ -210,8 +218,28 @@ try {
           ';
 
     $correoHTML += '</table>';
+    $correo = $_SESSION["email"];
 
-    // mandar correo
+    $mail = new PHPMailer(true);
+
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.office365.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'no_reply_bc@outlook.com';
+        $mail->Password = 'ProyectoFinalSW';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+        $mail->setFrom('no_reply_bc@outlook.com', 'Bash Crashers Support');
+        $mail->addAddress($correo, $nombre);
+        $mail->isHTML(true);
+        $mail->Subject = 'Orden de productos';
+        $mail->Body = $correoHTML;
+        $mail->send();
+    } catch (Exception $exception) {
+        echo "Algo salio mal: " . $mail->ErrorInfo;
+    }
+
     echo json_encode(array("message" => "Orden creada", "link" => '/orden.php?id=' . $idVenta));
 } catch (\Throwable $th) {
     $connection->rollback();
