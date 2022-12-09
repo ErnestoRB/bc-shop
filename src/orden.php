@@ -1,4 +1,30 @@
-<?php include_once "util/session.php" ?>
+<?php include_once "util/session.php";
+include_once "util/database/connection.php";
+include_once "util/database/querys.php";
+$id = '';
+if (!empty($_GET['id'])) {
+  $id = $_GET['id'];
+}
+if (empty($id)) {
+  exit();
+}
+
+$connection = getConnection();
+$psArticulos = $connection->prepare(getProductsFromVenta());
+$psArticulos->bind_param('i', $id);
+$psArticulos->execute();
+$articulos = $psArticulos->get_result()->fetch_all(MYSQLI_ASSOC);
+
+$psDetalles = $connection->prepare(getDetallesFromVenta());
+$psDetalles->bind_param('i', $id);
+$psDetalles->execute();
+$detalles = $psDetalles->get_result()->fetch_all(MYSQLI_ASSOC)[0];
+
+$psTotales = $connection->prepare(getTotalesFromVenta());
+$psTotales->bind_param('i', $id);
+$psTotales->execute();
+$totales = $psTotales->get_result()->fetch_all(MYSQLI_ASSOC)[0];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,56 +56,76 @@
     <br>
     <div class="container text-center" tyle="background-color:white; ">
       <div class="row align-items-start" style="background-color:white;">
-        <div class="col" style="background-color:white;">
-          <p>ARTICULOS DE PEDIDO</p>
-          <img src="..." class="rounded float-start" >
+        <div class="row">
+          <div class="col-3" style="background-color:white;">
+            <p>ARTICULOS DE PEDIDO</p>
+          </div>
+          <div class="col-3">
+            <p>PRECIO UNITARIO</p>
+          </div>
+          <div class="col-3">
+            <p>CANTIDAD</p>
+          </div>
+          <div class="col-3">
+            <p>Total de Articulos</p>
+          </div>
         </div>
-        <div class="col">
-          <p>PRECIO UNITARIO</p>
-          <p>$1599</p>
-        </div>
-        <div class="col">
-          <p>CANTIDAD</p>
-          <p>2</p>
-        </div>
-        <div class="col">
-          <p>TOTAL DE PEDIDO:</p>
-          <p>$3198</p>
 
-        </div>
+        <?php
+        foreach ($articulos as $articulo) {
+          echo '
+          <div class="row">
+            <div class="col-3" style="background-color:white;">
+              <img src="/static/' . $articulo['imagen'] . '" class="rounded img-product-sm ">
+            </div>
+            <div class="col-3">
+              <p>$' . $articulo['precio'] . '</p>
+            </div>
+            <div class="col-3">
+              <p>' . $articulo['cantidad'] . '</p>
+            </div>
+            <div class="col-3">
+              <p>$' . $articulo['total'] . '</p>
+            </div>
+          </div>
+          ';
+        }
+        ?>
+
         <hr>
         <div class="container text-center" tyle="background-color:white; ">
           <div class="row align-items-start" style="background-color:white;">
             <div class="col" style="background-color:white;">
+
               <p class="fw-light" style="text-align:left; font-size:13px">Subtotal</p>
+              <p class="fw-light" style="text-align:left; font-size:13px">Descuento por cupones</p>
+              <p class="fw-light" style="text-align:left; font-size:13px">Subtotal despues de descuento</p>
+              <p class="fw-light" style="text-align:left ; font-size:13px">IVA:</p>
               <p class="fw-light" style="text-align:left; font-size:13px">Gastos de envio y preparacion</p>
               <div style="grid-column: span 16; background-color:gainsboro; text-align:left">TOTAL (IVA INCLUIDO)</div>
-              <p class="fw-light" style="text-align:left ; font-size:13px">IVA: $243.20</p>
               <br>
               <h6 style="text-align:left ;">DETALLES DEL PEDIDO:</h6>
               <br>
-              <p  class="font-monospace" style="text-align:left ;">Referencia de Pedido: ABCUY71910</p>
-              <p  class="font-monospace" style="text-align:left ;">Metodo de Pago: OXXO</p>
-              <p  class="font-monospace" style="text-align:left ;">Metodo de Envio: Envio Estandar</p>
-              <p class="fst-italic" style="text-align:left ;">Envio estandar</p>
-
+              <p class="font-monospace" style="text-align:left ;">Referencia de Pedido: #<?= $id ?></p>
+              <p class="font-monospace" style="text-align:left ;">Metodo de Pago: <?= $detalles['pago'] ?></p>
+              <p class="font-monospace" style="text-align:left ;">Metodo de Envio: <?= $detalles['envio'] ?></p>
             </div>
 
             <div class="col" style="background-color:white;">
-              <p class="fw-light" style="text-align:end ; font-size:13px">$3198</p>
-              <p class="fw-light" style="text-align:end ; font-size:13px">$60.50</p>
-              <div style="grid-column: span 20; background-color:gainsboro; text-align:end">$3501.570</div>
-             
-             
+              <p class="fw-light" style="text-align:end ; font-size:13px">$<?= $totales['subtotal'] ?></p>
+              <p class="fw-light" style="text-align:end ; font-size:13px">-$<?= $totales['descuento_cupones'] ?></p>
+              <p class="fw-light" style="text-align:end ; font-size:13px">$<?= $totales['subtotal_descuentos'] ?></p>
+              <p class="fw-light" style="text-align:end ; font-size:13px">$<?= $totales['iva'] ?></p>
+              <p class="fw-light" style="text-align:end ; font-size:13px">$<?= $totales['costo_envio'] ?></p>
+              <div style="grid-column: span 20; background-color:gainsboro; text-align:end">$<?= $totales['total'] ?></div>
             </div>
-
-
 
           </div>
         </div>
-        
+      </div>
+    </div>
 
-       
+
 
   </main>
 </body>
