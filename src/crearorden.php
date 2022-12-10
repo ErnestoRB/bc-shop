@@ -75,12 +75,30 @@ $total = $subtotal + $iva;
                 <form id="orden-form" class="col-12 col-md-8">
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
+                            <h2 class="accordion-header" id="headOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Direccion de envio
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control" name="domicilio" id="floatingInput" placeholder="name@example.com">
+                                        <label for="floatingInput">Domicilio completo</label>
+                                    </div>
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">CONTINUAR</button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     Tipo de Envio
                                 </button>
                             </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="container text-center">
                                         <div style="background-color:#ECECEC;" class="row">
@@ -125,8 +143,8 @@ $total = $subtotal + $iva;
                                                 Pago Mediante Paypal <i class="bi bi-paypal"></i>
                                             </label>
                                         </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="pago" id="flexRadioDefault4" value="Banco">
+                                        <div class="form-check" id="bancoContainer">
+                                            <input class="form-check-input" type="radio" name="pago" id="bancoInput" value="Banco">
                                             <label class="form-check-label" for="flexRadioDefault1">
                                                 Pago en Banco <i class="bi bi-bank2"></i>
                                             </label>
@@ -134,7 +152,7 @@ $total = $subtotal + $iva;
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="pago" id="flexRadioDefault4" value="Oxxo">
                                             <label class="form-check-label" for="flexRadioDefault1">
-                                                Pago en Oxxo
+                                                Pago en Oxxo <span class="badge bg-primary">Clabe: <b>3470 2181 7350 620</b></span>
                                             </label>
 
                                         </div>
