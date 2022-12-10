@@ -34,6 +34,9 @@ $(document).ready(() => {
                 : `<p>Existencias: ${articulo.existencia}</p>`
             }
             <p>
+            ${articulo.descripcion}
+            </p>
+            <p>
                 <span class="' . ${
                   esDeOferta ? "text-decoration-line-through text-danger" : ""
                 } . '" >$ ${articulo.precio}</span>
