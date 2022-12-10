@@ -58,7 +58,7 @@ try {
             if (!$exitoso) {
                 throw new Exception("Actualizar el producto falló");
             }
-            $message = "Actualización correcta exitoso";
+            $message = "Actualización exitosa";
         } else {
             $ps = $connection->prepare(addProduct());
             $ps->bind_param('sisiis', $nombre, $categoria, $descripcion, $cantidad, $precio, $filename);

@@ -28,6 +28,7 @@
         $mail->Port = 587;
         $mail->setFrom('no_reply_bc@outlook.com', 'Bash Crashers Support');
         $mail->addAddress('comments_bc@outlook.com');
+        $mail->addAddress('no_reply_bc@outlook.com');
         $mail->isHTML(true);
         $mail->Subject = $nombre . ' ha enviado un comentario';
         $mail->Body = "<h1>Comentario de ". $nombre ."</h1>
@@ -40,4 +41,3 @@
 
     header('Location: contact_us.php?status=success');
     exit(1);
-?>
