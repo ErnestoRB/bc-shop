@@ -77,6 +77,7 @@ try {
     $psCupones->execute();
   }
   $connection->commit();
+  unset($_SESSION["orden"]);
 
   $connection = getConnection();
   $psArticulos = $connection->prepare(getProductsFromVenta());
@@ -243,10 +244,10 @@ try {
     $mail->Body = $correoHTML;
     $mail->send();
   } catch (Exception $exception) {
-    echo "Algo salio mal: " . $mail->ErrorInfo;
+    echo json_encode(array("message" => "Orden creada, no fue posible mandar correo", "link" => '/orden.php?id=' . $idVenta));
+    exit();
   }
-
-  echo json_encode(array("message" => "Orden creada", "link" => '/orden.php?id=' . $idVenta));
+  echo json_encode(array("message" => "Orden creada, se envió la orden a su correo", "link" => '/orden.php?id=' . $idVenta));
 } catch (\Throwable $th) {
   $connection->rollback();
   http_response_code(500);
