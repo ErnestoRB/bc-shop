@@ -1,11 +1,13 @@
 <?php
 include_once __DIR__ . "/../util/session.php";
 include_once __DIR__ . "/../util/database/connection.php";
+include_once __DIR__ . "/../util/admin.php";
 include_once __DIR__ . "/../util/database/querys.php";
 try {
     $isDelete = $_SERVER["REQUEST_METHOD"] === 'DELETE';
     if ($isDelete) {
-        if (!$isLogged)
+        include_once "util/admin.php";
+        if (!esAdmin())
             throw new Exception("No tienes permisos");
         $id = $_GET["id"];
         $connection = getConnection();

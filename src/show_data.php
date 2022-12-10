@@ -1,16 +1,35 @@
 <?php
-require_once "util/database/connection.php";
+include_once "util/session.php";
+include_once "util/admin.php";
 
-$conexion = getConnection();
-if ($conexion->connect_errno) {
+require_once './util/database/connection.php';
+require_once './util/database/querys.php';
+
+if (!$isLogged) {
+    header('Location: login.php');
+    exit();
+}
+
+if(!esAdmin()){
+    header('Location: index.php');
+    exit();
+}
+
+$connection = getConnection();
+if ($connection->connect_errno) {
     die('No se pudo conectar');
 }
 
-$sql = "SELECT * FROM Ventas";
-$consulta = $conexion->query($sql);
-$datos = array();
-while ($elemento = $consulta->fetch_object()) {
-    $datos[] = $elemento;
+$byShipping = $connection->query(getNumeroVentasByEnvios());
+$ship = array();
+while ($elemento = $byShipping->fetch_object()) {
+    $ship[] = $elemento;
+}
+
+$byCategory = $connection->query(getNumeroVentasByCategoria());
+$category = array();
+while ($elemento = $byCategory->fetch_object()) {
+    $category[] = $elemento;
 }
 ?>
 
@@ -22,28 +41,32 @@ while ($elemento = $consulta->fetch_object()) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/chart.min.js"></script>
-    <link rel="stylesheet" href="css/data_style.css">
+    <link rel="stylesheet" href="css/graphs.css">
+    <?php include_once "util/bootstrap.html" ?>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <title>Datos de ventas</title>
 </head>
 
 <body>
-    <h1>Prendas vendidas por mes</h1>
-    <div class="graphs">
-        <?php
-        if (isset($_POST['bars'])) {
-            require 'graphs/bars.php';
-        }
-        if (isset($_POST['doughnut'])) {
-            require 'graphs/pie.php';
-        }
-        ?>
-        <form method="post">
-            <input type="submit" value="Ver grafica de barras" name="bars">
-            <input type="submit" value="Ver grafica de pastel" name="doughnut">
-        </form>
-
-    </div>
+    <?php include "layout/navbar.php" ?>
+    <main id="content">
+        <h1>Estadísticas de prendas</h1>
+        <div class="graphs">
+            <?php
+            if (isset($_POST['bars'])) {
+                require 'graphs/bars.php';
+            }
+            if (isset($_POST['doughnut'])) {
+                require 'graphs/pie.php';
+            }
+            ?>
+            <form method="post">
+                <input class="btn btn-primary" type="submit" value="Ventas por envíos (Barras)" name="bars">
+                <input class="btn btn-primary" type="submit" value="Ventas por categoría (Pastel)" name="doughnut">
+            </form>
+        </div>
+    </main>
+    <?php include "layout/footer.html" ?>
 </body>
 
 </html>

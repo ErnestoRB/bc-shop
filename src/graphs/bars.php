@@ -4,17 +4,17 @@
         const data = {
             labels: [
                 <?php
-                    foreach($datos as $objeto){ ?>
-                        "<?php echo $objeto -> Prenda ?>",
+                    foreach($ship as $objeto){ ?>
+                        "<?php echo $objeto -> envio ?>",
                     <?php }
                 ?>
             ],
             datasets: [{
-                label: 'Ventas realizadas por mes',
+                label: 'Ventas realizadas',
                 data: [
                     <?php
-                    foreach($datos as $objeto){ ?>
-                        <?php echo $objeto -> Cantidad; ?>,
+                    foreach($ship as $objeto){ ?>
+                        <?php echo $objeto -> numero_ventas; ?>,
                     <?php }
                 ?>
                 ],

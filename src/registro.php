@@ -25,24 +25,24 @@ if ($isLogged) {
 
   <?php include "layout/navbar.php" ?>
   <main id="content">
-    <h3>Create an acount</h3>
-    <div>
+    <div class="container">
+      <h3>Crear una cuenta</h3>
       <form action="<?= $_SERVER["PHP_SELF"] ?>" class="form bg-white" method="post">
         <div class="justify-content-left d-flex">
 
-          <a class="text-decoration-none text-info" href="login.php">Already have account? Log in instead!</a>
+          <a class="text-decoration-none text-info" href="/login.php">Ya tienes cuenta? Inicia sesión!</a>
         </div>
         <?php include_once "util/handle_error.php" ?>
         <div class="col-md-6">
-          <label for="usuario" class="form-label">Username</label>
+          <label for="usuario" class="form-label">Nombre de usuario</label>
           <input type="text" class="form-control" id="nombre" name="usuario" required>
         </div>
         <div class="col-md-6">
-          <label for="nombre" class="form-label">First Name</label>
+          <label for="nombre" class="form-label">Nombres</label>
           <input type="text" class="form-control" id="nombre" name="nombre" required>
         </div>
         <div class="col-md-6">
-          <label for="apellidos" class="form-label">Last Name</label>
+          <label for="apellidos" class="form-label">Apellidos</label>
           <input type="text" class="form-control" id="apellidos" name="apellidos" required>
         </div>
         <div class="col-md-6">
@@ -51,11 +51,11 @@ if ($isLogged) {
         </div>
 
         <div class="col-md-6">
-          <label for="pass" class="form-label">Password</label>
+          <label for="pass" class="form-label">Contraseña</label>
           <input type="password" class="form-control" id="pass" name="pass" required>
         </div>
         <div class="col-md-6">
-          <label for="pass2" class="form-label">Confirm Password</label>
+          <label for="pass2" class="form-label">Repetir contraseña</label>
           <input type="password" class="form-control" id="pass2" name="pass2" required>
         </div>
         <div class="col-md-6">
@@ -66,7 +66,7 @@ if ($isLogged) {
           <label for="code-captcha" class="form-label">Código captcha</label>
           <input type="text" class="form-control" name="code-captcha" id="valorCapt" required>
         </div>
-        <button type="submit">Enviar</button>
+        <button type="submit" class="btn btn-primary">Enviar</button>
       </form>
     </div>
   </main>

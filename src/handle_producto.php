@@ -1,5 +1,6 @@
 <?php
 include_once "util/session.php";
+include_once "util/admin.php";
 include_once "util/validation.php";
 include_once "util/database/connection.php";
 include_once "util/database/querys.php";
@@ -14,7 +15,7 @@ if (!isset($message)) {
 $isEditInput = isset($_POST["id"]);
 try {
     if ($isPost) {
-        if (!$isLogged)
+        if (!esAdmin())
             throw new Exception("No tienes permisos");
         $nombre = $_POST["nombre"];
         $categoria = $_POST["categoria"];
@@ -58,7 +59,7 @@ try {
             if (!$exitoso) {
                 throw new Exception("Actualizar el producto falló");
             }
-            $message = "Actualización correcta exitoso";
+            $message = "Actualización exitosa";
         } else {
             $ps = $connection->prepare(addProduct());
             $ps->bind_param('sisiis', $nombre, $categoria, $descripcion, $cantidad, $precio, $filename);

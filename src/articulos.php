@@ -41,7 +41,7 @@ require_once 'util/get_categorias.php';
                     </form>
 
                 </div>
-                <div id="contenedorProductos" class="row">
+                <div id="contenedorProductos" class="d-flex flex-wrap">
 
                 </div>
             </div>

@@ -18,7 +18,7 @@
 
         <div class="justify-content-center d-flex mx-0">
 
-            <div class="justify-content-center row mx-0 col-10">
+            <div class="justify-content-center row mx-0 col-12 col-md-10">
 
                 <!-- carrusel -->
                 <div id="carouselExampleIndicators" class="carousel slide my-5" data-bs-ride="true">
@@ -51,17 +51,56 @@
         <div class="justify-content-center row mx-0 text-center">
             <h3>Últimos productos</h3>
         </div>
-        <div id="contprod" class="container d-flex flex-wrap">
+        <div id="contprod" class="container d-flex justify-content-center flex-wrap">
             <!--Contenedor para ajax-->
             <div class="flex-wrap d-flex">
+
+
+
+
+
+
+
             </div>
         </div>
         <div class="justify-content-center row mx-0">
-
         </div>
         <div class="justify-content-center row mx-0">
 
         </div>
+        <div class="justify-content-center d-flex mt-4 mx-0 bg-white">
+
+            <div class="justify-content-center row mx-0 col-10">
+
+                <!-- carrusel -->
+                <div id="carouselCupones" class="carousel slide my-5" data-bs-ride="true">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselCupones" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselCupones" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    </div>
+                    <div class="carousel-inner">
+
+                        <div class="carousel-item active">
+                            <img src="/images/cupon1.jpg" class="d-block w-100" alt="">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/images/cupon2.jpg" class="d-block w-100" alt="">
+                        </div>
+
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselCupones" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselCupones" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
     </main>
     <?php include "layout/footer.html" ?>
 </body>

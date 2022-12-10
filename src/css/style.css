@@ -46,9 +46,24 @@ a#nav-link active {
   background-color: black;
   color: white;
   text-align: center;
-  width: 256px;
-  height: 256px;
+  max-width: 256px;
+  max-height: 256px;
   object-fit: contain;
+}
+
+@media screen and (max-width: 768px) {
+  .img-product {
+    background-color: black;
+    color: white;
+    text-align: center;
+    max-width: 96px;
+    max-height: 96px;
+    object-fit: contain;
+  }
+}
+
+.w-max {
+  width: max-content;
 }
 
 .img-product-sm {
@@ -77,16 +92,16 @@ a#nav-link active {
   -webkit-transform: scale(1.8);
   transform: scale(1.8);
 }
-.col-8 border{
-  background-color:white;
+.col-8 border {
+  background-color: white;
 }
-.col-1 border{
+.col-1 border {
   background-color: gray;
 }
-.table{
-border: 2px solid black;
-} 
-    
-.container text-start{
+.table {
+  border: 2px solid black;
+}
+
+.container text-start {
   padding-bottom: 20px;
 }

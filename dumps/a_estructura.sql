@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: database:3306
--- Tiempo de generación: 06-12-2022 a las 23:16:19
+-- Tiempo de generación: 08-12-2022 a las 22:16:34
 -- Versión del servidor: 8.0.31
 -- Versión de PHP: 8.0.25
 
@@ -193,7 +193,8 @@ CREATE TABLE `venta_cupon` (
 CREATE TABLE `venta_producto` (
   `idProducto` int NOT NULL,
   `idVenta` int NOT NULL,
-  `cantidad` int NOT NULL
+  `cantidad` int NOT NULL,
+  `precio_oferta` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -279,7 +280,7 @@ ALTER TABLE `envio`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `idProducto` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idProducto` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `users`

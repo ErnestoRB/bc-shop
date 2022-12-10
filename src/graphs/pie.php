@@ -4,16 +4,16 @@
         const data = {
             labels: [
                 <?php
-                    foreach($datos as $objeto){ ?>
-                        "<?php echo $objeto -> Prenda ?>",
+                    foreach($category as $objeto){ ?>
+                        "<?php echo $objeto -> categoria ?>",
                     <?php }
                 ?>
             ],
             datasets: [{
                 data: [
                     <?php
-                    foreach($datos as $objeto){ ?>
-                        <?php echo $objeto -> Cantidad; ?>,
+                    foreach($category as $objeto){ ?>
+                        <?php echo $objeto -> ventas; ?>,
                     <?php }
                 ?>
                 ],
@@ -21,9 +21,9 @@
                     <?php
                     $red = 0;
                     $green = 0;
-                    foreach($datos as $objeto){ ?>
+                    foreach($category as $objeto){ ?>
                         '<?php echo "rgb($red, $green, 255)"; 
-                            $red += 30;
+                            $red += 150;
                             if($red > 255 && $green < 255){
                                 $green += 30;
                             } 

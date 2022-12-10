@@ -33,6 +33,7 @@ if (!$isLogged) {
                 <div class="btn-group">
                     <a href="/registroArticulo.php" class="btn btn-primary">Registrar articulo</a>
                     <a href="/articulosPanel.php" class="btn btn-primary">Articulos</a>
+                    <a href="/show_data.php" class="btn btn-primary">Estadísticas de venta</a>
                 </div>
                 ';
             }

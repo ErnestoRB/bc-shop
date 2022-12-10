@@ -9,49 +9,52 @@ $(document).ready(() => {
   function getProducts(categoria) {
     const contenedor = $("#contenedorProductos");
     contenedor.empty();
-    $.get(
-      "http://localhost:9999/api/productos.php?categoria=" + categoria,
-      function (data, status) {
-        const obj = JSON.parse(data);
-        console.log(obj);
-        obj.forEach((articulo) => {
-          let esDeOferta = true;
-          let titulo = $("<div>").html(`
-        <div class="card col-3" style="width: 18rem;">
+    $.get("/api/productos.php?categoria=" + categoria, function (data, status) {
+      const obj = JSON.parse(data);
+      console.log(data);
+      obj.forEach((articulo) => {
+        let esDeOferta = articulo.oferta;
+        const agotado = articulo.existencia == 0;
+        let titulo = $(`
+        <div class="card col-12 col-sm-6 col-md-3">
         <img height="256" height "256" src="/static/${
           articulo.imagen
         }" class="img-product card-img-top img efecto3" alt="imagen de ${
-            articulo.nombre
-          }">
+          articulo.nombre
+        }">
         <div class="card-body">
             <h5 class="card-title"> ${articulo.nombre} ${
-            esDeOferta
-              ? '<span class="badge text-bg-danger">Oferta!</span>'
-              : ""
-          } </h5>
-            <p class="card-text">${articulo.descripcion}</p>
-            <p>Existencias: ${articulo.existencia}</p>
+          esDeOferta
+            ? '<span class="badge text-bg-danger">Oferta (-10%)!</span>'
+            : ""
+        } </h5>
+            ${
+              agotado
+                ? "<b> Agotado </b>"
+                : `<p>Existencias: ${articulo.existencia}</p>`
+            }
             <p>
                 <span class="' . ${
                   esDeOferta ? "text-decoration-line-through text-danger" : ""
                 } . '" >$ ${articulo.precio}</span>
-                <span> ${esDeOferta ? articulo.precio * 0.9 : ""}</span>
+                <span> ${esDeOferta ? "$" + articulo.precio * 0.9 : ""}</span>
             </p>
-            <form data-cart-form>
-                <input type="hidden" name="id" value="${articulo.idProducto}" />
-                <input type="number" class="form-control" name="cantidad" step="" min="1" max="${
-                  articulo.existencia
-                }" value="1" />
-                <button type="submit" class="btn btn-primary"><i class="bi bi-cart-plus-fill"></i></button>
-            </form>
+            ${
+              !agotado
+                ? `<form data-cart-form>
+            <input type="hidden" name="id" value="${articulo.idProducto}" />
+            <input type="number" class="form-control" name="cantidad" step="" min="1" max="${articulo.existencia}" value="1" />
+            <button type="submit" class="btn btn-primary"><i class="bi bi-cart-plus-fill"></i></button>
+        </form>`
+                : ""
+            }
         </div>
     </div>    
         `);
-          contenedor.append(titulo);
-          window.carrito.loadForms();
-        });
-      }
-    );
+        contenedor.append(titulo);
+      });
+      window.carrito.loadForms();
+    });
   }
 
   getProducts(forms[0].elements.categoria.value);

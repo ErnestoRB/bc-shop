@@ -2,10 +2,18 @@
 include_once "util/session.php";
 include_once "util/database/connection.php";
 include_once "util/database/querys.php";
-if (!$isLogged) {
+include_once "util/admin.php";
+
+if (!esAdmin()) {
     header('Location: login.php');
     exit();
 }
+
+if (!esAdmin()) {
+    header('Location: index.php');
+    exit();
+}
+
 $isEdit = isset($_GET["edit"]);
 include "handle_producto.php";
 if (!isset($isError)) {

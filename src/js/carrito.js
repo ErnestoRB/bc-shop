@@ -11,37 +11,49 @@ window.carrito = (function () {
       const results = await window.carrito.getProductsData();
       const wrapper = document.createElement("div");
       wrapper.classList.add("container");
-      const element = document.createElement("table");
+      const tableResponsive = document.createElement("div");
+      tableResponsive.classList.add("table-responsive");
+      const table = document.createElement("table");
       let total = 0;
-      element.classList.add("table", "table-dark", "table-stripped");
+      table.classList.add("table", "table-dark", "table-stripped");
       if (results.length > 0) {
         wrapper.innerHTML += `<b>Hay ${results.length} artículo(s) en el carrito</b>`;
-        element.innerHTML += `<thead><tr>
+        table.innerHTML += `<thead><tr>
         <th>Eliminar</th>
         <th>Imagen</th>
         <th>Articulo</th>
         <th>Precio unitario</th>
         <th>Cantidad</th>
-        <th>Total $</th>
+        <th>Precio final</th>
         </tr></thead>`;
         results.forEach((item) => {
-          total += item.precio * item.cantidad;
-          element.innerHTML += `<tr>
+          item.precioOferta = item.precio;
+          const esDeOferta = item.oferta;
+          if (esDeOferta) {
+            item.precioOferta *= 0.9;
+          }
+          total += item.precioOferta * item.cantidad;
+          table.innerHTML += `<tr>
         <td><button class="btn btn-danger" data-cart-delete="${
           item.idProducto
-        }">Borrar</button></td>
+        }"><i class="bi bi-trash3-fill"></i></button></td>
         <td><img src="/static/${item.imagen}" width="64"></td>
         <td>${item.nombre}</td>
-        <td>$${item.precio}</td>
+        <td>${
+          esDeOferta
+            ? `<p class="text-decoration-line-through text-danger">$${item.precio}</p>`
+            : ""
+        }        $${item.precioOferta}</td>
         <td>${item.cantidad}</td>
-        <td>$${item.precio * item.cantidad}</td>
+        <td>$${item.precioOferta * item.cantidad}</td>
         </tr>`;
         });
-        element.innerHTML += `<tr>
+        table.innerHTML += `<tr>
         <td colspan="5"></td>
-        <td>Total: $${total}</td>
+        <td>Subtotal: $${total}</td>
         </tr>`;
-        wrapper.append(element);
+        tableResponsive.append(table);
+        wrapper.append(tableResponsive);
         wrapper.innerHTML += `<div class="d-flex justify-content-end">
         <button data-cart-clear class="btn btn-danger">Limpiar carrito</button>
         <a class="btn btn-primary" href="/carrito.php">Ir al carrito</a>

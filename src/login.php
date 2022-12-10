@@ -35,7 +35,7 @@ include "handle_login.php";
                     </div>
                     <div class="justify-content-center d-flex flex-wrap">
                         <div class="mb-3 col-xs-12 col-sm-10 col-md-6 ">
-                            <label for="inputPassword" class="form-label fw-bold">Password</label>
+                            <label for="inputPassword" class="form-label fw-bold">Contraseña</label>
                             <input type="password" class="form-control" name="pass" id="inputPassword" required value="<?= !empty($_COOKIE["pass"]) ? $_COOKIE["pass"] : '' ?>">
                         </div>
                     </div>
@@ -56,19 +56,19 @@ include "handle_login.php";
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="si" name="recordar" id="rememberme">
                             <label class="form-check-label" for="rememberme">
-                                Remember my password
+                                Recordar contraseña
                             </label>
                         </div>
                     </div>
                     <div class="justify-content-center d-flex">
-                        <a class="text-decoration-none text-info" href="unlock_account.php">Forgot your password?</a>
+                        <a class="text-decoration-none text-info" href="unlock_account.php">Olvidaste tu cuenta?</a>
                     </div>
                     <div class="justify-content-center d-flex mt-3">
-                        <button type="submit" class="btn btn-info text-white">Sign in</button>
+                        <button type="submit" class="btn btn-info text-white">Iniciar sesión</button>
                     </div>
                     <hr>
                     <div class="justify-content-center d-flex">
-                        <a class="text-decoration-none text-info" href="">No account? Create one here</a>
+                        <a class="text-decoration-none text-info" href="/registro.php">No tienes cuenta? Crea una aquí</a>
                     </div>
                 </div>
             </div>
