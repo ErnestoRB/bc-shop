@@ -4,12 +4,12 @@ include_once "util/database/connection.php";
 include_once "util/database/querys.php";
 include_once "util/admin.php";
 
-if (!$isLogged) {
+if (!esAdmin()) {
     header('Location: login.php');
     exit();
 }
 
-if(!esAdmin()){
+if (!esAdmin()) {
     header('Location: index.php');
     exit();
 }

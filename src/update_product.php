@@ -1,11 +1,12 @@
 <?php
 include_once "util/session.php";
 include_once "util/database/connection.php";
+include_once "util/admin.php";
 include_once "util/database/querys.php";
 $isPost = $_SERVER["REQUEST_METHOD"] === 'POST';
 try {
     if ($isPost) {
-        if (!$isLogged)
+        if (!esAdmin())
             throw new Exception("No tienes permisos");
         $id = $_POST["id"];
         $nombre = $_POST["nombre"];
@@ -29,8 +30,8 @@ try {
         $updateProduct = $connection->prepare(updateProduct());
         $updateProduct->bind_param('sisiii', $nombre, $categoria, $descripcion, $cantidad, $precio, $id);
         $ok = $updateProduct->execute();
-        
-         
+
+
         $exitoso = $connection->affected_rows > 0;
         if (!$exitoso) {
             throw new Exception("Registro no exitoso");
