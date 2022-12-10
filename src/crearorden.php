@@ -83,7 +83,7 @@ $total = $subtotal + $iva;
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" name="domicilio" id="floatingInput" placeholder="name@example.com">
+                                        <input type="text" class="form-control" name="domicilio" id="floatingInput">
                                         <label for="floatingInput">Domicilio completo</label>
                                     </div>
                                     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">CONTINUAR</button>
