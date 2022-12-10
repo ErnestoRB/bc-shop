@@ -51,7 +51,7 @@ try {
                 $updateProduct->bind_param('sisiii', $nombre, $categoria, $descripcion, $cantidad, $precio, $id);
                 $ok = $updateProduct->execute();
             } else {
-                $upProductimg = $connection->prepare(updateProductWithImage());
+                $updateProduct = $connection->prepare(updateProductWithImage());
                 $updateProduct->bind_param('sisiisi', $nombre, $categoria, $descripcion, $cantidad, $precio, $filename, $id);
                 $ok = $updateProduct->execute();
             }
