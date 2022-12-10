@@ -9,7 +9,7 @@ $(document).ready(() => {
         let esDeOferta = articulo.oferta;
         const agotado = articulo.existencia == 0;
         let titulo = $(`
-        <div class="card col col-sm-6 col-md-3">
+        <div class="card col-12 col-sm-6 col-md-3">
         <img height="256" height "256" src="/static/${
           articulo.imagen
         }" class="img-product card-img-top img efecto3" alt="imagen de ${

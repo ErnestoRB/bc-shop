@@ -25,6 +25,29 @@ $(document).ready(function () {
         );
         return;
       }
+      const tableContainer = $(`<div class="table-responsive">`);
+      const tableResponsive = $(
+        `<table class="table table-bordered table-hover table-striped table-light">`
+      );
+      tableContainer.append(tableResponsive);
+      const header = $(`<tr><td>
+        Articulo
+    </td>
+    <td >
+        Precio
+    </td>
+    <td >
+        Cantidad
+    </td>
+    <td>
+        <b>Precio total</b>
+    </td>
+    <td>
+        <b>Acciones</b>
+    </td></tr>`);
+
+      tableResponsive.append(header);
+      container.append(tableContainer);
       json.carrito?.forEach((articulo) => {
         articulo.precioOferta = articulo.precio;
         const esDeOferta = articulo.oferta;
@@ -38,34 +61,36 @@ $(document).ready(function () {
           window.carrito.removeFromCart(articulo.idProducto);
           validarCarrito();
         });
-        const item = $('<div class="row px-0 mx-0">').html(`
-                    <div class="col-sm-3 col-6">
+        const item = $("<tr>").html(`
+                    <td>
                         <img src="/static/${
                           articulo.imagen
-                        }" class="card-img-top" alt="...">
-                    </div>
-                    <div class="col-sm-4 ps-2 col-6 py-2">
+                        }" class="img-product-sm" alt="...">
+                    </td>
+                    <td >
                         <div class="">${
                           esDeOferta
                             ? `<p class="text-decoration-line-through text-danger">$${articulo.precio}</p>`
                             : ""
                         }        $${articulo.precioOferta}</div>
-                    </div>
-                    <div class="col-sm-2 ps-2 col-6 py-2">
+                    </td>
+                    <td >
                         <input disabled type="number" value="${
                           articulo.cantidad
                         }" style="width: 60px;">
-                    </div>
-                    <div class="col-sm-3 col-6 p-2 d-flex justify-content-between">
+                    </td>
+                    <td>
                         <div> <b>$${
                           articulo.cantidad * articulo.precioOferta
                         }</b></div>
+
+                    </td>
+                    <td>
                         <div data-delete-container>
                         </div>
-                    </div>`);
+                    </td>`);
         item.find("[data-delete-container]").append(deleteButton);
-        container.append(item);
-        console.log(item);
+        tableResponsive.append(item);
       });
       const total = json.carrito?.reduce((acum, articulo) => {
         return (acum += articulo.precioOferta * articulo.cantidad);

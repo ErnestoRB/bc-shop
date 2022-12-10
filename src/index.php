@@ -18,7 +18,7 @@
 
         <div class="justify-content-center d-flex mx-0">
 
-            <div class="justify-content-center row mx-0 col-10">
+            <div class="justify-content-center row mx-0 col-12 col-md-10">
 
                 <!-- carrusel -->
                 <div id="carouselExampleIndicators" class="carousel slide my-5" data-bs-ride="true">
@@ -38,18 +38,18 @@
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                        <span class="visually-hidden">Anterior</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                        <span class="visually-hidden">Siguiente</span>
                     </button>
                 </div>
             </div>
         </div>
 
         <div class="justify-content-center row mx-0 text-center">
-            <h3>Products</h3>
+            <h3>Últimos productos</h3>
         </div>
         <div id="contprod" class="container d-flex justify-content-center flex-wrap">
             <!--Contenedor para ajax-->
