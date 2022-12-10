@@ -2,7 +2,7 @@ $(document).ready(() => {
   function getProducts(categoria) {
     const contenedor = $("#contprod");
     contenedor.empty();
-    $.get("http://localhost:9999/api/productos.php", function (data, status) {
+    $.get("/api/productos.php", function (data, status) {
       const obj = JSON.parse(data);
       console.log(obj);
       obj.forEach((articulo) => {

@@ -9,27 +9,25 @@ $(document).ready(() => {
   function getProducts(categoria) {
     const contenedor = $("#contenedorProductos");
     contenedor.empty();
-    $.get(
-      "http://localhost:9999/api/productos.php?categoria=" + categoria,
-      function (data, status) {
-        const obj = JSON.parse(data);
-        console.log(data);
-        obj.forEach((articulo) => {
-          let esDeOferta = articulo.oferta;
-          const agotado = articulo.existencia == 0;
-          let titulo = $(`
+    $.get("/api/productos.php?categoria=" + categoria, function (data, status) {
+      const obj = JSON.parse(data);
+      console.log(data);
+      obj.forEach((articulo) => {
+        let esDeOferta = articulo.oferta;
+        const agotado = articulo.existencia == 0;
+        let titulo = $(`
         <div class="card col col-sm-6 col-md-3">
         <img height="256" height "256" src="/static/${
           articulo.imagen
         }" class="img-product card-img-top img efecto3" alt="imagen de ${
-            articulo.nombre
-          }">
+          articulo.nombre
+        }">
         <div class="card-body">
             <h5 class="card-title"> ${articulo.nombre} ${
-            esDeOferta
-              ? '<span class="badge text-bg-danger">Oferta (-10%)!</span>'
-              : ""
-          } </h5>
+          esDeOferta
+            ? '<span class="badge text-bg-danger">Oferta (-10%)!</span>'
+            : ""
+        } </h5>
             ${
               agotado
                 ? "<b> Agotado </b>"
@@ -53,11 +51,10 @@ $(document).ready(() => {
         </div>
     </div>    
         `);
-          contenedor.append(titulo);
-        });
-        window.carrito.loadForms();
-      }
-    );
+        contenedor.append(titulo);
+      });
+      window.carrito.loadForms();
+    });
   }
 
   getProducts(forms[0].elements.categoria.value);
