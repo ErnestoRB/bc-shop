@@ -24,8 +24,7 @@ $ps->bind_param("s", $nombreCupon);
 
 
 $subtotalAntesDescuento = $subtotal = array_reduce($orden, function ($carry, $element) {
-
-    return $carry + $element["precioOferta"];
+    return $carry + ($element["precioOferta"] * $element['cantidad']);
 }, 0);
 
 $porcentajeDescuento = 0;
@@ -162,7 +161,7 @@ $total = $subtotal + $iva;
                         <h6 class="card-subtitle mb-2 text-muted"><?= sizeof($orden) ?> Articulo(s)</h6>
                         <?php
                         foreach ($orden as $articulo) {
-                            echo "<li><b>" . $articulo['nombre'] . " (" . $articulo["cantidad"] . ") </b> - $" . $articulo['precioOferta'] . "</li>";
+                            echo "<li><b>" . $articulo['nombre'] . " (" . $articulo["cantidad"] . ") </b> - $" . ($articulo['precioOferta'] * $articulo['cantidad']) . "</li>";
                         }
                         ?>
                         <hr>

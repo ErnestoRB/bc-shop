@@ -47,9 +47,9 @@ $totales = $psTotales->get_result()->fetch_all(MYSQLI_ASSOC)[0];
           <h4><i class="bi bi-check-lg"></i> SU PEDIDO ESTA CONFIRMADO</h4>
           <p class="fw-lighter">Se ha enviado un correo a su coreo electronico:</p>
           <p class="fw-lighter"> El pedido PumpedUp KickShop esta completo.</p>
-          <p class="fw-lighter">Ha elegido el pago:</p>
+          <p class="fw-lighter">Una nota ha sido enviada a su correo.</p>
           <p class="fw-lighter">Le enviaremos su pedido en breve plazo.</p>
-          <p class="fw-lighter">Para cualquier duda, porfavor contacte con nosotros <strong><a href="#" class="text-decoration-none">Atencion al Cliente</a></strong></p>
+          <p class="fw-lighter">Para cualquier duda, porfavor contacte con nosotros <strong><a href="/contact_us.php" class="text-decoration-none">Atencion al Cliente</a></strong></p>
         </div>
       </div>
     </div>
@@ -77,6 +77,7 @@ $totales = $psTotales->get_result()->fetch_all(MYSQLI_ASSOC)[0];
           <div class="row">
             <div class="col-3" style="background-color:white;">
               <img src="/static/' . $articulo['imagen'] . '" class="rounded img-product-sm ">
+              <div>' . $articulo['nombre'] . '</div>
             </div>
             <div class="col-3">
               <p>$' . $articulo['precio'] . '</p>
